@@ -1,6 +1,6 @@
 {
   "name": "wtranspilationstrategy",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Aggregator of strategies to transpile JS code. It provides unified programatic and CL interfaces to transpile/optimize/minimize code.",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
