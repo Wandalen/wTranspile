@@ -1,0 +1,39 @@
+
+{
+  "name": "wtranspilationstrategy",
+  "version": "0.3.0",
+  "description": "Aggregator of strategies to transpile JS code",
+  "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
+  "license": "MIT",
+  "main": "staging/dwtools/amid/l9/transpilationStrategy/MainBase.s",
+  "files": [
+    "staging/dwtools/amid/l9/transpilationStrategy",
+    "production"
+  ],
+  "scripts": {
+    "test": "wtest staging",
+    "make_doc": "./doc.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wTranspilationStrategy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wandalen/wTranspilationStrategy/issues"
+  },
+  "dependencies": {
+    "wTools": "",
+    "wCopyable": "",
+    "wpathfundamentals": "",
+    "wverbal" : "",
+    "wFiles" : "",
+    "wcommandsaggregator" : "",
+  },
+  "devDependencies": {
+    "wTesting": "",
+    "wtranspilationstrategy": "."
+  },
+  "keywords": [
+    "wTools"
+  ]
+}
