@@ -149,6 +149,21 @@ function commandTranspile( e )
     outputPath : e.propertiesMap.outPath,
   });
 
+  ts.sessionOpen();
+
+  _.appArgsReadTo
+  ({
+    dst : ts,
+    only : 0,
+    removing : 0,
+    propertiesMap : ts.storage,
+    namesMap :
+    {
+      'verbosity' : 'verbosity',
+      'v' : 'verbosity',
+    },
+  });
+
   _.appArgsReadTo
   ({
     dst : ts,
@@ -164,6 +179,23 @@ function commandTranspile( e )
   _.appArgsReadTo
   ({
     dst : session,
+    only : 0,
+    removing : 0,
+    propertiesMap : ts.storage,
+    namesMap :
+    {
+      'inPath' : 'inputPath',
+      'outPath' : 'outputPath',
+      'strategies' : 'strategies',
+      'debug' : 'debug',
+      'optimization' : 'optimization',
+      'minification' : 'minification',
+    },
+  });
+
+  _.appArgsReadTo
+  ({
+    dst : session,
     only : 1,
     propertiesMap : e.propertiesMap,
     namesMap :
@@ -171,6 +203,9 @@ function commandTranspile( e )
       'inPath' : 'inputPath',
       'outPath' : 'outputPath',
       'strategies' : 'strategies',
+      'debug' : 'debug',
+      'optimization' : 'optimization',
+      'minification' : 'minification',
     },
   });
 
@@ -196,6 +231,9 @@ commandTranspile.properties =
   verbosity : null,
   v : null,
   strategies : null,
+  debug : null,
+  optimization : null,
+  minification : null,
 }
 
 //
@@ -206,32 +244,10 @@ function storageIs( storage )
   _.assert( arguments.length === 1 );
   if( !_.objectIs( storage ) )
   return false;
-  if( !_.mapHasOnly( storage, {} ) )
+  if( !_.mapHasOnly( storage, { strategies : null, debug : null, optimization : null, minification : null } ) )
   return false;
   return true;
 }
-
-//
-//
-// function storageToSave( o )
-// {
-//   let self = this;
-//
-//   _.assert( arguments.length === 1 );
-//
-//   let storage = Object.create( null );
-//   storage.confPath = self.confPath;
-//   storage.actionsPath = self.actionsPath;
-//
-//   if( self._storageToSave )
-//   {
-//     _.sure( _.objectIs( self._storageToSave ) );
-//     _.mapExtend( storage, self._storageToSave );
-//     _.sure( self.storageIs( storage ), () => 'Strange storage : ' + _.toStrShort( storage ) );
-//   }
-//
-//   return storage;
-// }
 
 // --
 // relations
@@ -282,7 +298,7 @@ let Extend =
   commandStrategiesList : commandStrategiesList,
   commandTranspile : commandTranspile,
 
-  // storageToSave,
+  storageIs,
 
   // relations
 
