@@ -14,7 +14,7 @@ let _ = wTools;
 _.include( 'wCommandsAggregator' );
 _.include( 'wCommandsConfig' );
 _.include( 'wStateStorage' );
-// _.include( 'wStateSession' );
+_.include( 'wStateSession' );
 
 //
 
@@ -316,7 +316,7 @@ let Extend =
 
 _.classExtend( Self, Extend );
 _.StateStorage.mixin( Self );
-// _.StateSession.mixin( Self );
+_.StateSession.mixin( Self );
 _.CommandsConfig.mixin( Self );
 
 //
