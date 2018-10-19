@@ -1,7 +1,7 @@
 
 # wTranspilationStrategy [![Build Status](https://travis-ci.org/Wandalen/wTranspilationStrategy.svg?branch=master)](https://travis-ci.org/Wandalen/wTranspilationStrategy)
 
-Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize code by one or several transpilers in series. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools.
+Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.
 
 ## Try out
 ```
@@ -23,4 +23,3 @@ ts .config.define debug:0 minification:0 optimization:9 verbosity:3
 ts .transpile inPath:sample/Sample.js outPath:temp.tmp/Sample.js
 ts .transpile inPath:sample/Sample2.js outPath:temp.tmp/Sample2.js debug:1
 ```
-
