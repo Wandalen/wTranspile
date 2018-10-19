@@ -13,7 +13,8 @@ let _ = wTools;
 
 _.include( 'wCommandsAggregator' );
 _.include( 'wCommandsConfig' );
-_.include( 'wStateSession' );
+_.include( 'wStateStorage' );
+// _.include( 'wStateSession' );
 
 //
 
@@ -149,7 +150,7 @@ function commandTranspile( e )
     outputPath : e.propertiesMap.outPath,
   });
 
-  ts.sessionOpen();
+  ts.storageLoad();
 
   _.appArgsReadTo
   ({
@@ -315,7 +316,7 @@ let Extend =
 
 _.classExtend( Self, Extend );
 _.StateStorage.mixin( Self );
-_.StateSession.mixin( Self );
+// _.StateSession.mixin( Self );
 _.CommandsConfig.mixin( Self );
 
 //

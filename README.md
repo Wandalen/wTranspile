@@ -12,6 +12,7 @@ node sample/Sample.s
 ## Try out
 ```
 npm -g install wtranspilationstrategy
+ts .
 ts .config.define debug:0 minification:0 optimization:9
 ts .config.read
 ```
@@ -23,4 +24,3 @@ ts .config.define debug:0 minification:0 optimization:9 verbosity:3
 ts .transpile inPath:sample/Sample.js outPath:temp.tmp/Sample.js
 ts .transpile inPath:sample/Sample2.js outPath:temp.tmp/Sample2.js debug:1
 ```
-

@@ -32,7 +32,7 @@
     "wFiles": "",
     "wcommandsaggregator": "",
     "wcommandsconfig": "",
-    "wstatesession": "",
+    "wstatestorage": "",
     "google-closure-compiler-js": "=20170626.0.0",
     "prepack": "=0.2.5",
     "uglify-es": "=3.0.25",
