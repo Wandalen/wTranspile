@@ -15,6 +15,5 @@ npm -g install wtranspilationstrategy
 tc .config.define debug:0 minification:0 optimization:9
 tc .config.read
 tc .transpile inPath:sample/Sample.js outPath:temp.tmp/Sample.js
-tc .transpile inPath:sample/Sample2.js outPath:temp.tmp/Sample2.js
+tc .transpile inPath:sample/Sample2.js outPath:temp.tmp/Sample2.js debug:1
 ```
-
