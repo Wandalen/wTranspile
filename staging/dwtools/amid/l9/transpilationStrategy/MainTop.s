@@ -71,7 +71,7 @@ function commandsMake()
     'transpile' :         { e : ts.commandTranspile.bind( ts ),           h : 'Transpile inPath file and store result at outPath' },
   }
 
-  var ca = _.CommandsAggregator
+  let ca = _.CommandsAggregator
   ({
     basePath : fileProvider.path.current(),
     commands : commands,
@@ -186,6 +186,7 @@ function commandTranspile( e )
     logger.down();
     session.finit();
   });
+
 }
 
 commandTranspile.properties =
@@ -197,6 +198,41 @@ commandTranspile.properties =
   strategies : null,
 }
 
+//
+
+function storageIs( storage )
+{
+  let session = this;
+  _.assert( arguments.length === 1 );
+  if( !_.objectIs( storage ) )
+  return false;
+  if( !_.mapHasOnly( storage, {} ) )
+  return false;
+  return true;
+}
+
+//
+//
+// function storageToSave( o )
+// {
+//   let self = this;
+//
+//   _.assert( arguments.length === 1 );
+//
+//   let storage = Object.create( null );
+//   storage.confPath = self.confPath;
+//   storage.actionsPath = self.actionsPath;
+//
+//   if( self._storageToSave )
+//   {
+//     _.sure( _.objectIs( self._storageToSave ) );
+//     _.mapExtend( storage, self._storageToSave );
+//     _.sure( self.storageIs( storage ), () => 'Strange storage : ' + _.toStrShort( storage ) );
+//   }
+//
+//   return storage;
+// }
+
 // --
 // relations
 // --
@@ -204,6 +240,7 @@ commandTranspile.properties =
 let Composes =
 {
   storageFileName : '.wTranspStrat',
+  storage : _.define.own({}),
 }
 
 let Aggregates =
@@ -244,6 +281,8 @@ let Extend =
   commandHelp : commandHelp,
   commandStrategiesList : commandStrategiesList,
   commandTranspile : commandTranspile,
+
+  // storageToSave,
 
   // relations
 
