@@ -1,8 +1,7 @@
-
 {
   "name": "wtranspilationstrategy",
   "version": "0.3.0",
-  "description": "Aggregator of strategies to transpile JS code",
+  "description": "Aggregator of strategies to transpile JS code. It provide unified programatic and CL interfaces to ",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
   "main": "staging/dwtools/amid/l9/transpilationStrategy/MainBase.s",
@@ -25,15 +24,38 @@
     "wTools": "",
     "wCopyable": "",
     "wpathfundamentals": "",
-    "wverbal" : "",
-    "wFiles" : "",
-    "wcommandsaggregator" : "",
+    "wverbal": "",
+    "wFiles": "",
+    "wcommandsaggregator": "",
+    "wcommandsconfig": "",
+    "google-closure-compiler-js": "=20170626.0.0",
+    "prepack": "=0.2.5",
+    "uglify-es": "=3.0.25",
+    "butternut": "=0.4.6",
+    "babylon": "=6.17.4",
+    "babel-core": "=6.25.0",
+    "babel-polyfill": "",
+    "babel-preset-stage-0": "",
+    "babel-preset-stage-1": "",
+    "babel-preset-stage-2": "",
+    "babel-preset-stage-3": "",
+    "babel-preset-es2015": "",
+    "babel-preset-es2015-without-strict": "",
+    "babel-preset-node6-without-strict": "",
+    "babel-plugin-transform-runtime": "",
+    "babel-plugin-transform-class-properties": ""
   },
   "devDependencies": {
     "wTesting": "",
     "wtranspilationstrategy": "."
   },
   "keywords": [
-    "wTools"
+    "wTools",
+    "Transpilation",
+    "transpilation strategies",
+    "uglify",
+    "minify",
+    "minimize",
+    "optimize"
   ]
 }

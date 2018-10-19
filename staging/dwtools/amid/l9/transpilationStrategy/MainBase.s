@@ -99,6 +99,21 @@ function formAssociates()
   if( !ts.fileProvider )
   ts.fileProvider = _.FileProvider.Default();
 
+  return ts;
+}
+
+//
+
+function session( o )
+{
+  let ts = this;
+  o = o || Object.create( null );
+
+  _.assert( arguments.length === 0 || arguments.length === 1 );
+
+  o.ts = ts;
+
+  return ts.Session( o );
 }
 
 // --
@@ -151,6 +166,8 @@ let Proto =
   form : form,
   formAssociates : formAssociates,
 
+  session : session,
+
   // ident
 
   Composes : Composes,
@@ -177,7 +194,7 @@ _.Verbal.mixin( Self );
 //
 
 if( typeof module !== 'undefined' && module !== null )
-module[ 'exports' ] = wTools;
+module[ 'exports' ] = Self;
 _global_[ Self.name ] = wTools[ Self.shortName ] = Self;
 
 if( typeof module !== 'undefined' )

@@ -2,6 +2,8 @@
 
 'use strict';
 
+debugger;
+
 if( typeof module !== 'undefined' )
 {
 
@@ -33,7 +35,8 @@ function exec()
 {
   let ts = this;
 
-  ts.formAssociates();
+  if( !ts.formed )
+  ts.form();
 
   _.assert( _.instanceIs( ts ) );
   _.assert( arguments.length === 0 );
@@ -72,7 +75,7 @@ function commandsMake()
     commandPrefix : 'node ',
   })
 
-  //ts._commandsConfigAdd( ca );
+  ts._commandsConfigAdd( ca );
 
   ca.form();
 
@@ -251,11 +254,12 @@ let Extend =
 //
 
 _.classExtend( Self, Extend );
+_.CommandsConfig.mixin( Self );
 
 //
 
 if( typeof module !== 'undefined' && module !== null )
-module[ 'exports' ] = wTools;
+module[ 'exports' ] = Self;
 _global_[ Self.name ] = wTools[ Self.shortName ] = Self;
 
 if( !module.parent )

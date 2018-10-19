@@ -25,15 +25,14 @@ if( typeof module !== 'undefined' )
   let _ = _global_.wTools;
 
   _.include( 'wCopyable' );
-  _.include( 'wTimeMarker' );
+  // _.include( 'wTimeMarker' );
   _.include( 'wPathFundamentals' );
   _.include( 'wVerbal' );
   _.include( 'wFiles' );
   _.include( 'wCommandsAggregator' );
+  _.include( 'wCommandsConfig' );
 
-  // let File = require( 'fs-extra' );
   let Gzip = require( 'zlib' ).gzip;
-  // let Commander = require( 'include/dwtools/amid_back/Commander.ss' );
 
 }
 
