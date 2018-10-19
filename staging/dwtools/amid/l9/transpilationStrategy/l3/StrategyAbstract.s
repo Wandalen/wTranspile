@@ -89,10 +89,10 @@ function proceed()
   .ifNoErrorThen( function()
   {
 
-    _.assert( _.strIs( self.input.code ) );
-    _.assert( _.strIs( self.output.code ) );
     if( self.output.error )
     throw _.err( self.output.error );
+    _.assert( _.strIs( self.input.code ) );
+    _.assert( _.strIs( self.output.code ) );
 
   })
   .ifNoErrorThen( function()
