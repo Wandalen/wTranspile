@@ -2,6 +2,10 @@
 
 'use strict';
 
+/**
+  @module Tools/base/Fundamental - Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize code by one or several transpilers in series. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools.
+*/
+
 if( typeof module !== 'undefined' )
 {
 
