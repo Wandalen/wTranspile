@@ -2,8 +2,6 @@
 
 'use strict';
 
-debugger;
-
 if( typeof module !== 'undefined' )
 {
 
@@ -11,9 +9,14 @@ if( typeof module !== 'undefined' )
 
 }
 
+let _ = wTools;
+
+_.include( 'wCommandsAggregator' );
+_.include( 'wCommandsConfig' );
+_.include( 'wStateSession' );
+
 //
 
-let _ = wTools;
 let Parent = null;
 let Self = _.TranspilingStrategy;
 
@@ -212,6 +215,7 @@ let Associates =
 
 let Restricts =
 {
+  opened : 0,
 }
 
 let Statics =
@@ -254,6 +258,7 @@ let Extend =
 //
 
 _.classExtend( Self, Extend );
+_.StateSession.mixin( Self );
 _.CommandsConfig.mixin( Self );
 
 //

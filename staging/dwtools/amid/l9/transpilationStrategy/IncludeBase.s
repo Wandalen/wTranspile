@@ -29,8 +29,6 @@ if( typeof module !== 'undefined' )
   _.include( 'wPathFundamentals' );
   _.include( 'wVerbal' );
   _.include( 'wFiles' );
-  _.include( 'wCommandsAggregator' );
-  _.include( 'wCommandsConfig' );
 
   let Gzip = require( 'zlib' ).gzip;
 
