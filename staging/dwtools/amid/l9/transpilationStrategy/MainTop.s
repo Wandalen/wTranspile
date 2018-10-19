@@ -203,6 +203,7 @@ commandTranspile.properties =
 
 let Composes =
 {
+  storageFileName : '.wTranspStrat',
 }
 
 let Aggregates =
@@ -258,6 +259,7 @@ let Extend =
 //
 
 _.classExtend( Self, Extend );
+_.StateStorage.mixin( Self );
 _.StateSession.mixin( Self );
 _.CommandsConfig.mixin( Self );
 

@@ -5,13 +5,17 @@
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
   "main": "staging/dwtools/amid/l9/transpilationStrategy/MainBase.s",
+  "bin": {
+    "ts": "staging/dwtools/amid/l9/transpilationStrategy/MainTop.s"
+  },
   "files": [
     "staging/dwtools/amid/l9/transpilationStrategy",
     "production"
   ],
   "scripts": {
     "test": "wtest staging",
-    "make_doc": "./doc.sh"
+    "make_doc": "./doc.sh",
+    "ts": "node staging/dwtools/amid/l9/transpilationStrategy/MainTop.s"
   },
   "repository": {
     "type": "git",
@@ -28,6 +32,7 @@
     "wFiles": "",
     "wcommandsaggregator": "",
     "wcommandsconfig": "",
+    "wstatesession": "",
     "google-closure-compiler-js": "=20170626.0.0",
     "prepack": "=0.2.5",
     "uglify-es": "=3.0.25",
