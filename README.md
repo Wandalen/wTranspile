@@ -17,3 +17,4 @@ tc .config.read
 tc .transpile inPath:sample/Sample.js outPath:temp.tmp/Sample.js
 tc .transpile inPath:sample/Sample2.js outPath:temp.tmp/Sample2.js debug:1
 ```
+
