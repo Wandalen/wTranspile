@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "staging/dwtools/amid/l9/transpilationStrategy/MainBase.s",
   "bin": {
-    "ts": "staging/dwtools/amid/l9/transpilationStrategy/MainTop.s"
+    "ts": "staging/dwtools/amid/l9/transpilationStrategy/Exec"
   },
   "files": [
     "staging/dwtools/amid/l9/transpilationStrategy",
