@@ -65,7 +65,7 @@
     "beautify",
     "minify",
     "minimize",
-    "optimize"
+    "optimize",
     "minifier",
     "javascript",
     "ecmascript"
