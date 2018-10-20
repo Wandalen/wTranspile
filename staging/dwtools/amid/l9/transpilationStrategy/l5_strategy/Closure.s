@@ -35,7 +35,7 @@ function _formAct()
   set.languageIn = 'ECMASCRIPT6';
   // set.languageOut = 'ECMASCRIPT6';
   // set.compilationLevel = session.optimization < 8 ? 'SIMPLE' : 'ADVANCED';
-  set.compilationLevel = 'SIMPLE'; 
+  set.compilationLevel = 'SIMPLE';
   set.warningLevel = 'DEFAULT';
   set.env = 'CUSTOM';
   set.assumeFunctionWrapper = false;
