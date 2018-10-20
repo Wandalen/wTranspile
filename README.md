@@ -31,3 +31,4 @@ ts .transpile inPath:sample/Sample2.js outPath:temp.tmp/Sample2.js debug:1
 
 
 
+
