@@ -29,9 +29,7 @@ ts .config.read
 npm -g install wtranspilationstrategy
 ts .config.define debug:0 minification:7 optimization:9
 ts .config.define strategies:[ Babel, Uglify, Babel ]
-ts .transpile inPath:sample/Sample.js outPath:temp.tmp/Sample.js
+ts .transpile inputPath:sample/Sample.js outputPath:temp.tmp/Sample.js
 ts .config.define verbosity:3
-ts .transpile inPath:sample/Sample2.js outPath:temp.tmp/Sample2.js debug:1
+ts .transpile inputPath:sample/Sample2.js outputPath:temp.tmp/Sample2.js debug:1
 ```
-
-
