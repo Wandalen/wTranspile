@@ -35,7 +35,7 @@
     "wstatestorage": "",
     "wstatesession": "",
     "google-closure-compiler-js": "=20170626.0.0",
-    "prepack": "=0.2.5",
+    "prepack": "=0.2.54",
     "uglify-es": "=3.3.9",
     "babylon": "=6.18.0",
     "babel-core": "=6.26.3",
