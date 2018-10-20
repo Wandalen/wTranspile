@@ -13,7 +13,6 @@ if( typeof module !== 'undefined' )
   require( './l3/StrategyAbstract.s' );
 
   require( './l5_strategy/Babel.s' );
-  require( './l5_strategy/Butternut.s' );
   require( './l5_strategy/Closure.s' );
   require( './l5_strategy/Prepack.s' );
   require( './l5_strategy/Uglify.s' );
