@@ -39,9 +39,14 @@ function _executeAct()
   let session = self.session;
   let result = null;
 
-  result = Prepack.prepack( self.input.code/*,self.settings*/ );
+  debugger;
+  result = Prepack.prepackSources( [{ fileContents : self.input.code }], self.settings );
+  debugger;
+
   if( result.error )
   throw _.err( result.error );
+
+  _.assert( _.strIs( result.code ) );
   _.mapExtend( self.output,result );
 
   return result;

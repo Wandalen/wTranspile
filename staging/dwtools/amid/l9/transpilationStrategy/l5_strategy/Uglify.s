@@ -206,6 +206,9 @@ function _executeAct()
   let session = self.session;
 
   let result = Uglify.minify( self.input.code, self.settings );
+
+  _.assert( _.strIs( result.code ) );
+
   _.mapExtend( self.output, result );
 
   return result;

@@ -34,7 +34,8 @@ function _formAct()
 
   set.languageIn = 'ECMASCRIPT6';
   // set.languageOut = 'ECMASCRIPT6';
-  set.compilationLevel = 'SIMPLE';
+  // set.compilationLevel = session.optimization < 8 ? 'SIMPLE' : 'ADVANCED';
+  set.compilationLevel = 'SIMPLE'; 
   set.warningLevel = 'DEFAULT';
   set.env = 'CUSTOM';
   set.assumeFunctionWrapper = false;
@@ -96,10 +97,8 @@ let Proto =
   _formAct : _formAct,
   _executeAct : _executeAct,
 
-
   /* */
 
-  /* constructor * : * Self, */
   Composes : Composes,
   Aggregates : Aggregates,
   Associates : Associates,
