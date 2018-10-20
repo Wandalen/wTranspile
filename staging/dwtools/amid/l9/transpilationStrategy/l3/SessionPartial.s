@@ -7,7 +7,7 @@ let Gzip;
 //
 
 let _ = wTools;
-let Parent = _.TranspilingStrategy.SessionAbstract;
+let Parent = _.TranspilationStrategy.SessionAbstract;
 let Self = function wTsSessionPartial( o )
 {
   return _.instanceConstructor( Self, this, arguments );
@@ -88,15 +88,15 @@ function form()
     let strategy = session.strategies[ s ];
     if( _.strIs( strategy ) )
     {
-      _.sure( !!_.TranspilingStrategy.Strategies[ strategy ], 'Strategy not found', strategy )
-      strategy = _.TranspilingStrategy.Strategies[ strategy ];
+      _.sure( !!_.TranspilationStrategy.Strategies[ strategy ], 'Strategy not found', strategy )
+      strategy = _.TranspilationStrategy.Strategies[ strategy ];
     }
 
     if( _.routineIs( strategy ) )
     strategy = strategy({ session : session });
 
     session.strategies[ s ] = strategy;
-    _.assert( strategy instanceof _.TranspilingStrategy.Strategies.Abstract );
+    _.assert( strategy instanceof _.TranspilationStrategy.Strategies.Abstract );
   }
 
   /* validation */
@@ -210,7 +210,6 @@ function strategyProceed( strategy, index )
     _.assert( session.input !== strategy.output );
     _.assert( session.output !== strategy.output );
 
-    debugger;
     return session.reportFileSize
     ({
       input : strategy.input.code,
@@ -476,7 +475,7 @@ module[ 'exports' ] = Self;
 
 _.staticDecalre
 ({
-  prototype : _.TranspilingStrategy.prototype,
+  prototype : _.TranspilationStrategy.prototype,
   name : Self.shortName,
   value : Self,
 });

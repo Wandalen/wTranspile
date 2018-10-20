@@ -178,7 +178,7 @@ module[ 'exports' ] = Self;
 
 _.staticDecalre
 ({
-  prototype : _.TranspilingStrategy.prototype,
+  prototype : _.TranspilationStrategy.prototype,
   name : Self.shortName,
   value : Self,
 });

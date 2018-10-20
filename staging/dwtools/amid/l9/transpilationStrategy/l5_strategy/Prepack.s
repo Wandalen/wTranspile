@@ -7,7 +7,7 @@ let Prepack = require( 'prepack' );
 //
 
 let _ = wTools;
-let Parent = _.TranspilingStrategy.Strategies.Abstract;
+let Parent = _.TranspilationStrategy.Strategies.Abstract;
 let Self = function wTsStrategyPrepack( o )
 {
   return _.instanceConstructor( Self, this, arguments );
@@ -107,6 +107,6 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilingStrategy.Strategies[ Self.shortName ] = Self;
+_.TranspilationStrategy.Strategies[ Self.shortName ] = Self;
 
 })();

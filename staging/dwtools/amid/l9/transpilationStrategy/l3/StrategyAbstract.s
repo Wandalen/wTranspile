@@ -63,8 +63,8 @@ function proceed( o )
   let Fields =
   {
 
-    inPath : null,
-    outPath : null,
+    inputPath : null,
+    inputPath : null,
     tempPath : null,
     mapFilePath : null,
 
@@ -323,9 +323,9 @@ _.Copyable.mixin( Self );
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilingStrategy.Strategies[ Self.shortName ] = Self;
+_.TranspilationStrategy.Strategies[ Self.shortName ] = Self;
 
-// _.TranspilingStrategy.Strategies = _.TranspilingStrategy.Strategies || Object.create( null );
-// _.TranspilingStrategy.Strategies[ Self.shortName ] = Self;
+// _.TranspilationStrategy.Strategies = _.TranspilationStrategy.Strategies || Object.create( null );
+// _.TranspilationStrategy.Strategies[ Self.shortName ] = Self;
 
 })();

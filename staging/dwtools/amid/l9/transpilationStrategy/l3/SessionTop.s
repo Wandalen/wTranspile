@@ -5,7 +5,7 @@
 //
 
 let _ = wTools;
-let Parent = _.TranspilingStrategy.SessionPartial;
+let Parent = _.TranspilationStrategy.SessionPartial;
 let Self = function wTsSession( o )
 {
   return _.instanceConstructor( Self, this, arguments );
@@ -63,7 +63,7 @@ module[ 'exports' ] = Self;
 
 _.staticDecalre
 ({
-  prototype : _.TranspilingStrategy.prototype,
+  prototype : _.TranspilationStrategy.prototype,
   name : Self.shortName,
   value : Self,
 });

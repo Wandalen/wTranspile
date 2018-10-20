@@ -7,7 +7,7 @@ let Uglify = require( 'uglify-es' );
 //
 
 let _ = wTools;
-let Parent = _.TranspilingStrategy.Strategies.Abstract;
+let Parent = _.TranspilationStrategy.Strategies.Abstract;
 let Self = function wTsStrategyUglify( o )
 {
   return _.instanceConstructor( Self, this, arguments );
@@ -268,8 +268,8 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilingStrategy.Strategies[ Self.shortName ] = Self;
-if( !_.TranspilingStrategy.Strategies.Default )
-_.TranspilingStrategy.Strategies.Default = Self;
+_.TranspilationStrategy.Strategies[ Self.shortName ] = Self;
+if( !_.TranspilationStrategy.Strategies.Default )
+_.TranspilationStrategy.Strategies.Default = Self;
 
 })();

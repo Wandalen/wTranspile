@@ -19,9 +19,9 @@ _.include( 'wStateSession' );
 //
 
 let Parent = null;
-let Self = _.TranspilingStrategy;
+let Self = _.TranspilationStrategy;
 
-_.assert( _.routineIs( _.TranspilingStrategy ) );
+_.assert( _.routineIs( _.TranspilationStrategy ) );
 
 // --
 //
@@ -30,8 +30,8 @@ _.assert( _.routineIs( _.TranspilingStrategy ) );
 let ConfigProperties =
 {
 
-  inPath : 'Path to terminal file or dirrectory with files to transpile.',
-  outPath : 'Path to terminal file to store.',
+  inputPath : 'Path to terminal file or dirrectory with files to transpile.',
+  inputPath : 'Path to terminal file to store.',
   tempPath : 'Path to temporary directory to store intermediate results. Default : temp.tmp.',
   mapFilePath : 'Path to store map-file. Default : null.',
 
@@ -94,7 +94,7 @@ function commandsMake()
   {
     'help' :              { e : _.routineJoin( ts, ts.commandHelp ),                h : 'Get help' },
     'strategies list' :   { e : _.routineJoin( ts, ts.commandStrategiesList ),      h : 'List available strategies of transpilation' },
-    'transpile' :    { e : _.routineJoin( ts, ts.commandTranspile ),                h : 'Transpile inPath file and store result at outPath' },
+    'transpile' :    { e : _.routineJoin( ts, ts.commandTranspile ),                h : 'Transpile inputPath file and store result at inputPath' },
   }
 
   let ca = _.CommandsAggregator
@@ -158,19 +158,19 @@ function commandTranspile( e )
   let logger = ts.logger;
 
   _.sureMapHasOnly( e.propertiesMap, commandTranspile.commandProperties );
-  _.sureBriefly( _.strIs( e.propertiesMap.inPath ), 'Expects path to file to transpile {-inPath-}' );
-  _.sureBriefly( _.strIs( e.propertiesMap.outPath ), 'Expects path to file to save transpiled {-outPath-}' );
+  _.sureBriefly( _.strIs( e.propertiesMap.inputPath ), 'Expects path to file to transpile {-inputPath-}' );
+  _.sureBriefly( _.strIs( e.propertiesMap.inputPath ), 'Expects path to file to save transpiled {-inputPath-}' );
 
   if( ts.verbosity >= 3 )
-  logger.log( ' # Transpiling', e.propertiesMap.outPath, '<-', e.propertiesMap.inPath );
+  logger.log( ' # Transpiling', e.propertiesMap.inputPath, '<-', e.propertiesMap.inputPath );
 
   logger.up();
 
   let session = ts.Session
   ({
     ts : ts,
-    inputPath : e.propertiesMap.inPath,
-    outputPath : e.propertiesMap.outPath,
+    inputPath : e.propertiesMap.inputPath,
+    outputPath : e.propertiesMap.inputPath,
   });
 
   ts.storageLoad();
@@ -208,8 +208,8 @@ function commandTranspile( e )
     propertiesMap : ts.storage,
     namesMap :
     {
-      'inPath' : 'inputPath',
-      'outPath' : 'outputPath',
+      'inputPath' : 'inputPath',
+      'inputPath' : 'outputPath',
       'strategies' : 'strategies',
       'debug' : 'debug',
       'optimization' : 'optimization',
@@ -227,8 +227,8 @@ function commandTranspile( e )
     propertiesMap : e.propertiesMap,
     namesMap :
     {
-      'inPath' : 'inputPath',
-      'outPath' : 'outputPath',
+      'inputPath' : 'inputPath',
+      'inputPath' : 'outputPath',
       'strategies' : 'strategies',
       'debug' : 'debug',
       'optimization' : 'optimization',

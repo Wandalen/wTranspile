@@ -17,12 +17,12 @@ if( typeof module !== 'undefined' )
 
 let _ = wTools;
 let Parent = null;
-let Self = function wTranspilingStrategy( o )
+let Self = function wTranspilationStrategy( o )
 {
   return _.instanceConstructor( Self, this, arguments );
 }
 
-Self.shortName = 'TranspilingStrategy';
+Self.shortName = 'TranspilationStrategy';
 
 // --
 // inter
