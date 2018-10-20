@@ -3,6 +3,13 @@
 
 Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.
 
+## Supports such tranpilation strategies
+
+- Uglify
+- Babel
+- Prepack
+- Closure
+
 ## Try out
 ```
 npm install
@@ -26,12 +33,3 @@ ts .transpile inPath:sample/Sample.js outPath:temp.tmp/Sample.js
 ts .config.define verbosity:3
 ts .transpile inPath:sample/Sample2.js outPath:temp.tmp/Sample2.js debug:1
 ```
-
-
-
-
-
-
-
-
-

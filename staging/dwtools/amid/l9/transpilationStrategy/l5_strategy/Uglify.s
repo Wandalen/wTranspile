@@ -157,8 +157,8 @@ global_defs   : {}     // global definitions
 
     // if( compress.arrows === undefined ) compress.arrows = !!session.optimization;
     if( compress.toplevel === undefined ) compress.toplevel = session.optimization > 7;
-    if( compress.drop_debugger === undefined ) compress.drop_debugger = !!session.minification && !session.debug;
-    if( compress.drop_console === undefined ) compress.drop_console = !!session.minification && !session.debug;
+    if( compress.drop_debugger === undefined ) compress.drop_debugger = !!session.minification && !session.debug && !session.beautifing;
+    if( compress.drop_console === undefined ) compress.drop_console = !!session.minification && !session.debug && !session.beautifing;
 
     if( compress.global_defs === undefined ) compress.global_defs =
     {
@@ -184,11 +184,11 @@ global_defs   : {}     // global definitions
   let output = set.output;
   let defOutput =
   {
-    beautify : !session.minification,
-    comments : !session.minification,
-    indent_level : !session.minification ? 2 : undefined,
-    keep_quoted_props : !session.minification ? true : false,
-    max_line_len : !session.minification ? 160 : 65535,
+    beautify : !session.beautifing,
+    comments : !session.beautifing,
+    indent_level : !session.beautifing ? 2 : undefined,
+    keep_quoted_props : !session.beautifing ? true : false,
+    max_line_len : !session.beautifing ? 160 : 65535,
     source_map : null,
     // ecma : 6, /* problematic */
   }

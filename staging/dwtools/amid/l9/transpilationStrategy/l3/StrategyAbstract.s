@@ -60,9 +60,28 @@ function proceed( o )
   // if( session.verbosity >= 2 )
   // logger.log( ' # Transpiling ' + session.outputFilePath + ' with strategy ' + self.constructor.shortName );
 
+  let Fields =
+  {
+
+    inPath : null,
+    outPath : null,
+    tempPath : null,
+    mapFilePath : null,
+
+    debug : null,
+    optimization : null,
+    minification : null,
+    beautifing : null,
+
+    writingTempFiles : null,
+    reportingFileSize : null,
+    strategies : null,
+
+  }
+
   if( session.verbosity >= 4 )
   {
-    let fields = _.mapOnly( session, { debug : null, optimization : null, minification : null } );
+    let fields = _.mapOnly( session, Fields );
     logger.log( _.toStr( fields, { levels : 2, multiline : 1, wrap : 0 } ) );
   }
 

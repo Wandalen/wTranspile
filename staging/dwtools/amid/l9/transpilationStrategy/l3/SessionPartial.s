@@ -48,6 +48,7 @@ function form()
   _.assert( _.numberInRange( session.debug, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-session.debug-}' );
   _.assert( _.numberInRange( session.optimization, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-session.debug-}' );
   _.assert( _.numberInRange( session.minification, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-session.debug-}' );
+  _.assert( _.boolLike( session.beautifing ), 'Expects bool-like {-session.beautifing-}' );
   _.assert( _.strIs( session.outputFilePath ), 'Expects path {-session.outputFilePath-}' );
 
   /* parent */
@@ -388,6 +389,7 @@ let Composes =
   debug : 0,
   optimization : 9,
   minification : 8,
+  beautifing : 0,
 
   /* */
 

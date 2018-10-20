@@ -38,6 +38,7 @@ let ConfigProperties =
   debug : 'Level of debug, should be in range [ 0 .. 9 ]. Default : 0.',
   optimization : 'Level of optimization, should be in range [ 0 .. 9 ]. Default : 9.',
   minification : 'Level of minification, should be in range [ 0 .. 9 ]. Default : 5.',
+  beautifing : 'Make output code readable. Default : 0',
 
   writingTempFiles : 'Switch on/off writing intermediate results of transpiling as temporary file. Default : 1.',
   reportingFileSize : 'Switch on/off reporting of input/output/compressed size of file. Takes some extra time because of compressing. Default : 1.',
@@ -213,6 +214,7 @@ function commandTranspile( e )
       'debug' : 'debug',
       'optimization' : 'optimization',
       'minification' : 'minification',
+      'beautifing' : 'beautifing',
       'writingTempFiles' : 'writingTempFiles',
       'reportingFileSize' : 'reportingFileSize',
     },
@@ -231,6 +233,7 @@ function commandTranspile( e )
       'debug' : 'debug',
       'optimization' : 'optimization',
       'minification' : 'minification',
+      'beautifing' : 'beautifing',
       'writingTempFiles' : 'writingTempFiles',
       'reportingFileSize' : 'reportingFileSize',
     },
