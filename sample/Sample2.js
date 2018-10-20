@@ -10,6 +10,7 @@ let session = ts.session
   debug : 5,
   minification : 0,
   optimization : 0,
+  strategies : [ 'Babel', 'Uglify', 'Babel' ],
 });
 
 session.form().proceed()

@@ -69,7 +69,7 @@ function form()
   if( !session.name )
   session.name = path.name({ path : session.inputFilesPaths[ 0 ], withExtension : true });
 
-  if( session.usingTempFiles )
+  if( session.writingTempFiles && session.tempPath )
   fileProvider.directoryMake( session.tempPath );
 
   /* transpilation strategies */
@@ -133,7 +133,7 @@ function proceed()
   for( let s = 0 ; s < session.strategies.length ; s++ )
   result.ifNoErrorThen( function( arg )
   {
-    return session.strategyProceed( session.strategies[ s ] );
+    return session.strategyProceed( session.strategies[ s ], s );
   });
 
   result
@@ -155,7 +155,7 @@ function proceed()
 
 //
 
-function strategyProceed( strategy )
+function strategyProceed( strategy, index )
 {
   let session = this;
   let result = _.Consequence().give();
@@ -164,7 +164,7 @@ function strategyProceed( strategy )
   .ifNoErrorThen( function()
   {
     strategy.input = _.mapExtend( null, session.output );
-    return strategy.proceed();
+    return strategy.proceed({ session : session, index : index });
   })
   .ifNoErrorThen( function()
   {
@@ -253,7 +253,7 @@ function read()
 
     session.output.code = session.input.code = session.codeJoin( session.input.read );
 
-    if( session.usingTempFiles )
+    if( session.writingTempFiles && session.tempPath )
     {
       _.sure( fileProvider.directoryIs( session.tempPath ) );
       let dstPath = path.join( session.tempPath, path.nameJoin( session.name, '-read' ) );
@@ -296,7 +296,7 @@ function tempWrite( o )
   let fileProvider = session.fileProvider;
   let path = fileProvider.path;
 
-  if( !session.usingTempFiles )
+  if( !session.writingTempFiles || !session.tempPath )
   return;
 
   if( arguments.length === 2 )
@@ -364,7 +364,7 @@ function reportFileSize( o )
     let gzipSize = _.entitySize( buffer );
 
     if( session.reportingFileSize )
-    logger.log( 'Compression factor :', format( gzipSize ), '/' , format( outputSize ), '/', format( inputSize )/*, 'kb'*/ );
+    logger.log( 'Compression factor :', format( inputSize ), '/' , format( outputSize ), '/', format( gzipSize ) );
 
     con.give();
   });
@@ -385,11 +385,16 @@ reportFileSize.defaults =
 let Composes =
 {
 
-  /* */
-
   debug : 0,
   optimization : 9,
   minification : 8,
+
+  /* */
+
+  writingTempFiles : 1,
+  reportingFileSize : 1,
+
+  /* */
 
   inputPath : null,
   outputPath : null,
@@ -397,11 +402,6 @@ let Composes =
   mapFilePath : null,
   inputFilesPaths : '.',
   outputFilePath : '.',
-
-  /* */
-
-  usingTempFiles : 1,
-  reportingFileSize : 1,
 
 }
 

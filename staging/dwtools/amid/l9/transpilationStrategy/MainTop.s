@@ -24,6 +24,30 @@ let Self = _.TranspilingStrategy;
 _.assert( _.routineIs( _.TranspilingStrategy ) );
 
 // --
+//
+// --
+
+let ConfigProperties =
+{
+
+  inPath : 'Path to terminal file or dirrectory with files to transpile.',
+  outPath : 'Path to terminal file to store.',
+  tempPath : 'Path to temporary directory to store intermediate results. Default : temp.tmp.',
+  mapFilePath : 'Path to store map-file. Default : null.',
+
+  debug : 'Level of debug, should be in range [ 0 .. 9 ]. Default : 0.',
+  optimization : 'Level of optimization, should be in range [ 0 .. 9 ]. Default : 9.',
+  minification : 'Level of minification, should be in range [ 0 .. 9 ]. Default : 5.',
+
+  writingTempFiles : 'Switch on/off writing intermediate results of transpiling as temporary file. Default : 1.',
+  reportingFileSize : 'Switch on/off reporting of input/output/compressed size of file. Takes some extra time because of compressing. Default : 1.',
+  verbosity : 'Set verbosity of the session.',
+  v : 'Set verbosity of the session.',
+  strategies : 'One or several strategies to use. Use .strategies.list to get list of available strategies.',
+
+}
+
+// --
 // exec
 // --
 
@@ -67,9 +91,9 @@ function commandsMake()
 
   let commands =
   {
-    'help' :              { e : ts.commandHelp.bind( ts ),                h : 'Get help' },
-    'strategies list' :   { e : ts.commandStrategiesList.bind( ts ),      h : 'List available strategies to transpile' },
-    'transpile' :         { e : ts.commandTranspile.bind( ts ),           h : 'Transpile inPath file and store result at outPath' },
+    'help' :              { e : _.routineJoin( ts, ts.commandHelp ),                h : 'Get help' },
+    'strategies list' :   { e : _.routineJoin( ts, ts.commandStrategiesList ),      h : 'List available strategies of transpilation' },
+    'transpile' :    { e : _.routineJoin( ts, ts.commandTranspile ),                h : 'Transpile inPath file and store result at outPath' },
   }
 
   let ca = _.CommandsAggregator
@@ -91,16 +115,14 @@ function commandsMake()
 function commandHelp( e )
 {
   let ts = this;
+  let ca = e.ca;
   let fileProvider = ts.fileProvider;
   let logger = ts.logger;
 
-  logger.log();
-  logger.log( e.ca.vocabulary.helpForSubjectAsString( '' ) );
-  logger.log();
+  ca._commandHelp( e );
 
-  //logger.log( 'Use ' + logger.colorFormat( '"ts .init confPath:./conf" actionsPath:./actions', 'code' ) + ' to init the module' );
+  if( !e.subject )
   logger.log( 'Use ' + logger.colorFormat( '"ts .help"', 'code' ) + ' to get help' );
-  // logger.log( 'Use ' + logger.colorFormat( '"ts"', 'code' ) + '' );
 
   return ts;
 }
@@ -134,7 +156,7 @@ function commandTranspile( e )
   let fileProvider = ts.fileProvider;
   let logger = ts.logger;
 
-  _.sureMapHasOnly( e.propertiesMap, commandTranspile.properties );
+  _.sureMapHasOnly( e.propertiesMap, commandTranspile.commandProperties );
   _.sureBriefly( _.strIs( e.propertiesMap.inPath ), 'Expects path to file to transpile {-inPath-}' );
   _.sureBriefly( _.strIs( e.propertiesMap.outPath ), 'Expects path to file to save transpiled {-outPath-}' );
 
@@ -191,6 +213,8 @@ function commandTranspile( e )
       'debug' : 'debug',
       'optimization' : 'optimization',
       'minification' : 'minification',
+      'writingTempFiles' : 'writingTempFiles',
+      'reportingFileSize' : 'reportingFileSize',
     },
   });
 
@@ -207,6 +231,8 @@ function commandTranspile( e )
       'debug' : 'debug',
       'optimization' : 'optimization',
       'minification' : 'minification',
+      'writingTempFiles' : 'writingTempFiles',
+      'reportingFileSize' : 'reportingFileSize',
     },
   });
 
@@ -225,17 +251,7 @@ function commandTranspile( e )
 
 }
 
-commandTranspile.properties =
-{
-  inPath : null,
-  outPath : null,
-  verbosity : null,
-  v : null,
-  strategies : null,
-  debug : null,
-  optimization : null,
-  minification : null,
-}
+commandTranspile.commandProperties = ConfigProperties
 
 //
 
@@ -245,9 +261,18 @@ function storageIs( storage )
   _.assert( arguments.length === 1 );
   if( !_.objectIs( storage ) )
   return false;
-  if( !_.mapHasOnly( storage, { strategies : null, debug : null, optimization : null, minification : null } ) )
+  if( !_.mapHasOnly( storage, session.ConfigProperties ) )
   return false;
   return true;
+}
+
+//
+
+function storageDefaultGet()
+{
+  let session = this;
+  debugger;
+  return { storage : Object.create( null ) };
 }
 
 // --
@@ -276,6 +301,7 @@ let Restricts =
 let Statics =
 {
   Exec : Exec,
+  ConfigProperties : ConfigProperties,
 }
 
 let Forbids =
@@ -300,6 +326,7 @@ let Extend =
   commandTranspile : commandTranspile,
 
   storageIs,
+  storageDefaultGet,
 
   // relations
 

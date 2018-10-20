@@ -33,18 +33,27 @@ function form()
 
 //
 
-function proceed()
+function proceed( o )
 {
   let self = this;
   let session = self.session;
   let fileProvider = session.fileProvider;
   let path = fileProvider.path;
   let logger = session.logger;
-  let result;
   let time = _.timeNow();
+  let result;
+
+  /* verify */
+
+  _.assert( arguments.length === 1 );
+  _.assert( _.strIs( self.input.code ) );
+  _.assert( session.inputFilesPaths.length >= 1 );
+  _.assertRoutineOptions( proceed, arguments );
+
+  /* */
 
   self.form();
-  _.routinesCall( self,session.onBegin,[ self ] );
+  _.routinesCall( self, session.onBegin, [ self ] );
 
   /* verbal */
 
@@ -65,12 +74,6 @@ function proceed()
 
   if( session.verbosity >= 5 )
   logger.log( 'inputFilesPaths :', _.toStr( session.inputFilesPaths, { levels : 2, wrap : 0, multiline : 1 } ) );
-
-  /* verify */
-
-  _.assert( arguments.length === 0 );
-  _.assert( _.strIs( self.input.code ) );
-  _.assert( session.inputFilesPaths.length >= 1 );
 
   /* */
 
@@ -98,12 +101,10 @@ function proceed()
   .ifNoErrorThen( function()
   {
 
-    /* */
-
-    if( session.usingTempFiles )
+    if( session.writingTempFiles )
     session.tempWrite
     ({
-      filePath : path.nameJoin( path.fullName( session.outputFilePath ), '-after-', self.constructor.shortName ),
+      filePath : path.nameJoin( path.fullName( session.outputFilePath ), '-after-', String( o.index ), '-', self.constructor.shortName ),
       data : self.output.code,
     });
 
@@ -113,6 +114,12 @@ function proceed()
   })
 
   return result;
+}
+
+proceed.defaults =
+{
+  session : null,
+  index : null,
 }
 
 //
@@ -224,7 +231,7 @@ let Forbids =
   /* */
 
   mapFilePath : 'mapFilePath',
-  usingTempFiles : 'usingTempFiles',
+  writingTempFiles : 'writingTempFiles',
   off : 'off',
   verbosity : 'verbosity',
   command : 'command',
