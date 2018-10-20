@@ -163,20 +163,17 @@ function strategyProceed( strategy )
   result
   .ifNoErrorThen( function()
   {
-    debugger;
     strategy.input = _.mapExtend( null, session.output );
     return strategy.proceed();
   })
   .ifNoErrorThen( function()
   {
 
-    debugger;
     _.mapExtend( session.output, strategy.output );
     _.assert( _.strIs( session.output.code ) );
 
     if( session.output.error )
     throw _.err( session.output.error );
-    debugger;
 
   })
   .ifNoErrorThen( function()

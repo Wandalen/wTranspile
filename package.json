@@ -1,7 +1,7 @@
 {
   "name": "wtranspilationstrategy",
   "version": "0.3.13",
-  "description": "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
+  "description": "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
   "main": "staging/dwtools/amid/l9/transpilationStrategy/MainBase.s",
@@ -36,7 +36,7 @@
     "wstatesession": "",
     "google-closure-compiler-js": "=20170626.0.0",
     "prepack": "=0.2.5",
-    "uglify-es": "=3.0.25",
+    "uglify-es": "=3.3.9",
     "butternut": "=0.4.6",
     "babylon": "=6.17.4",
     "babel-core": "=6.25.0",
@@ -60,8 +60,14 @@
     "Transpilation",
     "transpilation strategies",
     "uglify",
+    "uglify-es",
+    "uglify-js",
+    "beautify",
     "minify",
     "minimize",
     "optimize"
+    "minifier",
+    "javascript",
+    "ecmascript"
   ]
 }

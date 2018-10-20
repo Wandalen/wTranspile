@@ -123,7 +123,7 @@ global_defs   : {}     // global definitions
     unsafe : false,
     hoist_funs : false,
     join_vars : false,
-    cascade : true,
+    // cascade : true, /* removed? */
     keep_fnames : true,
     keep_infinity : true,
     negate_iife : false,
@@ -151,7 +151,7 @@ global_defs   : {}     // global definitions
     if( compress.if_return === undefined ) compress.if_return = !!session.optimization;
     if( compress.conditionals === undefined ) compress.conditionals = !!session.optimization;
     if( compress.comparisons === undefined ) compress.comparisons = !!session.optimization;
-    if( compress.top_retain === undefined ) compress.top_retain = session.minification < 5;
+    // if( compress.top_retain === undefined ) compress.top_retain = session.minification < 5; /* it should be function or string */
     if( compress.evaluate === undefined ) compress.evaluate = !!session.optimization;
     if( compress.negate_iife === undefined ) compress.negate_iife = !!session.optimization;
 
@@ -168,6 +168,13 @@ global_defs   : {}     // global definitions
     }
 
     _.mapSupplement( compress,defCompress );
+
+    // if( compress.top_retain )
+    // compress.top_retain = function( a,b,c )
+    // {
+    //   debugger;
+    //   console.log( a,b,c )
+    // }
 
   }
 
