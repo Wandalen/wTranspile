@@ -2,7 +2,7 @@
 
 'use strict';
 
-let Gzip;
+let Zlib;
 
 //
 
@@ -355,11 +355,13 @@ function reportFileSize( o )
   function _format( size ){ return ( size / 1024 ).toFixed( 2 ); };
   let format = _.strMetricFormatBytes || _format;
 
-  if( !Gzip )
-  Gzip = require( 'zlib' ).gzip;
-  Gzip( o.output, function( err, buffer )
+  if( !Zlib )
+  Zlib = require( 'zlib' );
+  debugger;
+  Zlib.gzip( o.output, function( err, buffer )
   {
 
+    // let outputSize = _.entitySize( _.bufferNodeFrom( o.output ) );
     let outputSize = _.entitySize( o.output );
     let gzipSize = _.entitySize( buffer );
 

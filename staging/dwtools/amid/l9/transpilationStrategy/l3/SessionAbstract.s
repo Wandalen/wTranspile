@@ -2,7 +2,7 @@
 
 'use strict';
 
-let Gzip = require( 'zlib' ).gzip;
+// let Gzip = require( 'zlib' ).gzip;
 let _ = _global_.wTools;
 
 //

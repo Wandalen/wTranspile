@@ -30,7 +30,7 @@ if( typeof module !== 'undefined' )
   _.include( 'wVerbal' );
   _.include( 'wFiles' );
 
-  let Gzip = require( 'zlib' ).gzip;
+  // let Gzip = require( 'zlib' ).gzip;
 
 }
 

@@ -31,7 +31,7 @@ let ConfigProperties =
 {
 
   inputPath : 'Path to terminal file or dirrectory with files to transpile.',
-  inputPath : 'Path to terminal file to store.',
+  outputPath : 'Path to terminal file to store.',
   tempPath : 'Path to temporary directory to store intermediate results. Default : temp.tmp.',
   mapFilePath : 'Path to store map-file. Default : null.',
 
@@ -94,7 +94,7 @@ function commandsMake()
   {
     'help' :              { e : _.routineJoin( ts, ts.commandHelp ),                h : 'Get help' },
     'strategies list' :   { e : _.routineJoin( ts, ts.commandStrategiesList ),      h : 'List available strategies of transpilation' },
-    'transpile' :    { e : _.routineJoin( ts, ts.commandTranspile ),                h : 'Transpile inputPath file and store result at inputPath' },
+    'transpile' :    { e : _.routineJoin( ts, ts.commandTranspile ),                h : 'Transpile inputPath file and store result at outputPath' },
   }
 
   let ca = _.CommandsAggregator
@@ -159,10 +159,10 @@ function commandTranspile( e )
 
   _.sureMapHasOnly( e.propertiesMap, commandTranspile.commandProperties );
   _.sureBriefly( _.strIs( e.propertiesMap.inputPath ), 'Expects path to file to transpile {-inputPath-}' );
-  _.sureBriefly( _.strIs( e.propertiesMap.inputPath ), 'Expects path to file to save transpiled {-inputPath-}' );
+  _.sureBriefly( _.strIs( e.propertiesMap.outputPath ), 'Expects path to file to save transpiled {-outputPath-}' );
 
   if( ts.verbosity >= 3 )
-  logger.log( ' # Transpiling', e.propertiesMap.inputPath, '<-', e.propertiesMap.inputPath );
+  logger.log( ' # Transpiling', e.propertiesMap.outputPath, '<-', e.propertiesMap.inputPath );
 
   logger.up();
 
@@ -170,7 +170,7 @@ function commandTranspile( e )
   ({
     ts : ts,
     inputPath : e.propertiesMap.inputPath,
-    outputPath : e.propertiesMap.inputPath,
+    outputPath : e.propertiesMap.outputPath,
   });
 
   ts.storageLoad();
@@ -209,7 +209,7 @@ function commandTranspile( e )
     namesMap :
     {
       'inputPath' : 'inputPath',
-      'inputPath' : 'outputPath',
+      'outputPath' : 'outputPath',
       'strategies' : 'strategies',
       'debug' : 'debug',
       'optimization' : 'optimization',
@@ -228,7 +228,7 @@ function commandTranspile( e )
     namesMap :
     {
       'inputPath' : 'inputPath',
-      'inputPath' : 'outputPath',
+      'outputPath' : 'outputPath',
       'strategies' : 'strategies',
       'debug' : 'debug',
       'optimization' : 'optimization',

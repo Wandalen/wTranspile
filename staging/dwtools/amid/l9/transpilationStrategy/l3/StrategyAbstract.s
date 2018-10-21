@@ -64,7 +64,7 @@ function proceed( o )
   {
 
     inputPath : null,
-    inputPath : null,
+    outputPath : null,
     tempPath : null,
     mapFilePath : null,
 
