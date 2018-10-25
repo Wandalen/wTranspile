@@ -98,7 +98,7 @@ function proceed( o )
 
   try
   {
-    result = _.Consequence.from( self._executeAct() );
+    result = _.Consequence.From( self._executeAct() );
   }
   catch( err )
   {
