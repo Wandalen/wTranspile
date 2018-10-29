@@ -341,7 +341,7 @@ function reportFileSize( o )
   o = { output : o };
 
   _.routineOptions( reportFileSize, o );
-  _.assert( arguments.length === 1, 'expects single argument' );
+  _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( !session.reportingFileSize || session.verbosity < 3 )
   return _.timeOut( 1 );
