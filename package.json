@@ -4,18 +4,18 @@
   "description": "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
-  "main": "staging/dwtools/amid/l9/transpilationStrategy/MainBase.s",
+  "main": "proto/dwtools/amid/l9/transpilationStrategy/MainBase.s",
   "bin": {
-    "ts": "staging/dwtools/amid/l9/transpilationStrategy/Exec"
+    "ts": "proto/dwtools/amid/l9/transpilationStrategy/Exec"
   },
   "files": [
-    "staging/dwtools/amid/l9/transpilationStrategy",
-    "production"
+    "proto/dwtools/amid/l9/transpilationStrategy",
+    "proto/dwtools/Tools.s", "production"
   ],
   "scripts": {
     "test": "wtest staging",
-    "make_doc": "./doc.sh",
-    "ts": "node staging/dwtools/amid/l9/transpilationStrategy/MainTop.s"
+    "docgen": "wdocgen proto",
+    "ts": "node proto/dwtools/amid/l9/transpilationStrategy/MainTop.s"
   },
   "repository": {
     "type": "git",
