@@ -1,6 +1,6 @@
 {
   "name": "wtranspilationstrategy",
-  "version": "0.3.32",
+  "version": "0.3.33",
   "description": "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
   "author": "Kostiantyn Wandalen <wanalen@willbe.so>",
   "license": "MIT",
@@ -10,7 +10,8 @@
   },
   "files": [
     "proto/dwtools/amid/l9/transpilationStrategy",
-    "proto/dwtools/Tools.s", "production"
+    "proto/dwtools/Tools.s",
+    "production"
   ],
   "scripts": {
     "test": "wtest staging",
