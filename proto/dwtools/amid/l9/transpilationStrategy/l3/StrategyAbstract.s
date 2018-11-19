@@ -108,7 +108,7 @@ function proceed( o )
   /* result */
 
   result
-  .ifNoErrorThen( function()
+  .ifNoErrorThen( function( arg/*aaa*/ )
   {
 
     if( self.output.error )
@@ -117,7 +117,7 @@ function proceed( o )
     _.assert( _.strIs( self.output.code ) );
 
   })
-  .ifNoErrorThen( function()
+  .ifNoErrorThen( function( arg/*aaa*/ )
   {
 
     if( session.writingTempFiles )
