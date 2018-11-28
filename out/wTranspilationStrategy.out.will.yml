@@ -205,8 +205,8 @@ reflector:
       ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: true
       ./dwtools/amid/l9.test/TranspilationStrategy.test.s: true
     srcFilter:
-      basePath: ./proto
-      prefixPath: .
+      basePath: .
+      prefixPath: proto
     dstFilter:
       basePath: .
       prefixPath: .
