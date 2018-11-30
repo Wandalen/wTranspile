@@ -123,7 +123,7 @@ function proceed( o )
     if( session.writingTempFiles )
     session.tempWrite
     ({
-      filePath : path.nameJoin( path.fullName( session.outputFilePath ), '-after-', String( o.index ), '-', self.constructor.shortName ),
+      filePath : path.joinNames( path.fullName( session.outputFilePath ), '-after-', String( o.index ), '-', self.constructor.shortName ),
       data : self.output.code,
     });
 
