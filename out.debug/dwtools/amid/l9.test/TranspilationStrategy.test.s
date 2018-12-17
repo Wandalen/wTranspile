@@ -54,7 +54,7 @@ function trivial( test )
     });
 
     return session.form().proceed()
-    .doThen( ( err ) =>
+    .finally( ( err ) =>
     {
       test.is( _.fileProvider.fileExists( outputPath ) );
       end();

@@ -244,7 +244,7 @@ function commandTranspile( e )
   session.form();
 
   return session.proceed()
-  .doThen( ( err ) =>
+  .finally( ( err ) =>
   {
     if( err )
     _.errLogOnce( err );
