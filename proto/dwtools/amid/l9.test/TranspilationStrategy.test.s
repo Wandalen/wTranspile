@@ -54,12 +54,13 @@ function trivial( test )
     });
 
     return session.form().proceed()
-    .finally( ( err ) =>
+    .finally( ( err, got ) =>
     {
       test.is( _.fileProvider.fileExists( outputPath ) );
       end();
       if( err )
       throw _.errLogOnce( err );
+      return true;
     });
 
   }

@@ -115,6 +115,7 @@ function proceed( o )
     throw _.err( self.output.error );
     _.assert( _.strIs( self.input.code ) );
     _.assert( _.strIs( self.output.code ) );
+    return true;
 
   })
   .ifNoErrorThen( function( arg/*aaa*/ )
@@ -130,6 +131,7 @@ function proceed( o )
     if( session.verbosity >= 2 )
     logger.log( ' # Transpiled ' + session.outputFilePath + ' with strategy ' + self.constructor.shortName, 'in', _.timeSpent( time ) );
 
+    return true;
   })
 
   return result;
