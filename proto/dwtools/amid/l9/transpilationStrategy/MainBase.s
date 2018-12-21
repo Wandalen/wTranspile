@@ -43,6 +43,9 @@ function init( o )
 
   _.assert( arguments.length === 0 || arguments.length === 1 );
 
+  if( !ts.logger )
+  ts.logger = new _.Logger({ output : _global_.logger });
+
   _.instanceInit( ts );
   Object.preventExtensions( ts );
 
