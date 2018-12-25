@@ -71,7 +71,7 @@ function form()
   session.name = path.name({ path : session.inputFilesPaths[ 0 ], withExtension : true });
 
   if( session.writingTempFiles && session.tempPath )
-  fileProvider.directoryMake( session.tempPath );
+  fileProvider.dirMake( session.tempPath );
 
   /* transpilation strategies */
 
@@ -120,7 +120,7 @@ function form()
 function proceed()
 {
   let session = this;
-  let result = _.Consequence().give();
+  let result = _.Consequence().take( null );
   let time = _.timeNow();
 
   session.read();
@@ -142,7 +142,7 @@ function proceed()
   {
     return _.routinesCall( session, session.onEnd, [ session ] );
   })
-  .doThen( function( err,arg )
+  .finally( function( err,arg )
   {
     if( err )
     throw _.err( err );
@@ -159,7 +159,7 @@ function proceed()
 function strategyProceed( strategy, index )
 {
   let session = this;
-  let result = _.Consequence().give();
+  let result = _.Consequence().take( null );
 
   result
   .ifNoErrorThen( function()
@@ -176,6 +176,7 @@ function strategyProceed( strategy, index )
     if( session.output.error )
     throw _.err( session.output.error );
 
+    return true;
   })
   .ifNoErrorThen( function()
   {
@@ -255,8 +256,8 @@ function read()
 
     if( session.writingTempFiles && session.tempPath )
     {
-      _.sure( fileProvider.directoryIs( session.tempPath ) );
-      let dstPath = path.join( session.tempPath, path.nameJoin( session.name, '-read' ) );
+      _.sure( fileProvider.isDir( session.tempPath ) );
+      let dstPath = path.join( session.tempPath, path.joinNames( session.name, '-read' ) );
       fileProvider.fileWrite( dstPath, session.output.code );
     }
 
@@ -368,7 +369,7 @@ function reportFileSize( o )
     if( session.reportingFileSize )
     logger.log( 'Compression factor :', format( inputSize ), '/' , format( outputSize ), '/', format( gzipSize ) );
 
-    con.give();
+    con.take( null );
   });
 
   return con;
