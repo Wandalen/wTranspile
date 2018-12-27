@@ -52,8 +52,7 @@
     "babel-plugin-transform-class-properties": "=6.24.1"
   },
   "devDependencies": {
-    "wTesting": "",
-    "wtranspilationstrategy": "."
+    "wTesting": ""
   },
   "keywords": [
     "wTools",
