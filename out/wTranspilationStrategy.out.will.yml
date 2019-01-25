@@ -56,6 +56,7 @@ path:
       - .
       - ./dwtools
       - ./dwtools/Tools.s
+      - ./dwtools/abase
       - ./dwtools/amid
       - ./dwtools/amid/l9
       - ./dwtools/amid/l9/transpilationStrategy
@@ -76,6 +77,7 @@ path:
       - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s
       - ./dwtools/amid/l9.test
       - ./dwtools/amid/l9.test/TranspilationStrategy.test.s
+      - ./dwtools/atop
     criterion:
       default: 1
       debug: 1
