@@ -8,7 +8,7 @@ about:
     plugins. Default options of transpilation can be written into a config file
     to avoid retyping. Use the module to utilize the power of open source
     transpilation tools in single package.
-  version: 0.3.52
+  version: 0.3.53
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -336,7 +336,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.52
+    version: 0.3.53
     criterion:
       default: 1
       debug: 1
