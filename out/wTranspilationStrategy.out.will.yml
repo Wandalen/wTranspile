@@ -39,7 +39,7 @@ path:
     path: 'git+https://github.com/Wandalen/wTranspilationStrategy.git'
   bugs:
     path: 'https://github.com/Wandalen/wTranspilationStrategy/issues'
-  exportedDir.0:
+  exportedDir.proto.export:
     path: ./proto
     criterion:
       default: 1
@@ -49,58 +49,31 @@ path:
       export: 1
       tar: 1
       public: 1
-  baseDir:
-    path: ..
-  exportedFiles.0:
+  exportedFiles.proto.export:
     path:
-      - .
-      - ./dwtools
-      - ./dwtools/Tools.s
-      - ./dwtools/amid
-      - ./dwtools/amid/l9
-      - ./dwtools/amid/l9/transpilationStrategy
-      - ./dwtools/amid/l9/transpilationStrategy/Exec
-      - ./dwtools/amid/l9/transpilationStrategy/IncludeBase.s
-      - ./dwtools/amid/l9/transpilationStrategy/IncludeTop.s
-      - ./dwtools/amid/l9/transpilationStrategy/MainBase.s
-      - ./dwtools/amid/l9/transpilationStrategy/MainTop.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3
-      - ./dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s
-      - ./dwtools/amid/l9.test
-      - ./dwtools/amid/l9.test/TranspilationStrategy.test.s
-    criterion:
-      default: 1
-      debug: 1
-      raw: 1
-      proto: 1
-      export: 1
-      tar: 1
-      public: 1
-  exportedTerminals.0:
-    path:
-      - ./dwtools/Tools.s
-      - ./dwtools/amid/l9/transpilationStrategy/Exec
-      - ./dwtools/amid/l9/transpilationStrategy/IncludeBase.s
-      - ./dwtools/amid/l9/transpilationStrategy/IncludeTop.s
-      - ./dwtools/amid/l9/transpilationStrategy/MainBase.s
-      - ./dwtools/amid/l9/transpilationStrategy/MainTop.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s
-      - ./dwtools/amid/l9.test/TranspilationStrategy.test.s
+      - proto
+      - proto/dwtools
+      - proto/dwtools/Tools.s
+      - proto/dwtools/amid
+      - proto/dwtools/amid/l9
+      - proto/dwtools/amid/l9/transpilationStrategy
+      - proto/dwtools/amid/l9/transpilationStrategy/Exec
+      - proto/dwtools/amid/l9/transpilationStrategy/IncludeBase.s
+      - proto/dwtools/amid/l9/transpilationStrategy/IncludeTop.s
+      - proto/dwtools/amid/l9/transpilationStrategy/MainBase.s
+      - proto/dwtools/amid/l9/transpilationStrategy/MainTop.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l3
+      - proto/dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s
+      - proto/dwtools/amid/l9.test
+      - proto/dwtools/amid/l9.test/TranspilationStrategy.test.s
     criterion:
       default: 1
       debug: 1
@@ -111,12 +84,10 @@ path:
       public: 1
 submodule: {}
 reflector:
-  reflect.proto.0:
-    filePath:
-      ./proto: ./out.release
-    srcFilter:
+  reflect.proto.:
+    src:
       filePath:
-        ./proto: ./out.release
+        proto: out.release
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -130,18 +101,14 @@ reflector:
           - !<tag:yaml.org,2002:js/regexp> /\.test($|\.|\/)/i
           - !<tag:yaml.org,2002:js/regexp> /\.experiment($|\.|\/)/i
       prefixPath: .
-    dstFilter:
-      prefixPath: .
     criterion:
       debug: 0
     inherit:
       - predefined.*
-  reflect.proto.1:
-    filePath:
-      ./proto: ./out.debug
-    srcFilter:
+  reflect.proto.debug:
+    src:
       filePath:
-        ./proto: ./out.debug
+        proto: out.debug
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -152,15 +119,13 @@ reflector:
           - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
           - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
           - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
-      prefixPath: .
-    dstFilter:
       prefixPath: .
     criterion:
       debug: 1
     inherit:
       - predefined.*
   reflect.submodules:
-    srcFilter:
+    src:
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -172,61 +137,62 @@ reflector:
           - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
           - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
       prefixPath: .
-    dstFilter:
-      prefixPath: .
     criterion:
       debug: 1
     inherit:
       - predefined.*
-  exported.0:
-    filePath: ./proto
-    srcFilter:
-      filePath: ./proto
-      prefixPath: .
-    dstFilter:
-      prefixPath: .
-  exportedFiles.0:
-    recursive: 0
-    filePath:
-      ./dwtools/Tools.s: true
-      ./dwtools/amid/l9/transpilationStrategy/Exec: true
-      ./dwtools/amid/l9/transpilationStrategy/IncludeBase.s: true
-      ./dwtools/amid/l9/transpilationStrategy/IncludeTop.s: true
-      ./dwtools/amid/l9/transpilationStrategy/MainBase.s: true
-      ./dwtools/amid/l9/transpilationStrategy/MainTop.s: true
-      ./dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s: true
-      ./dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s: true
-      ./dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s: true
-      ./dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s: true
-      ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s: true
-      ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s: true
-      ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s: true
-      ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: true
-      ./dwtools/amid/l9.test/TranspilationStrategy.test.s: true
-    srcFilter:
+  exported.proto.export:
+    src:
       filePath:
-        ./dwtools/Tools.s: true
-        ./dwtools/amid/l9/transpilationStrategy/Exec: true
-        ./dwtools/amid/l9/transpilationStrategy/IncludeBase.s: true
-        ./dwtools/amid/l9/transpilationStrategy/IncludeTop.s: true
-        ./dwtools/amid/l9/transpilationStrategy/MainBase.s: true
-        ./dwtools/amid/l9/transpilationStrategy/MainTop.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: true
-        ./dwtools/amid/l9.test/TranspilationStrategy.test.s: true
+        proto: true
+      prefixPath: .
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
+  exportedFiles.proto.export:
+    recursive: 0
+    src:
+      filePath:
+        .: true
+        dwtools: true
+        dwtools/Tools.s: true
+        dwtools/amid: true
+        dwtools/amid/l9: true
+        dwtools/amid/l9/transpilationStrategy: true
+        dwtools/amid/l9/transpilationStrategy/Exec: true
+        dwtools/amid/l9/transpilationStrategy/IncludeBase.s: true
+        dwtools/amid/l9/transpilationStrategy/IncludeTop.s: true
+        dwtools/amid/l9/transpilationStrategy/MainBase.s: true
+        dwtools/amid/l9/transpilationStrategy/MainTop.s: true
+        dwtools/amid/l9/transpilationStrategy/l3: true
+        dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s: true
+        dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s: true
+        dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s: true
+        dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: true
+        dwtools/amid/l9.test: true
+        dwtools/amid/l9.test/TranspilationStrategy.test.s: true
       basePath: .
       prefixPath: proto
-    dstFilter:
-      basePath: .
-      prefixPath: .
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
 step:
-  reflect.proto.0:
+  reflect.proto.:
     criterion:
       debug: 0
       raw: 0
@@ -234,7 +200,7 @@ step:
       reflector: 'reflector::reflect.proto.*=1'
     inherit:
       - predefined.reflect
-  reflect.proto.1:
+  reflect.proto.debug:
     criterion:
       debug: 1
       raw: 0
@@ -242,7 +208,7 @@ step:
       reflector: 'reflector::reflect.proto.*=1'
     inherit:
       - predefined.reflect
-  reflect.proto.2:
+  reflect.proto.raw:
     criterion:
       debug: 0
       raw: 1
@@ -250,7 +216,7 @@ step:
       reflector: 'reflector::reflect.proto.*=1'
     inherit:
       - predefined.reflect
-  reflect.proto.3:
+  reflect.proto.debug.raw:
     criterion:
       debug: 1
       raw: 1
@@ -258,7 +224,7 @@ step:
       reflector: 'reflector::reflect.proto.*=1'
     inherit:
       - predefined.reflect
-  reflect.submodules.0:
+  reflect.submodules.:
     criterion:
       debug: 1
       raw: 0
@@ -266,7 +232,7 @@ step:
       reflector: 'reflector::reflect.submodules*=1'
     inherit:
       - predefined.reflect
-  reflect.submodules.1:
+  reflect.submodules.raw:
     criterion:
       debug: 1
       raw: 1
@@ -282,7 +248,7 @@ step:
       export: 'path::proto'
       tar: 0
     inherit:
-      - export
+      - predefined.export
 build:
   debug.raw:
     criterion:
@@ -336,32 +302,7 @@ exported:
       export: 1
       tar: 1
       public: 1
-    exportedReflector: 'reflector::exported.0'
-    exportedFilesReflector: 'reflector::exportedFiles.0'
-    exportedDirPath: 'path::exportedDir.0'
-    exportedFilesPath: 'path::exportedFiles.0'
-    exportedTerminalsPath:
-      path:
-        - ./dwtools/Tools.s
-        - ./dwtools/amid/l9/transpilationStrategy/Exec
-        - ./dwtools/amid/l9/transpilationStrategy/IncludeBase.s
-        - ./dwtools/amid/l9/transpilationStrategy/IncludeTop.s
-        - ./dwtools/amid/l9/transpilationStrategy/MainBase.s
-        - ./dwtools/amid/l9/transpilationStrategy/MainTop.s
-        - ./dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s
-        - ./dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s
-        - ./dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s
-        - ./dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s
-        - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s
-        - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s
-        - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s
-        - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s
-        - ./dwtools/amid/l9.test/TranspilationStrategy.test.s
-      criterion:
-        default: 1
-        debug: 1
-        raw: 1
-        proto: 1
-        export: 1
-        tar: 1
-        public: 1
+    exportedReflector: 'reflector::exported.proto.export'
+    exportedFilesReflector: 'reflector::exportedFiles.proto.export'
+    exportedDirPath: 'path::exportedDir.proto.export'
+    exportedFilesPath: 'path::exportedFiles.proto.export'
