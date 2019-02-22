@@ -8,7 +8,7 @@ about:
     plugins. Default options of transpilation can be written into a config file
     to avoid retyping. Use the module to utilize the power of open source
     transpilation tools in single package.
-  version: 0.3.55
+  version: 0.3.56
   enabled: 1
   interpreters:
     - nodejs >= 6.0.0
@@ -21,20 +21,22 @@ execution:
     test: wtest staging
     docgen: wdocgen staging
 path:
-  proto:
-    path: ./proto
   in:
     path: .
+  temp:
+    path: out
   out:
     path: out
   out.debug:
-    path: ./out.debug
+    path: ./out/debug
     criterion:
       debug: 1
   out.release:
-    path: ./out.release
+    path: ./out/release
     criterion:
       debug: 0
+  proto:
+    path: ./proto
   repository:
     path: 'git+https://github.com/Wandalen/wTranspilationStrategy.git'
   bugs:
@@ -51,31 +53,31 @@ path:
       public: 1
   exportedFiles.proto.export:
     path:
-      - .
-      - ./dwtools
-      - ./dwtools/Tools.s
-      - ./dwtools/abase
-      - ./dwtools/amid
-      - ./dwtools/amid/l9
-      - ./dwtools/amid/l9/transpilationStrategy
-      - ./dwtools/amid/l9/transpilationStrategy/Exec
-      - ./dwtools/amid/l9/transpilationStrategy/IncludeBase.s
-      - ./dwtools/amid/l9/transpilationStrategy/IncludeTop.s
-      - ./dwtools/amid/l9/transpilationStrategy/MainBase.s
-      - ./dwtools/amid/l9/transpilationStrategy/MainTop.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3
-      - ./dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s
-      - ./dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s
-      - ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s
-      - ./dwtools/amid/l9.test
-      - ./dwtools/amid/l9.test/TranspilationStrategy.test.s
-      - ./dwtools/atop
+      - proto
+      - proto/dwtools
+      - proto/dwtools/Tools.s
+      - proto/dwtools/abase
+      - proto/dwtools/amid
+      - proto/dwtools/amid/l9
+      - proto/dwtools/amid/l9/transpilationStrategy
+      - proto/dwtools/amid/l9/transpilationStrategy/Exec
+      - proto/dwtools/amid/l9/transpilationStrategy/IncludeBase.s
+      - proto/dwtools/amid/l9/transpilationStrategy/IncludeTop.s
+      - proto/dwtools/amid/l9/transpilationStrategy/MainBase.s
+      - proto/dwtools/amid/l9/transpilationStrategy/MainTop.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l3
+      - proto/dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s
+      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s
+      - proto/dwtools/amid/l9.test
+      - proto/dwtools/amid/l9.test/TranspilationStrategy.test.s
+      - proto/dwtools/atop
     criterion:
       default: 1
       debug: 1
@@ -87,9 +89,9 @@ path:
 submodule: {}
 reflector:
   reflect.proto.:
-    srcFilter:
+    src:
       filePath:
-        ./proto: ./out.release
+        proto: out/release
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -108,9 +110,9 @@ reflector:
     inherit:
       - predefined.*
   reflect.proto.debug:
-    srcFilter:
+    src:
       filePath:
-        ./proto: ./out.debug
+        proto: out/debug
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -127,7 +129,7 @@ reflector:
     inherit:
       - predefined.*
   reflect.submodules:
-    srcFilter:
+    src:
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -144,40 +146,57 @@ reflector:
     inherit:
       - predefined.*
   exported.proto.export:
-    srcFilter:
-      filePath: ./proto
+    src:
+      filePath:
+        proto: true
       prefixPath: .
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
   exportedFiles.proto.export:
     recursive: 0
-    srcFilter:
+    src:
       filePath:
         .: true
-        ./dwtools: true
-        ./dwtools/Tools.s: true
-        ./dwtools/abase: true
-        ./dwtools/amid: true
-        ./dwtools/amid/l9: true
-        ./dwtools/amid/l9/transpilationStrategy: true
-        ./dwtools/amid/l9/transpilationStrategy/Exec: true
-        ./dwtools/amid/l9/transpilationStrategy/IncludeBase.s: true
-        ./dwtools/amid/l9/transpilationStrategy/IncludeTop.s: true
-        ./dwtools/amid/l9/transpilationStrategy/MainBase.s: true
-        ./dwtools/amid/l9/transpilationStrategy/MainTop.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l3: true
-        ./dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l5_strategy: true
-        ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s: true
-        ./dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: true
-        ./dwtools/amid/l9.test: true
-        ./dwtools/amid/l9.test/TranspilationStrategy.test.s: true
-        ./dwtools/atop: true
+        dwtools: true
+        dwtools/Tools.s: true
+        dwtools/abase: true
+        dwtools/amid: true
+        dwtools/amid/l9: true
+        dwtools/amid/l9/transpilationStrategy: true
+        dwtools/amid/l9/transpilationStrategy/Exec: true
+        dwtools/amid/l9/transpilationStrategy/IncludeBase.s: true
+        dwtools/amid/l9/transpilationStrategy/IncludeTop.s: true
+        dwtools/amid/l9/transpilationStrategy/MainBase.s: true
+        dwtools/amid/l9/transpilationStrategy/MainTop.s: true
+        dwtools/amid/l9/transpilationStrategy/l3: true
+        dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s: true
+        dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s: true
+        dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s: true
+        dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s: true
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: true
+        dwtools/amid/l9.test: true
+        dwtools/amid/l9.test/TranspilationStrategy.test.s: true
+        dwtools/atop: true
       basePath: .
       prefixPath: proto
+    criterion:
+      default: 1
+      debug: 1
+      raw: 1
+      proto: 1
+      export: 1
+      tar: 1
+      public: 1
 step:
   clean.out.:
     criterion:
@@ -298,7 +317,7 @@ build:
       - 'step::export.proto'
 exported:
   proto.export:
-    version: 0.3.55
+    version: 0.3.56
     criterion:
       default: 1
       debug: 1
