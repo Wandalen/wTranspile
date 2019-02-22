@@ -40,10 +40,10 @@ let Restricts =
 let Proto =
 {
 
-  Composes : Composes,
-  Aggregates : Aggregates,
-  Associates : Associates,
-  Restricts : Restricts,
+  Composes,
+  Aggregates,
+  Associates,
+  Restricts,
 
 }
 

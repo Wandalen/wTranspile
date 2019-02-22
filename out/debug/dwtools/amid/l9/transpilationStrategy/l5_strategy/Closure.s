@@ -1,4 +1,4 @@
-( function _StrategyClosure_s_() {
+( function _TranspilerClosure_s_() {
 
 'use strict';
 
@@ -7,8 +7,8 @@ let Closure = require( 'google-closure-compiler-js' );
 //
 
 let _ = wTools;
-let Parent = _.TranspilationStrategy.Strategies.Abstract;
-let Self = function wTsStrategyClosure( o )
+let Parent = _.TranspilationStrategy.Transpiler.Abstract;
+let Self = function wTsTranspilerClosure( o )
 {
   return _.instanceConstructor( Self, this, arguments );
 }
@@ -47,7 +47,7 @@ function _formAct()
 
 //
 
-function _executeAct()
+function _performAct()
 {
   let self = this;
   let session = self.session;
@@ -94,15 +94,15 @@ let Restricts =
 let Proto =
 {
 
-  _formAct : _formAct,
-  _executeAct : _executeAct,
+  _formAct,
+  _performAct,
 
   /* */
 
-  Composes : Composes,
-  Aggregates : Aggregates,
-  Associates : Associates,
-  Restricts : Restricts,
+  Composes,
+  Aggregates,
+  Associates,
+  Restricts,
 
 }
 
@@ -120,6 +120,6 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Strategies[ Self.shortName ] = Self;
+_.TranspilationStrategy.Transpiler[ Self.shortName ] = Self;
 
 })();

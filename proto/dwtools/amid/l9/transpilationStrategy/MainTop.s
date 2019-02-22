@@ -41,9 +41,9 @@ let ConfigProperties =
   beautifing : 'Make output code readable. Default : 0',
 
   writingTempFiles : 'Switch on/off writing intermediate results of transpiling as temporary file. Default : 1.',
-  reportingFileSize : 'Switch on/off reporting of input/output/compressed size of file. Takes some extra time because of compressing. Default : 1.',
-  verbosity : 'Set verbosity of the session.',
-  v : 'Set verbosity of the session.',
+  sizeReporting : 'Switch on/off reporting of input/output/compressed size of file. Takes some extra time because of compressing. Default : 1.',
+  verbosity : 'Set verbosity of the multiple.',
+  v : 'Set verbosity of the multiple.',
   strategies : 'One or several strategies to use. Use .strategies.list to get list of available strategies.',
 
 }
@@ -54,47 +54,47 @@ let ConfigProperties =
 
 function Exec()
 {
-  let ts = new this.Self();
-  return ts.exec();
+  let sys = new this.Self();
+  return sys.exec();
 }
 
 //
 
 function exec()
 {
-  let ts = this;
+  let sys = this;
 
-  if( !ts.formed )
-  ts.form();
+  if( !sys.formed )
+  sys.form();
 
-  _.assert( _.instanceIs( ts ) );
+  _.assert( _.instanceIs( sys ) );
   _.assert( arguments.length === 0 );
 
-  let logger = ts.logger;
-  let fileProvider = ts.fileProvider;
+  let logger = sys.logger;
+  let fileProvider = sys.fileProvider;
   let appArgs = _.appArgs();
-  let ca = ts.commandsMake();
+  let ca = sys.commandsMake();
 
-  return ca.proceedApplicationArguments({ appArgs : appArgs });
+  return ca.performApplicationArguments({ appArgs : appArgs });
 }
 
 //
 
 function commandsMake()
 {
-  let ts = this;
-  let logger = ts.logger;
-  let fileProvider = ts.fileProvider;
+  let sys = this;
+  let logger = sys.logger;
+  let fileProvider = sys.fileProvider;
   let appArgs = _.appArgs();
 
-  _.assert( _.instanceIs( ts ) );
+  _.assert( _.instanceIs( sys ) );
   _.assert( arguments.length === 0 );
 
   let commands =
   {
-    'help' :              { e : _.routineJoin( ts, ts.commandHelp ),                h : 'Get help' },
-    'strategies list' :   { e : _.routineJoin( ts, ts.commandStrategiesList ),      h : 'List available strategies of transpilation' },
-    'transpile' :    { e : _.routineJoin( ts, ts.commandTranspile ),                h : 'Transpile inputPath file and store result at outputPath' },
+    'help' :              { e : _.routineJoin( sys, sys.commandHelp ),                h : 'Get help' },
+    'strategies list' :   { e : _.routineJoin( sys, sys.commandTranspilersList ),      h : 'List available strategies of transpilation' },
+    'transpile' :         { e : _.routineJoin( sys, sys.commandTranspile ),                h : 'Transpile inputPath file and store result at outputPath' },
   }
 
   let ca = _.CommandsAggregator
@@ -104,7 +104,7 @@ function commandsMake()
     commandPrefix : 'node ',
   })
 
-  ts._commandsConfigAdd( ca );
+  sys._commandsConfigAdd( ca );
 
   ca.form();
 
@@ -115,72 +115,81 @@ function commandsMake()
 
 function commandHelp( e )
 {
-  let ts = this;
+  let sys = this;
   let ca = e.ca;
-  let fileProvider = ts.fileProvider;
-  let logger = ts.logger;
+  let fileProvider = sys.fileProvider;
+  let logger = sys.logger;
 
   ca._commandHelp( e );
 
   if( !e.subject )
-  logger.log( 'Use ' + logger.colorFormat( '"ts .help"', 'code' ) + ' to get help' );
+  logger.log( 'Use ' + logger.colorFormat( '"sys .help"', 'code' ) + ' to get help' );
 
-  return ts;
+  return sys;
 }
 
 //
 
-function commandStrategiesList( e )
+function commandTranspilersList( e )
 {
-  let ts = this;
-  let fileProvider = ts.fileProvider;
-  let logger = ts.logger;
+  let sys = this;
+  let fileProvider = sys.fileProvider;
+  let logger = sys.logger;
 
   debugger;
   logger.log( 'Available strategies' );
   logger.up();
-  for( let s in ts.Strategies )
+  for( let s in sys.Transpiler )
   {
-    let strategy = ts.Strategies[ s ];
+    let strategy = sys.Transpiler[ s ];
     logger.log( s, '-', strategy.name );
   }
   logger.down();
 
-  return ts;
+  return sys;
 }
 
 //
 
 function commandTranspile( e )
 {
-  let ts = this;
-  let fileProvider = ts.fileProvider;
-  let logger = ts.logger;
+  let sys = this;
+  let fileProvider = sys.fileProvider;
+  let path = fileProvider.path;
+  let logger = sys.logger;
+
+  e.propertiesMap.outputPath = e.propertiesMap.outputPath || path.current();
+
+  debugger;
+  logger.log( 'e.propertiesMap', e.propertiesMap );
 
   _.sureMapHasOnly( e.propertiesMap, commandTranspile.commandProperties );
   _.sureBriefly( _.strIs( e.propertiesMap.inputPath ), 'Expects path to file to transpile {-inputPath-}' );
   _.sureBriefly( _.strIs( e.propertiesMap.outputPath ), 'Expects path to file to save transpiled {-outputPath-}' );
 
-  if( ts.verbosity >= 3 )
-  logger.log( ' # Transpiling', e.propertiesMap.outputPath, '<-', e.propertiesMap.inputPath );
+  // if( sys.verbosity >= 3 )
+  // logger.log( ' # Transpiling', e.propertiesMap.outputPath, '<-', e.propertiesMap.inputPath );
+  // logger.up();
 
-  logger.up();
-
-  let session = ts.Session
+  let multiple = sys.Multiple
   ({
-    ts : ts,
-    inputPath : e.propertiesMap.inputPath,
+    sys : sys,
+    inputPath : { filePath : e.propertiesMap.inputPath, basePath : path.join( e.propertiesMap.inputPath, '.' ) },
+    // inputPath : e.propertiesMap.inputPath,
     outputPath : e.propertiesMap.outputPath,
   });
 
-  ts.storageLoad();
+  delete e.propertiesMap.inputPath;
+  delete e.propertiesMap.outputPath;
+
+  sys.storageLoad();
 
   _.appArgsReadTo
   ({
-    dst : ts,
+    dst : sys,
     only : 0,
     removing : 0,
-    propertiesMap : ts.storage,
+    propertiesMap : sys.storage,
     namesMap :
     {
       'verbosity' : 'verbosity',
@@ -190,7 +199,7 @@ function commandTranspile( e )
 
   _.appArgsReadTo
   ({
-    dst : ts,
+    dst : sys,
     only : 0,
     propertiesMap : e.propertiesMap,
     namesMap :
@@ -202,10 +211,10 @@ function commandTranspile( e )
 
   _.appArgsReadTo
   ({
-    dst : session,
+    dst : multiple,
     only : 0,
     removing : 0,
-    propertiesMap : ts.storage,
+    propertiesMap : sys.storage,
     namesMap :
     {
       'inputPath' : 'inputPath',
@@ -216,13 +225,13 @@ function commandTranspile( e )
       'minification' : 'minification',
       'beautifing' : 'beautifing',
       'writingTempFiles' : 'writingTempFiles',
-      'reportingFileSize' : 'reportingFileSize',
+      'sizeReporting' : 'sizeReporting',
     },
   });
 
   _.appArgsReadTo
   ({
-    dst : session,
+    dst : multiple,
     only : 1,
     propertiesMap : e.propertiesMap,
     namesMap :
@@ -235,21 +244,24 @@ function commandTranspile( e )
       'minification' : 'minification',
       'beautifing' : 'beautifing',
       'writingTempFiles' : 'writingTempFiles',
-      'reportingFileSize' : 'reportingFileSize',
+      'sizeReporting' : 'sizeReporting',
     },
   });
 
-  session.verbosity = ts.verbosity;
+  multiple.verbosity = sys.verbosity;
 
-  session.form();
+  multiple.form();
 
-  return session.proceed()
-  .finally( ( err ) =>
+  debugger;
+  return multiple.perform()
+  .finally( ( err, arg ) =>
   {
+    debugger;
     if( err )
     _.errLogOnce( err );
-    logger.down();
-    session.finit();
+    // logger.down();
+    multiple.finit();
+    return null;
   });
 
 }
@@ -260,11 +272,11 @@ commandTranspile.commandProperties = ConfigProperties
 
 function storageIs( storage )
 {
-  let session = this;
+  let multiple = this;
   _.assert( arguments.length === 1 );
   if( !_.objectIs( storage ) )
   return false;
-  if( !_.mapHasOnly( storage, session.ConfigProperties ) )
+  if( !_.mapHasOnly( storage, multiple.ConfigProperties ) )
   return false;
   return true;
 }
@@ -273,7 +285,7 @@ function storageIs( storage )
 
 function storageDefaultGet()
 {
-  let session = this;
+  let multiple = this;
   debugger;
   return { storage : Object.create( null ) };
 }
@@ -320,25 +332,25 @@ let Extend =
 
   // exec
 
-  Exec : Exec,
-  exec : exec,
+  Exec,
+  exec,
 
-  commandsMake : commandsMake,
-  commandHelp : commandHelp,
-  commandStrategiesList : commandStrategiesList,
-  commandTranspile : commandTranspile,
+  commandsMake,
+  commandHelp,
+  commandTranspilersList,
+  commandTranspile,
 
   storageIs,
   storageDefaultGet,
 
   // relations
 
-  Composes : Composes,
-  Aggregates : Aggregates,
-  Associates : Associates,
-  Restricts : Restricts,
-  Statics : Statics,
-  Forbids : Forbids,
+  Composes,
+  Aggregates,
+  Associates,
+  Restricts,
+  Statics,
+  Forbids,
 
 }
 

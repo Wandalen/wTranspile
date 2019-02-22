@@ -1,4 +1,4 @@
-( function _StrategyBabel_s_() {
+( function _TranspilerBabel_s_() {
 
 'use strict';
 
@@ -8,8 +8,8 @@ let Babel = require( 'babel-core' );
 //
 
 let _ = wTools;
-let Parent = _.TranspilationStrategy.Strategies.Abstract;
-let Self = function wTsStrategyBabel( o )
+let Parent = _.TranspilationStrategy.Transpiler.Abstract;
+let Self = function wTsTranspilerBabel( o )
 {
   return _.instanceConstructor( Self, this, arguments );
 }
@@ -75,7 +75,7 @@ function _formAct()
 
 //
 
-function _executeAct()
+function _performAct()
 {
   let self = this;
   let session = self.session;
@@ -130,15 +130,15 @@ let Restricts =
 let Proto =
 {
 
-  _formAct : _formAct,
-  _executeAct : _executeAct,
+  _formAct,
+  _performAct,
 
   /* */
 
-  Composes : Composes,
-  Aggregates : Aggregates,
-  Associates : Associates,
-  Restricts : Restricts,
+  Composes,
+  Aggregates,
+  Associates,
+  Restricts,
 
 }
 
@@ -156,6 +156,6 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Strategies[ Self.shortName ] = Self;
+_.TranspilationStrategy.Transpiler[ Self.shortName ] = Self;
 
 })();
