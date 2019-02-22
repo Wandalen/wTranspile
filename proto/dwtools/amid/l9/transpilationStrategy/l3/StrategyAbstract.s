@@ -1,4 +1,4 @@
-( function _StrategyAbstract_s_() {
+( function _Transpiler_s_() {
 
 'use strict';
 
@@ -6,7 +6,7 @@
 
 let _ = wTools;
 let Parent = null;
-let Self = function wTsStrategyAbstract( o )
+let Self = function wTsTranspilerAbstract( o )
 {
   return _.instanceConstructor( Self, this, arguments );
 }
@@ -17,48 +17,51 @@ Self.shortName = 'Abstract';
 //
 // --
 
-function form()
+function form( stage )
 {
   let self = this;
+  let sys = stage.sys;
 
-  _.assert( _.mapIs( self.input ) );
+  _.assert( !self.single );
+  _.assert( !self.multiple );
+  _.assert( arguments.length === 1 );
+  _.assert( stage instanceof sys.Stage );
 
-  if( !self.output )
-  self.output = Object.create( null );
-
-  let result = self._formAct();
+  let result = self._formAct( stage );
 
   return result;
 }
 
 //
 
-function proceed( o )
+function perform( stage )
 {
   let self = this;
-  let session = self.session;
-  let fileProvider = session.fileProvider;
+  let sys = stage.sys;
+  let single = stage.single;
+  let multiple = stage.multiple;
+  let fileProvider = multiple.fileProvider;
   let path = fileProvider.path;
-  let logger = session.logger;
+  let logger = multiple.logger;
   let time = _.timeNow();
   let result;
 
   /* verify */
 
   _.assert( arguments.length === 1 );
-  _.assert( _.strIs( self.input.code ) );
-  _.assert( session.inputFilesPaths.length >= 1 );
-  _.assertRoutineOptions( proceed, arguments );
+  _.assert( _.strIs( stage.input.data ) );
+  _.assert( stage.data === null );
+  _.assert( _.numberIs( stage.index ) );
 
   /* */
 
-  self.form();
-  _.routinesCall( self, session.onBegin, [ self ] );
+  self.form( stage );
+  _.routinesCall( self, multiple.onBegin, [ self ] );
 
   /* verbal */
 
-  // if( session.verbosity >= 2 )
-  // logger.log( ' # Transpiling ' + session.outputFilePath + ' with strategy ' + self.constructor.shortName );
+  // if( multiple.verbosity >= 2 )
+  // logger.log( ' # Transpiling ' + multiple.outputFilePath + ' with strategy ' + self.constructor.shortName );
 
   let Fields =
   {
@@ -74,73 +77,71 @@ function proceed( o )
     beautifing : null,
 
     writingTempFiles : null,
-    reportingFileSize : null,
+    sizeReporting : null,
     strategies : null,
 
   }
 
-  if( session.verbosity >= 4 )
+  if( multiple.verbosity >= 4 )
   {
-    let fields = _.mapOnly( session, Fields );
+    let fields = _.mapOnly( multiple, Fields );
     logger.log( _.toStr( fields, { levels : 2, multiline : 1, wrap : 0 } ) );
   }
 
-  if( session.verbosity >= 4 )
+  if( multiple.verbosity >= 4 )
   {
     logger.log( 'Settings' );
-    logger.log( _.toStr( self.settings, { levels : session.verbosity >= 5 ? 2 : 1, wrap : 0, multiline : 1 } ) );
+    logger.log( _.toStr( stage.settings, { levels : multiple.verbosity >= 5 ? 2 : 1, wrap : 0, multiline : 1 } ) );
   }
 
-  if( session.verbosity >= 5 )
-  logger.log( 'inputFilesPaths :', _.toStr( session.inputFilesPaths, { levels : 2, wrap : 0, multiline : 1 } ) );
+  // if( multiple.verbosity >= 5 )
+  // logger.log( 'inputFilesPaths :', _.toStr( multiple.inputFilesPaths, { levels : 2, wrap : 0, multiline : 1 } ) );
 
   /* */
 
   try
   {
-    result = _.Consequence.From( self._executeAct() );
+    result = _.Consequence.From( self._performAct( stage ) );
   }
   catch( err )
   {
-    return self.errorHandle( err );
+    debugger;
+    let err2 = _.err( 'Error executing ', self.Self.shortName, '\n', err );
+    return _.Consequence().error( err2 );
   }
 
   /* result */
 
   result
-  .ifNoErrorThen( function( arg/*aaa*/ )
+  .ifNoErrorThen( function( arg )
   {
 
-    if( self.output.error )
-    throw _.err( self.output.error );
-    _.assert( _.strIs( self.input.code ) );
-    _.assert( _.strIs( self.output.code ) );
-    return true;
+    _.assert( stage.error === null );
+    _.assert( _.strIs( stage.input.data ) );
+    _.assert( _.strIs( stage.data ) );
 
-  })
-  .ifNoErrorThen( function( arg/*aaa*/ )
-  {
-
-    if( session.writingTempFiles )
-    session.tempWrite
+    if( multiple.writingTempFiles )
+    single.tempWrite
     ({
-      filePath : path.joinNames( path.fullName( session.outputFilePath ), '-after-', String( o.index ), '-', self.constructor.shortName ),
-      data : self.output.code,
+      filePath : path.joinNames( path.fullName( single.outputPath ), '-after-', String( stage.index ), '-', self.constructor.shortName ),
+      data : stage.data,
     });
 
-    if( session.verbosity >= 2 )
-    logger.log( ' # Transpiled ' + session.outputFilePath + ' with strategy ' + self.constructor.shortName, 'in', _.timeSpent( time ) );
+    // if( multiple.verbosity >= 2 )
+    // logger.log( ' # Transpiled ' + single.outputPath + ' with strategy ' + self.constructor.shortName, 'in', _.timeSpent( time ) );
 
     return true;
   })
+  .except( function( err )
+  {
+    debugger;
+    err = _.err( err )
+    if( !stage.error )
+    stage.error = err;
+    throw err;
+  });
 
   return result;
-}
-
-proceed.defaults =
-{
-  session : null,
-  index : null,
 }
 
 //
@@ -150,7 +151,7 @@ function go()
   let self = this;
 
   self.form();
-  self.proceed();
+  self.perform();
 
   return self;
 }
@@ -162,48 +163,7 @@ function goThen()
   let self = this;
 
   self.form();
-  return self.proceed();
-}
-
-//
-
-function errorHandle( err )
-{
-  let self = this;
-  let session = self.session;
-  let result = null;
-
-  debugger;
-  let code = '';
-
-  let line = err.line;
-  if( err.location && line === undefined )
-  line = err.location.line;
-  if( _.numberIs( line ) && self.input.code )
-  {
-    debugger;
-
-    code = _.strLinesSelect
-    ({
-      src : self.input.code,
-      line : line,
-      number : 1,
-    });
-
-    // code = _.strLinesNumber
-    // ({
-    //   src : _.strLinesSelect( self.input.code , line-3 , line+3 ),
-    //   first : err.line-3,
-    // });
-
-  }
-
-  err = _.errLogOnce( code + '\n',err );
-
-  if( self.terminatingOnError )
-  _.appExitWithBeep( -1 );
-
-  throw err;
+  return self.perform();
 }
 
 // --
@@ -212,25 +172,20 @@ function errorHandle( err )
 
 let Composes =
 {
-
-  settings : null,
-  terminatingOnError : 1,
-
+  // terminatingOnError : 0, // xxx
 }
 
 let Aggregates =
 {
-  input : null,
-  output : null,
 }
 
 let Associates =
 {
-  session : null,
 }
 
 let Restricts =
 {
+  formed : 0,
 }
 
 let Forbids =
@@ -248,9 +203,6 @@ let Forbids =
   settingsOfClosure : 'settingsOfClosure',
   usingUglify : 'usingUglify',
   settingsOfUglify : 'settingsOfUglify',
-
-  /* */
-
   mapFilePath : 'mapFilePath',
   writingTempFiles : 'writingTempFiles',
   off : 'off',
@@ -277,6 +229,11 @@ let Forbids =
   usingUglify : 'usingUglify',
   settingsOfUglify : 'settingsOfUglify',
   strategy : 'strategy',
+  input : 'input',
+  output : 'output',
+  session : 'session',
+  stage : 'stage',
+  settings : 'settings',
 
 }
 
@@ -287,24 +244,22 @@ let Forbids =
 let Proto =
 {
 
-  form : form,
+  form,
   _formAct : null,
 
-  proceed : proceed,
-  _executeAct : null,
+  perform,
+  _performAct : null,
 
-  go : go,
-  goThen : goThen,
-
-  errorHandle : errorHandle,
+  go,
+  goThen,
 
   /* */
 
-  Composes : Composes,
-  Aggregates : Aggregates,
-  Associates : Associates,
-  Restricts : Restricts,
-  Forbids : Forbids,
+  Composes,
+  Aggregates,
+  Associates,
+  Restricts,
+  Forbids,
 
 }
 
@@ -318,16 +273,12 @@ _.classDeclare
 });
 
 _.Copyable.mixin( Self );
-// _.Instancing.mixin( Self );
 
 //
 
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Strategies[ Self.shortName ] = Self;
-
-// _.TranspilationStrategy.Strategies = _.TranspilationStrategy.Strategies || Object.create( null );
-// _.TranspilationStrategy.Strategies[ Self.shortName ] = Self;
+_.TranspilationStrategy.Transpiler[ Self.shortName ] = Self;
 
 })();

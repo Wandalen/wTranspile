@@ -7,15 +7,18 @@ if( typeof module !== 'undefined' )
 
   require( './IncludeBase.s' );
 
-  require( './l3/SessionAbstract.s' );
-  require( './l3/SessionPartial.s' );
-  require( './l3/SessionTop.s' );
-  require( './l3/StrategyAbstract.s' );
+  require( './l3/Concatenator.s' );
+  require( './l3/Multiple.s' );
+  require( './l3/Single.s' );
+  require( './l3/Stage.s' );
+  require( './l3/Transpiler.s' );
 
-  require( './l5_strategy/Babel.s' );
-  require( './l5_strategy/Closure.s' );
-  require( './l5_strategy/Prepack.s' );
-  require( './l5_strategy/Uglify.s' );
+  require( './l5_concatenator/JavaScript.s' );
+
+  require( './l5_transpiler/Babel.s' );
+  require( './l5_transpiler/Closure.s' );
+  require( './l5_transpiler/Prepack.s' );
+  require( './l5_transpiler/Uglify.s' );
 
 }
 

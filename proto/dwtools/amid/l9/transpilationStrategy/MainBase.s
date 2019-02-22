@@ -40,18 +40,18 @@ function finit()
 
 function init( o )
 {
-  let ts = this;
+  let sys = this;
 
   _.assert( arguments.length === 0 || arguments.length === 1 );
 
-  if( !ts.logger )
-  ts.logger = new _.Logger({ output : _global_.logger });
+  if( !sys.logger )
+  sys.logger = new _.Logger({ output : _global_.logger });
 
-  _.instanceInit( ts );
-  Object.preventExtensions( ts );
+  _.instanceInit( sys );
+  Object.preventExtensions( sys );
 
   if( o )
-  ts.copy( o );
+  sys.copy( o );
 
 }
 
@@ -59,69 +59,79 @@ function init( o )
 
 function unform()
 {
-  let ts = this;
+  let sys = this;
 
   _.assert( arguments.length === 0 );
-  _.assert( !!ts.formed );
+  _.assert( !!sys.formed );
 
   /* begin */
 
   /* end */
 
-  ts.formed = 0;
-  return ts;
+  sys.formed = 0;
+  return sys;
 }
 
 //
 
 function form()
 {
-  let ts = this;
+  let sys = this;
 
-  ts.formAssociates();
+  sys.formAssociates();
 
   _.assert( arguments.length === 0 );
-  _.assert( !ts.formed );
+  _.assert( !sys.formed );
 
   /* begin */
 
   /* end */
 
-  ts.formed = 1;
-  return ts;
+  sys.formed = 1;
+  return sys;
 }
 
 //
 
 function formAssociates()
 {
-  let ts = this;
-  let logger = ts.logger;
+  let sys = this;
+  let logger = sys.logger;
 
   _.assert( arguments.length === 0 );
-  _.assert( !ts.formed );
+  _.assert( !sys.formed );
 
-  if( !ts.logger )
-  logger = ts.logger = new _.Logger({ output : _global_.logger });
+  if( !sys.logger )
+  logger = sys.logger = new _.Logger({ output : _global_.logger });
 
-  if( !ts.fileProvider )
-  ts.fileProvider = _.FileProvider.Default();
+  if( !sys.fileProvider )
+  sys.fileProvider = _.FileProvider.Default();
 
-  return ts;
+  sys.concatenators = [];
+  sys.extToConcatenatorMap = Object.create( null );
+
+  for( let c in sys.Concatenator )
+  {
+    if( c === 'Abstract' )
+    continue;
+    new sys.Concatenator[ c ]({ sys : sys }).form();
+  }
+
+  return sys;
 }
 
 //
 
-function session( o )
+function multiple( o )
 {
-  let ts = this;
+  let sys = this;
   o = o || Object.create( null );
 
   _.assert( arguments.length === 0 || arguments.length === 1 );
 
-  o.ts = ts;
+  o.sys = sys;
 
-  return ts.Session( o );
+  return sys.Multiple( o );
 }
 
 // --
@@ -148,11 +158,15 @@ let Associates =
 let Restricts =
 {
   formed : 0,
+  extToConcatenatorMap : null,
+  concatenators : null,
 }
 
 let Statics =
 {
-  Strategies : Object.create( null ),
+  Transpiler : Object.create( null ),
+  Concatenator : Object.create( null ),
+  // ExtToConcatenatorMap : Object.create( null ), xxx
 }
 
 let Forbids =
@@ -168,22 +182,22 @@ let Proto =
 
   // inter
 
-  finit : finit,
-  init : init,
-  unform : unform,
-  form : form,
-  formAssociates : formAssociates,
+  finit,
+  init,
+  unform,
+  form,
+  formAssociates,
 
-  session : session,
+  multiple,
 
   // ident
 
-  Composes : Composes,
-  Aggregates : Aggregates,
-  Associates : Associates,
-  Restricts : Restricts,
-  Statics : Statics,
-  Forbids : Forbids,
+  Composes,
+  Aggregates,
+  Associates,
+  Restricts,
+  Statics,
+  Forbids,
 
 }
 
@@ -206,7 +220,6 @@ module[ 'exports' ] = Self;
 _global_[ Self.name ] = wTools[ Self.shortName ] = Self;
 
 if( typeof module !== 'undefined' )
-require( './IncludeTop.s' );
-
+require( './IncludeMid.s' );
 
 })();
