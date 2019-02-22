@@ -192,6 +192,20 @@ reflector:
       tar: 1
       public: 1
 step:
+  clean.out.:
+    criterion:
+      debug: 0
+    opts:
+      filePath: 'path::out.debug'
+    inherit:
+      - predefined.delete
+  clean.out.debug:
+    criterion:
+      debug: 1
+    opts:
+      filePath: 'path::out.debug'
+    inherit:
+      - predefined.delete
   reflect.proto.:
     criterion:
       debug: 0
