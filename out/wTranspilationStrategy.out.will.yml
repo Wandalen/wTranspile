@@ -56,7 +56,6 @@ path:
       - proto
       - proto/dwtools
       - proto/dwtools/Tools.s
-      - proto/dwtools/abase
       - proto/dwtools/amid
       - proto/dwtools/amid/l9
       - proto/dwtools/amid/l9/transpilationStrategy
@@ -77,7 +76,6 @@ path:
       - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s
       - proto/dwtools/amid/l9.test
       - proto/dwtools/amid/l9.test/TranspilationStrategy.test.s
-      - proto/dwtools/atop
     criterion:
       default: 1
       debug: 1
@@ -165,7 +163,6 @@ reflector:
         .: true
         dwtools: true
         dwtools/Tools.s: true
-        dwtools/abase: true
         dwtools/amid: true
         dwtools/amid/l9: true
         dwtools/amid/l9/transpilationStrategy: true
@@ -186,7 +183,6 @@ reflector:
         dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: true
         dwtools/amid/l9.test: true
         dwtools/amid/l9.test/TranspilationStrategy.test.s: true
-        dwtools/atop: true
       basePath: .
       prefixPath: proto
     criterion:
