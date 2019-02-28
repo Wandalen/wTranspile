@@ -75,7 +75,7 @@ function exec()
   let appArgs = _.appArgs();
   let ca = sys.commandsMake();
 
-  return ca.performApplicationArguments({ appArgs : appArgs });
+  return ca.appArgsPerform({ appArgs : appArgs });
 }
 
 //
@@ -123,7 +123,9 @@ function commandHelp( e )
   ca._commandHelp( e );
 
   if( !e.subject )
-  logger.log( 'Use ' + logger.colorFormat( '"sys .help"', 'code' ) + ' to get help' );
+  debugger;
+  // if( !e.subject )
+  // logger.log( 'Use ' + logger.colorFormat( '"sys .help"', 'code' ) + ' to get help' );
 
   return sys;
 }
