@@ -161,7 +161,7 @@ function shell( test )
   let ready = new _.Consequence().take( null );
   let shell = _.sheller
   ({
-    path : 'node ' + execPath,
+    execPath : 'node ' + execPath,
     currentPath : routinePath,
     outputCollecting : 1,
     ready : ready,
@@ -182,7 +182,6 @@ function shell( test )
   })
 
   shell({ args : [ '.transpile inputPath:' + srcPath + ' outputPath:' + outPath + ' writingTempFiles:0' ] })
-
   .thenKeep( ( got ) =>
   {
 
