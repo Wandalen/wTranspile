@@ -92,6 +92,7 @@ reflector:
     src:
       filePath:
         .: .
+      prefixPath: proto
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -104,7 +105,6 @@ reflector:
           - !<tag:yaml.org,2002:js/regexp> /\.debug($|\.|\/)/i
           - !<tag:yaml.org,2002:js/regexp> /\.test($|\.|\/)/i
           - !<tag:yaml.org,2002:js/regexp> /\.experiment($|\.|\/)/i
-      prefixPath: proto
     dst:
       prefixPath: out/release
     criterion:
@@ -115,6 +115,7 @@ reflector:
     src:
       filePath:
         .: .
+      prefixPath: proto
       maskAll:
         excludeAny:
           - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
@@ -125,7 +126,6 @@ reflector:
           - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
           - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
           - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
-      prefixPath: proto
     dst:
       prefixPath: out/debug
     criterion:
@@ -151,7 +151,7 @@ reflector:
   exported.proto.export:
     src:
       filePath:
-        .: true
+        .: null
       prefixPath: proto
     criterion:
       default: 1
@@ -165,31 +165,31 @@ reflector:
     recursive: 0
     src:
       filePath:
-        .: true
-        dwtools: true
-        dwtools/Tools.s: true
-        dwtools/abase: true
-        dwtools/amid: true
-        dwtools/amid/l9: true
-        dwtools/amid/l9/transpilationStrategy: true
-        dwtools/amid/l9/transpilationStrategy/Exec: true
-        dwtools/amid/l9/transpilationStrategy/IncludeBase.s: true
-        dwtools/amid/l9/transpilationStrategy/IncludeTop.s: true
-        dwtools/amid/l9/transpilationStrategy/MainBase.s: true
-        dwtools/amid/l9/transpilationStrategy/MainTop.s: true
-        dwtools/amid/l9/transpilationStrategy/l3: true
-        dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s: true
-        dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s: true
-        dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s: true
-        dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s: true
-        dwtools/amid/l9/transpilationStrategy/l5_strategy: true
-        dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s: true
-        dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s: true
-        dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s: true
-        dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: true
-        dwtools/amid/l9.test: true
-        dwtools/amid/l9.test/TranspilationStrategy.test.s: true
-        dwtools/atop: true
+        .: null
+        dwtools: null
+        dwtools/Tools.s: null
+        dwtools/abase: null
+        dwtools/amid: null
+        dwtools/amid/l9: null
+        dwtools/amid/l9/transpilationStrategy: null
+        dwtools/amid/l9/transpilationStrategy/Exec: null
+        dwtools/amid/l9/transpilationStrategy/IncludeBase.s: null
+        dwtools/amid/l9/transpilationStrategy/IncludeTop.s: null
+        dwtools/amid/l9/transpilationStrategy/MainBase.s: null
+        dwtools/amid/l9/transpilationStrategy/MainTop.s: null
+        dwtools/amid/l9/transpilationStrategy/l3: null
+        dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s: null
+        dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s: null
+        dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s: null
+        dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s: null
+        dwtools/amid/l9/transpilationStrategy/l5_strategy: null
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s: null
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s: null
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s: null
+        dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: null
+        dwtools/amid/l9.test: null
+        dwtools/amid/l9.test/TranspilationStrategy.test.s: null
+        dwtools/atop: null
       basePath: .
       prefixPath: proto
     criterion:
