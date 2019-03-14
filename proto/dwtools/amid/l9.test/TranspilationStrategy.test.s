@@ -26,7 +26,7 @@ function onSuiteBegin()
 
   self.tempDir = _.path.dirTempOpen( _.path.join( __dirname, '../..'  ), 'TransiplationStrategy' );
 
-  self.find = _.fileProvider.filesFinder
+  self.find1 = _.fileProvider.filesFinder
   ({
     recursive : 2,
     includingTerminals : 1,
@@ -36,7 +36,6 @@ function onSuiteBegin()
     outputFormat : 'relative',
   });
 
-  // debugger;
 }
 
 //
@@ -46,6 +45,19 @@ function onSuiteEnd()
   let self = this;
   _.assert( _.strHas( self.tempDir, '/tmp.tmp' ) )
   _.fileProvider.filesDelete( self.tempDir );
+}
+
+//
+
+function find2( fileProvider, filePath )
+{
+  let self = this;
+  return fileProvider.filesFindRecursive
+  ({
+    filePath : filePath,
+    outputFormat : 'relative',
+    recursive : 2,
+  })
 }
 
 // --
@@ -73,7 +85,7 @@ function singleFileInputTerminal( test )
     test.is( _.fileProvider.fileExists( outputPath ) );
     let expected = [ '.', './Output.js' ];
     test.is( _.fileProvider.fileSize( outputPath ) > 100 );
-    let found = self.find( routinePath );
+    let found = self.find1( routinePath );
     test.identical( found, expected );
     if( err )
     throw _.errLogOnce( err );
@@ -105,7 +117,7 @@ function singleFileInputDir( test )
     test.is( _.fileProvider.fileExists( outputPath ) );
     test.is( _.fileProvider.fileSize( outputPath ) > 100 );
     let expected = [ '.', './Output.js' ];
-    let found = self.find( routinePath );
+    let found = self.find1( routinePath );
     test.identical( found, expected );
     if( err )
     throw _.errLogOnce( err );
@@ -122,7 +134,7 @@ function singleDst( test )
   let routinePath = _.path.join( self.tempDir, test.name );
   let originalDirPath = _.path.join( __dirname, '../l9/transpilationStrategy' );
 
-  test.description = 'single destination';
+  test.case = 'single destination';
 
   let outputPath = _.path.join( routinePath, 'Output.js' );
   let ts = new _.TranspilationStrategy().form();
@@ -138,8 +150,52 @@ function singleDst( test )
     test.is( _.fileProvider.fileExists( outputPath ) );
     test.is( _.fileProvider.fileSize( outputPath ) > 5000 );
     let expected = [ '.', './Output.js' ];
-    let found = self.find( routinePath );
+    let found = self.find1( routinePath );
     test.identical( found, expected );
+    if( err )
+    throw _.errLogOnce( err );
+    return true;
+  });
+
+}
+
+//
+
+function severalDst( test )
+{
+  let self = this;
+  let routinePath = _.path.join( self.tempDir, test.name );
+  // let originalDirPath = _.path.join( __dirname, '../l9/transpilationStrategy' );
+
+  test.case = 'trivial';
+
+  var filesTree =
+  {
+    'File1.js' : `console.log( 'File1.js' );`,
+    'File2.js' : `console.log( 'File2.js' );`,
+    'File1.s' : `console.log( 'File1.s' );`,
+    'File2.s' : `console.log( 'File2.s' );`,
+  }
+  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+
+  var inputPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
+  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var multiple = ts.multiple
+  ({
+    inputPath : inputPath,
+    outputPath : null,
+  });
+
+  return multiple.form().perform()
+  .finally( ( err, got ) =>
+  {
+    var expected = [ '.', './All.js', './All.s', './File1.js', './File1.s', './File2.js', './File2.s' ];
+    var found = self.find2( fileProvider, '/' );
+    test.identical( found, expected );
+    test.is( _.strHas( fileProvider.fileRead( '/All.js' ), 'File1.js' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/All.js' ), 'File2.js' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File1.s' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File2.s' ) );
     if( err )
     throw _.errLogOnce( err );
     return true;
@@ -185,7 +241,7 @@ function shell( test )
   .thenKeep( ( got ) =>
   {
 
-    var files = self.find( routinePath );
+    var files = self.find1( routinePath );
     test.identical( files, [ '.', './out.js' ] );
     test.identical( got.exitCode, 0 );
     test.is( _.fileProvider.isTerminal( outPath ) );
@@ -216,7 +272,8 @@ var Self =
   context :
   {
     tempDir : null,
-    find : null,
+    find1 : null,
+    find2 : find2,
   },
 
   tests :
@@ -225,6 +282,7 @@ var Self =
     singleFileInputTerminal,
     singleFileInputDir,
     singleDst,
+    severalDst,
     shell,
 
   }

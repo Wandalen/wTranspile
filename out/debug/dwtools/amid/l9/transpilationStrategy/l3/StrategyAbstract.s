@@ -26,9 +26,11 @@ function form( stage )
   _.assert( !self.multiple );
   _.assert( arguments.length === 1 );
   _.assert( stage instanceof sys.Stage );
+  _.assert( stage.formed === 0 );
 
   let result = self._formAct( stage );
 
+  _.assert( stage.formed === 1 );
   return result;
 }
 
@@ -48,6 +50,7 @@ function perform( stage )
 
   /* verify */
 
+  _.assert( stage.formed === 1 );
   _.assert( arguments.length === 1 );
   _.assert( _.strIs( stage.input.data ) );
   _.assert( stage.data === null );
@@ -55,7 +58,7 @@ function perform( stage )
 
   /* */
 
-  self.form( stage );
+  // self.form( stage );
   _.routinesCall( self, multiple.onBegin, [ self ] );
 
   /* verbal */
@@ -130,6 +133,7 @@ function perform( stage )
     // if( multiple.verbosity >= 2 )
     // logger.log( ' # Transpiled ' + single.outputPath + ' with strategy ' + self.constructor.shortName, 'in', _.timeSpent( time ) );
 
+    _.assert( stage.formed === 2 );
     return true;
   })
   .except( function( err )
@@ -146,24 +150,21 @@ function perform( stage )
 
 //
 
-function go()
+function proceed( stage )
 {
   let self = this;
-
-  self.form();
-  self.perform();
-
+  self.form( stage );
+  self.perform( stage );
   return self;
 }
 
 //
 
-function goThen()
+function proceedThen( stage )
 {
   let self = this;
-
-  self.form();
-  return self.perform();
+  self.form( stage );
+  return self.perform( stage );
 }
 
 // --
@@ -185,7 +186,6 @@ let Associates =
 
 let Restricts =
 {
-  formed : 0,
 }
 
 let Forbids =
@@ -234,6 +234,7 @@ let Forbids =
   session : 'session',
   stage : 'stage',
   settings : 'settings',
+  formed : 'formed',
 
 }
 
@@ -250,8 +251,8 @@ let Proto =
   perform,
   _performAct : null,
 
-  go,
-  goThen,
+  proceed,
+  proceedThen,
 
   /* */
 
