@@ -33,3 +33,4 @@ ts .transpile inputPath:sample/Sample.js outputPath:temp.tmp/Sample.js
 ts .config.define verbosity:3
 ts .transpile inputPath:sample/Sample2.js outputPath:temp.tmp/Sample2.js debug:1
 ```
+
