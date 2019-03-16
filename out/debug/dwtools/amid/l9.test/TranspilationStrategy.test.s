@@ -165,7 +165,6 @@ function severalDst( test )
 {
   let self = this;
   let routinePath = _.path.join( self.tempDir, test.name );
-  // let originalDirPath = _.path.join( __dirname, '../l9/transpilationStrategy' );
 
   test.case = 'trivial';
 
@@ -184,6 +183,50 @@ function severalDst( test )
   ({
     inputPath : inputPath,
     outputPath : null,
+  });
+
+  return multiple.form().perform()
+  .finally( ( err, got ) =>
+  {
+    var expected = [ '.', './All.js', './All.s', './File1.js', './File1.s', './File2.js', './File2.s' ];
+    var found = self.find2( fileProvider, '/' );
+    test.identical( found, expected );
+    test.is( _.strHas( fileProvider.fileRead( '/All.js' ), 'File1.js' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/All.js' ), 'File2.js' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File1.s' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File2.s' ) );
+    if( err )
+    throw _.errLogOnce( err );
+    return true;
+  });
+
+}
+
+//
+
+function oneToOne( test )
+{
+  let self = this;
+  let routinePath = _.path.join( self.tempDir, test.name );
+
+  test.case = 'trivial';
+
+  var filesTree =
+  {
+    'File1.js' : `console.log( 'File1.js' );`,
+    'File2.js' : `console.log( 'File2.js' );`,
+    'File1.s' : `console.log( 'File1.s' );`,
+    'File2.s' : `console.log( 'File2.s' );`,
+  }
+  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+
+  var inputPath = { filePath : { '**.js' : null, '**.s' : null } }
+  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var multiple = ts.multiple
+  ({
+    inputPath : inputPath,
+    outputPath : '/dst/dir',
+    splittingStrategy : 'OneToOne',
   });
 
   return multiple.form().perform()
@@ -283,6 +326,7 @@ var Self =
     singleFileInputDir,
     singleDst,
     severalDst,
+    oneToOne,
     shell,
 
   }

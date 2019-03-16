@@ -17,6 +17,7 @@ if( typeof module !== 'undefined' )
 
   require( './l5_transpiler/Babel.s' );
   require( './l5_transpiler/Closure.s' );
+  require( './l5_transpiler/Nop.s' );
   require( './l5_transpiler/Prepack.s' );
   require( './l5_transpiler/Uglify.s' );
 
