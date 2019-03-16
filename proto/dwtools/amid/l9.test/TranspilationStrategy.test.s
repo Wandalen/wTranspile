@@ -183,6 +183,7 @@ function severalDst( test )
   ({
     inputPath : inputPath,
     outputPath : null,
+    diagnosing : 1,
   });
 
   return multiple.form().perform()
@@ -204,7 +205,7 @@ function severalDst( test )
 
 //
 
-function oneToOne( test )
+function complexMask( test )
 {
   let self = this;
   let routinePath = _.path.join( self.tempDir, test.name );
@@ -220,28 +221,90 @@ function oneToOne( test )
   }
   var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
-  var inputPath = { filePath : { '**.js' : null, '**.s' : null } }
+  var inputPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
   var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
     inputPath : inputPath,
-    outputPath : '/dst/dir',
-    splittingStrategy : 'OneToOne',
+    outputPath : { prefixPath : '/dst' },
+    splittingStrategy : 'ManyToOne',
+    diagnosing : 1,
   });
 
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
-    var expected = [ '.', './All.js', './All.s', './File1.js', './File1.s', './File2.js', './File2.s' ];
+    var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dst', './dst/All.js', './dst/All.s' ];
     var found = self.find2( fileProvider, '/' );
     test.identical( found, expected );
-    test.is( _.strHas( fileProvider.fileRead( '/All.js' ), 'File1.js' ) );
-    test.is( _.strHas( fileProvider.fileRead( '/All.js' ), 'File2.js' ) );
-    test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File1.s' ) );
-    test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File2.s' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/dst/All.js' ), 'File1.js' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/dst/All.js' ), 'File2.js' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/dst/All.s' ), 'File1.s' ) );
+    test.is( _.strHas( fileProvider.fileRead( '/dst/All.s' ), 'File2.s' ) );
     if( err )
     throw _.errLogOnce( err );
     return true;
+  });
+
+}
+
+//
+
+function oneToOne( test )
+{
+  let self = this;
+  let routinePath = _.path.join( self.tempDir, test.name );
+
+  test.case = 'trivial';
+
+  var filesTree =
+  {
+    'File1.js' : `console.log( './File1.js' );`,
+    'File2.js' : `console.log( './File2.js' );`,
+    'File1.s' : `console.log( './File1.s' );`,
+    'File2.s' : `console.log( './File2.s' );`,
+
+    dir :
+    {
+      'File1.js' : `console.log( './dir/File1.js' );`,
+      'File2.js' : `console.log( './dir/File2.js' );`,
+      'File1.s' : `console.log( './dir/File1.s' );`,
+      'File2.s' : `console.log( './dir/File2.s' );`,
+    }
+
+  }
+  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+
+  var inputPath = { filePath : { '/' : null, '**.js' : true } }
+  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var multiple = ts.multiple
+  ({
+    inputPath : inputPath,
+    outputPath : { prefixPath : '/dst' },
+    splittingStrategy : 'OneToOne',
+    transpilingStrategies : [ 'Nop' ],
+  });
+
+  return multiple.form().perform()
+  .finally( ( err, got ) =>
+  {
+
+    var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dir', './dir/File1.js', './dir/File1.s', './dir/File2.js', './dir/File2.s', './dst', './dst/File1.js', './dst/File2.js', './dst/dir', './dst/dir/File1.js', './dst/dir/File2.js' ];
+    var found = self.find2( fileProvider, '/' );
+    test.identical( found, expected );
+
+    var src = fileProvider.fileRead( '/File1.js' );
+    var dst = fileProvider.fileRead( '/dst/File1.js' );
+    test.is( _.strHas( dst, src ) );
+
+    var src = fileProvider.fileRead( '/dir/File2.js' );
+    var dst = fileProvider.fileRead( '/dst/dir/File2.js' );
+    test.is( _.strHas( dst, src ) );
+
+    if( err )
+    throw _.errLogOnce( err );
+    return true;
+
   });
 
 }
@@ -271,7 +334,7 @@ function shell( test )
   ready
   .thenKeep( ( got ) =>
   {
-    test.case = '.export debug:1';
+    test.case = '.transpile';
 
     _.fileProvider.filesDelete( routinePath );
     _.fileProvider.dirMake( routinePath );
@@ -326,6 +389,7 @@ var Self =
     singleFileInputDir,
     singleDst,
     severalDst,
+    complexMask,
     oneToOne,
     shell,
 
