@@ -9,7 +9,7 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wTesting' );
 
-  require( '../l9/transpilationStrategy/MainBase.s' );
+  require( '../transpilationStrategy/MainBase.s' );
 
 }
 
@@ -370,7 +370,7 @@ function shell( test )
 var Self =
 {
 
-  name : 'Tools/mid/TranspilationStrategy',
+  name : 'Tools/top/TranspilationStrategy',
   silencing : 1,
   onSuiteBegin : onSuiteBegin,
   onSuiteEnd : onSuiteEnd,
