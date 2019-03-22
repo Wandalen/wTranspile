@@ -58,26 +58,30 @@ path:
       - proto/dwtools/Tools.s
       - proto/dwtools/abase
       - proto/dwtools/amid
-      - proto/dwtools/amid/l9
-      - proto/dwtools/amid/l9/transpilationStrategy
-      - proto/dwtools/amid/l9/transpilationStrategy/Exec
-      - proto/dwtools/amid/l9/transpilationStrategy/IncludeBase.s
-      - proto/dwtools/amid/l9/transpilationStrategy/IncludeTop.s
-      - proto/dwtools/amid/l9/transpilationStrategy/MainBase.s
-      - proto/dwtools/amid/l9/transpilationStrategy/MainTop.s
-      - proto/dwtools/amid/l9/transpilationStrategy/l3
-      - proto/dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s
-      - proto/dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s
-      - proto/dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s
-      - proto/dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s
-      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy
-      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s
-      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s
-      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s
-      - proto/dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s
-      - proto/dwtools/amid/l9.test
-      - proto/dwtools/amid/l9.test/TranspilationStrategy.test.s
       - proto/dwtools/atop
+      - proto/dwtools/atop/transpilationStrategy
+      - proto/dwtools/atop/transpilationStrategy/Exec
+      - proto/dwtools/atop/transpilationStrategy/IncludeBase.s
+      - proto/dwtools/atop/transpilationStrategy/IncludeMid.s
+      - proto/dwtools/atop/transpilationStrategy/MainBase.s
+      - proto/dwtools/atop/transpilationStrategy/MainTop.s
+      - proto/dwtools/atop/transpilationStrategy/l3
+      - proto/dwtools/atop/transpilationStrategy/l3/Concatenator.s
+      - proto/dwtools/atop/transpilationStrategy/l3/Multiple.s
+      - proto/dwtools/atop/transpilationStrategy/l3/Single.s
+      - proto/dwtools/atop/transpilationStrategy/l3/Stage.s
+      - proto/dwtools/atop/transpilationStrategy/l3/Transpiler.s
+      - proto/dwtools/atop/transpilationStrategy/l5_concatenator
+      - proto/dwtools/atop/transpilationStrategy/l5_concatenator/JavaScript.s
+      - proto/dwtools/atop/transpilationStrategy/l5_transpiler
+      - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Babel.s
+      - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Closure.s
+      - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Nop.s
+      - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Prepack.s
+      - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Uglify.s
+      - proto/dwtools/atop/transpilationStrategy.test
+      - >-
+        proto/dwtools/atop/transpilationStrategy.test/TranspilationStrategy.test.s
     criterion:
       default: 1
       debug: 1
@@ -91,22 +95,7 @@ reflector:
   reflect.proto.:
     src:
       filePath:
-        .: .
-      prefixPath: proto
-      maskAll:
-        excludeAny:
-          - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
-          - !<tag:yaml.org,2002:js/regexp> /\.unique$/
-          - !<tag:yaml.org,2002:js/regexp> /\.git$/
-          - !<tag:yaml.org,2002:js/regexp> /\.svn$/
-          - !<tag:yaml.org,2002:js/regexp> /\.hg$/
-          - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
-          - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
-          - !<tag:yaml.org,2002:js/regexp> /\.debug($|\.|\/)/i
-          - !<tag:yaml.org,2002:js/regexp> /\.test($|\.|\/)/i
-          - !<tag:yaml.org,2002:js/regexp> /\.experiment($|\.|\/)/i
-    dst:
-      prefixPath: out/release
+        'path::proto': 'path::out.*=1'
     criterion:
       debug: 0
     inherit:
@@ -134,16 +123,8 @@ reflector:
       - predefined.*
   reflect.submodules:
     src:
-      maskAll:
-        excludeAny:
-          - !<tag:yaml.org,2002:js/regexp> /(\W|^)node_modules(\W|$)/
-          - !<tag:yaml.org,2002:js/regexp> /\.unique$/
-          - !<tag:yaml.org,2002:js/regexp> /\.git$/
-          - !<tag:yaml.org,2002:js/regexp> /\.svn$/
-          - !<tag:yaml.org,2002:js/regexp> /\.hg$/
-          - !<tag:yaml.org,2002:js/regexp> /\.DS_Store$/
-          - !<tag:yaml.org,2002:js/regexp> /(^|\/)-/
-          - !<tag:yaml.org,2002:js/regexp> /\.release($|\.|\/)/i
+      filePath:
+        'submodule::*/exported::*=1/path::exportedDir*=1': 'path::out.*=1'
     criterion:
       debug: 1
     inherit:
@@ -164,34 +145,9 @@ reflector:
   exportedFiles.proto.export:
     recursive: 0
     src:
-      filePath:
-        .: null
-        dwtools: null
-        dwtools/Tools.s: null
-        dwtools/abase: null
-        dwtools/amid: null
-        dwtools/amid/l9: null
-        dwtools/amid/l9/transpilationStrategy: null
-        dwtools/amid/l9/transpilationStrategy/Exec: null
-        dwtools/amid/l9/transpilationStrategy/IncludeBase.s: null
-        dwtools/amid/l9/transpilationStrategy/IncludeTop.s: null
-        dwtools/amid/l9/transpilationStrategy/MainBase.s: null
-        dwtools/amid/l9/transpilationStrategy/MainTop.s: null
-        dwtools/amid/l9/transpilationStrategy/l3: null
-        dwtools/amid/l9/transpilationStrategy/l3/SessionAbstract.s: null
-        dwtools/amid/l9/transpilationStrategy/l3/SessionPartial.s: null
-        dwtools/amid/l9/transpilationStrategy/l3/SessionTop.s: null
-        dwtools/amid/l9/transpilationStrategy/l3/StrategyAbstract.s: null
-        dwtools/amid/l9/transpilationStrategy/l5_strategy: null
-        dwtools/amid/l9/transpilationStrategy/l5_strategy/Babel.s: null
-        dwtools/amid/l9/transpilationStrategy/l5_strategy/Closure.s: null
-        dwtools/amid/l9/transpilationStrategy/l5_strategy/Prepack.s: null
-        dwtools/amid/l9/transpilationStrategy/l5_strategy/Uglify.s: null
-        dwtools/amid/l9.test: null
-        dwtools/amid/l9.test/TranspilationStrategy.test.s: null
-        dwtools/atop: null
+      filePath: 'path::exportedFiles.proto.export'
       basePath: .
-      prefixPath: proto
+      prefixPath: 'path::exportedDir.proto.export'
     criterion:
       default: 1
       debug: 1
@@ -261,6 +217,13 @@ step:
       raw: 1
     opts:
       reflector: 'reflector::reflect.submodules*=1'
+    inherit:
+      - predefined.reflect
+  reflect.submodules:
+    criterion:
+      debug: 1
+    opts:
+      reflector: 'reflector::reflect.submodules*'
     inherit:
       - predefined.reflect
   export.proto:
