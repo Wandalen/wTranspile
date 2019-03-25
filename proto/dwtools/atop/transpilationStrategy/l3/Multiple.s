@@ -222,7 +222,6 @@ function singleEach( onEach )
   try
   {
 
-    // debugger;
     let found = fileProvider.filesRead
     ({
       fileFilter : multiple.inputPath,
@@ -232,10 +231,10 @@ function singleEach( onEach )
 
     // logger.log( 'Found', _.toStr( found.dstMap, { levels : 3 } ) );
 
-    // debugger;
-    for( let dstPath in found.dstMap )
+    debugger;
+    for( let dstPath in found.grouped )
     {
-      let descriptor = found.dstMap[ dstPath ];
+      let descriptor = found.grouped[ dstPath ];
 
       if( multiple.splittingStrategy === 'ManyToOne' )
       {

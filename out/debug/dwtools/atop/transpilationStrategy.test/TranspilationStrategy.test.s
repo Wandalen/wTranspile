@@ -132,7 +132,7 @@ function singleDst( test )
 {
   let self = this;
   let routinePath = _.path.join( self.tempDir, test.name );
-  let originalDirPath = _.path.join( __dirname, '../l9/transpilationStrategy' );
+  let originalDirPath = _.path.join( __dirname, '../transpilationStrategy' );
 
   test.case = 'single destination';
 
@@ -314,10 +314,10 @@ function oneToOne( test )
 function shell( test )
 {
   let self = this;
-  let originalDirPath = _.path.join( __dirname, '../l9/transpilationStrategy' );
+  let originalDirPath = _.path.join( __dirname, '../transpilationStrategy' );
   let routinePath = _.path.join( self.tempDir, test.name );
   let outPath = _.path.join( routinePath, 'out.js' );
-  let execRelativePath = '../l9/transpilationStrategy/Exec';
+  let execRelativePath = '../transpilationStrategy/Exec';
   let srcPath = _.path.normalize( __dirname );
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let ready = new _.Consequence().take( null );
