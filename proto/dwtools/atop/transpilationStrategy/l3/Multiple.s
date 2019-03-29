@@ -430,7 +430,7 @@ _.Verbal.mixin( Self );
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.staticDecalre
+_.staticDeclare
 ({
   prototype : _.TranspilationStrategy.prototype,
   name : Self.shortName,
