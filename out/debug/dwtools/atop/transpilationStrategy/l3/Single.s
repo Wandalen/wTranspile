@@ -225,7 +225,7 @@ function perform()
     {
       debugger;
       if( multiple.verbosity >= 3 )
-      logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + single.outputPath + ' in', _.timeSpent( time ) );
+      logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outputPath, 'path' ) + ' in', _.timeSpent( time ) );
       if( multiple.verbosity >= 4 )
       logger.log( ' # ' + single.sizeReportLast );
     }
