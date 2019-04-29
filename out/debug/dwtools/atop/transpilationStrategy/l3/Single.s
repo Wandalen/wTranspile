@@ -22,8 +22,6 @@ Self.shortName = 'Single';
 function finit()
 {
   let single = this;
-  // single.input = null;
-  // single.output = null;
   Parent.prototype.finit.call( single );
 }
 
@@ -68,7 +66,6 @@ function form()
     isFirst : true,
   });
 
-  // single.input.data = single.codeJoin( _.mapVals( single.dataMap ) );
   single.input.data = single.concatenate();
 
   if( multiple.writingTempFiles && multiple.tempPath )
@@ -99,6 +96,9 @@ function perform()
   _.assert( single.output === null );
   _.assert( arguments.length === 0 );
 
+  multiple.dstCounter += 1;
+  multiple.srcCounter += _.mapKeys( single.dataMap ).length;
+
   con.thenKeep( ( arg ) =>
   {
     return single.input;
@@ -123,41 +123,21 @@ function perform()
     });
   }());
 
+  /* */
+
   con
   .thenKeep( function( arg )
   {
 
-    /* */
-
     let outputPath = single.outputPath;
 
-    // if( multiple.writingStrategy === 'single' )
-    // {
-
-      if( multiple.fileProvider.isDir( outputPath ) )
-      if( multiple.writingTerminalUnderDirectory )
-      {
-        _.assert( !!single.concatenator );
-        _.assert( _.strIs( single.concatenator.ext[ 0 ] ) );
-        outputPath = single.outputPath = path.join( outputPath, single.name + '.' + single.concatenator.ext[ 0 ] );
-      }
-
-    // }
-    // else if( multiple.writingStrategy === 'multiple' )
-    // {
-    //
-    //   outputPath =
-    //
-    // }
-    // else _.assert( 0 );
-
-    // if( multiple.fileProvider.isDir( outputPath ) && multiple.writingTerminalUnderDirectory )
-    // {
-    //   debugger;
-    //   _.assert( !!single.concatenator );
-    //   _.assert( _.strIs( single.concatenator.ext[ 0 ] ) );
-    //   outputPath = path.join( outputPath, single.name + '.' + single.concatenator.ext[ 0 ] );
-    // }
+    if( multiple.fileProvider.isDir( outputPath ) )
+    if( multiple.writingTerminalUnderDirectory )
+    {
+      _.assert( !!single.concatenator );
+      _.assert( _.strIs( single.concatenator.ext[ 0 ] ) );
+      outputPath = single.outputPath = path.join( outputPath, single.name + '.' + single.concatenator.ext[ 0 ] );
+    }
 
     if( multiple.fileProvider.isDir( outputPath ) )
     {
@@ -175,7 +155,6 @@ function perform()
 
     /* */
 
-    // debugger;
     if( multiple.writingSourceMap && single.sourceMapPath && single.output.sourceMap )
     debugger;
     if( multiple.writingSourceMap && single.sourceMapPath && single.output.sourceMap )
@@ -187,25 +166,10 @@ function perform()
       purging : 1,
     });
 
-    // if( multiple.output.map && multiple.mapFilePath )
-    // multiple.fileProvider.fileWrite
-    // ({
-    //   filePath : multiple.mapFilePath,
-    //   data : _.strIs( multiple.output.map ) ? multiple.output.map : _.toJstruct( multiple.output.map ),
-    //   makingDirectory : 1,
-    //   purging : 1,
-    // });
-
     /* */
 
     _.assert( single.input !== single.output );
-    // _.assert( multiple.input !== multiple.output );
-    // _.assert( multiple.input !== strategy.input );
-    // _.assert( multiple.output !== strategy.input );
-    // _.assert( multiple.input !== strategy.output );
-    // _.assert( multiple.output !== strategy.output );
 
-    // debugger;
     return single.sizeReport
     ({
       input : single.input.data,
@@ -303,7 +267,6 @@ function sizeReport( o )
   if( !multiple.sizeReporting || multiple.verbosity < 4 )
   return _.timeOut( 1 );
 
-  // debugger;
   let inputSize = 0;
   if( o.input )
   inputSize = o.input.length;
@@ -322,9 +285,6 @@ function sizeReport( o )
     let gzipSize = _.entitySize( buffer );
 
     single.sizeReportLast = 'Compression factor : ' + format( inputSize ) + ' / ' + format( outputSize ) + ' / ' + format( gzipSize );
-
-    // if( multiple.sizeReporting )
-    // logger.log( multpile.sizeReportLast );
 
     con.take( null );
   });
@@ -543,7 +503,6 @@ let Forbids =
 
 let Accessors =
 {
-  // strategies : { setter : _.accessor.setter.arrayCollection({ name : 'strategies' }) },
 }
 
 // --

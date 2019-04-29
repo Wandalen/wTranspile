@@ -53,7 +53,8 @@ function form()
   _.assert( _.numberInRange( multiple.minification, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.minification-}' );
   _.assert( _.numberInRange( multiple.diagnosing, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.diagnosing-}' );
   _.assert( _.boolLike( multiple.beautifing ), 'Expects bool-like {-multiple.beautifing-}' );
-  _.assert( _.arrayHas( [ 'ManyToOne', 'OneToOne' ], multiple.splittingStrategy ) );
+  _.sure( _.arrayHas( [ 'ManyToOne', 'OneToOne' ], multiple.splittingStrategy ) );
+  _.sure( _.arrayHas( [ 'preserve', 'rebuild' ], multiple.upToDate ), () => 'Unknown value of upToDate ' + _.strQuote( multiple.upToDate ) );
 
   /* parent */
 
@@ -143,15 +144,15 @@ function form()
   return multiple;
 }
 
+// //
 //
-
-function perform()
-{
-  let multiple = this;
-  multiple.form();
-  multiple.perform();
-  return multiple;
-}
+// function perform()
+// {
+//   let multiple = this;
+//   multiple.form();
+//   multiple.perform();
+//   return multiple;
+// }
 
 //
 
@@ -229,19 +230,43 @@ function singleEach( onEach )
       recursive : 2,
     })
 
+    // debugger;
+    let groups = fileProvider.filesFindGroups
+    ({
+      fileFilter : multiple.inputPath,
+      throwing : 1,
+      recursive : 2,
+      outputFormat : 'absolute',
+    });
+
+    // groups.filesGrouped
     // logger.log( 'Found', _.toStr( found.dstMap, { levels : 3 } ) );
 
-    debugger;
-    for( let dstPath in found.grouped )
+    // debugger;
+    for( let dstPath in groups.filesGrouped )
     {
-      let descriptor = found.grouped[ dstPath ];
+      let srcPaths = groups.filesGrouped[ dstPath ];
+      let dataMap = Object.create( null );
+
+      if( multiple.upToDate === 'preserve' )
+      {
+        // debugger;
+        let upToDate = fileProvider.filesAreUpToDate( dstPath, srcPaths );
+        if( upToDate )
+        continue;
+      }
+
+      srcPaths.map( ( srcPath ) =>
+      {
+        dataMap[ srcPath ] = fileProvider.fileRead( srcPath );
+      });
 
       if( multiple.splittingStrategy === 'ManyToOne' )
       {
 
         let single = sys.Single
         ({
-          dataMap : descriptor.dataMap,
+          dataMap : dataMap,
           outputPath : dstPath,
           multiple : multiple,
           sys : sys,
@@ -254,19 +279,19 @@ function singleEach( onEach )
       else if( multiple.splittingStrategy === 'OneToOne' )
       {
 
-        debugger;
-        for( let srcPath in descriptor.dataMap )
+        // debugger;
+        for( let srcPath in dataMap )
         {
 
           let basePath = multiple.inputPath.basePathFor( srcPath );
           let relativePath = path.relative( basePath, srcPath );
           let outputPath = path.join( dstPath, relativePath );
-          let dataMap = Object.create( null );
-          dataMap[ srcPath ] = descriptor.dataMap[ srcPath ];
+          let dataMap2 = Object.create( null );
+          dataMap2[ srcPath ] = dataMap[ srcPath ];
 
           let single = sys.Single
           ({
-            dataMap : dataMap,
+            dataMap : dataMap2,
             outputPath : outputPath,
             multiple : multiple,
             sys : sys,
@@ -289,6 +314,65 @@ function singleEach( onEach )
     throw err;
   }
 
+// xxx
+//     for( let dstPath in found.grouped )
+//     {
+//       let descriptor = found.grouped[ dstPath ];
+//
+//       if( multiple.splittingStrategy === 'ManyToOne' )
+//       {
+//
+//         let single = sys.Single
+//         ({
+//           dataMap : descriptor.dataMap,
+//           outputPath : dstPath,
+//           multiple : multiple,
+//           sys : sys,
+//         });
+//
+//         single.form();
+//         onEach( single );
+//
+//       }
+//       else if( multiple.splittingStrategy === 'OneToOne' )
+//       {
+//
+//         debugger;
+//         for( let srcPath in descriptor.dataMap )
+//         {
+//
+//           let basePath = multiple.inputPath.basePathFor( srcPath );
+//           let relativePath = path.relative( basePath, srcPath );
+//           let outputPath = path.join( dstPath, relativePath );
+//           let dataMap = Object.create( null );
+//           dataMap[ srcPath ] = descriptor.dataMap[ srcPath ];
+//
+//           let single = sys.Single
+//           ({
+//             dataMap : dataMap,
+//             outputPath : outputPath,
+//             multiple : multiple,
+//             sys : sys,
+//           });
+//
+//           single.form();
+//           onEach( single );
+//
+//         }
+//
+//       }
+//       else _.assert( 0 );
+//
+//     }
+//
+//   }
+//   catch( err )
+//   {
+//     err = _.err( err );
+//     throw err;
+//   }
+// xxx
+
 }
 
 // --
@@ -307,10 +391,13 @@ let Composes =
   /* */
 
   writingTerminalUnderDirectory : 0,
-  splittingStrategy : 'ManyToOne', // [ 'ManyToOne', 'OneToOne' ]
+  splittingStrategy : 'ManyToOne', /* [ 'ManyToOne', 'OneToOne' ] */
+  upToDate : 'preserve', /* [ 'preserve', 'rebuild' ] */
   writingTempFiles : 0,
   writingSourceMap : 1,
   sizeReporting : 1,
+  dstCounter : 0,
+  srcCounter : 0,
 
   /* */
 
@@ -318,7 +405,7 @@ let Composes =
   outputPath : null,
   tempPath : 'temp.tmp',
 
-  //
+  /* */
 
   totalReporting : 1,
   verbosity : 4,
@@ -347,40 +434,6 @@ let Restricts =
 
 let Forbids =
 {
-
-  debug : 'debug',
-  inputFilesPaths : 'inputFilesPaths',
-  outputFilePath : 'outputFilePath',
-  input : 'input',
-  output : 'output',
-  command : 'command',
-  fileReport : 'fileReport',
-  separateProcess : 'separateProcess',
-  silent : 'silent',
-  fastest : 'fastest',
-  pretty : 'pretty',
-  _options : '_options',
-  outputFilesPath : 'outputFilesPath',
-  infoEnabled : 'infoEnabled',
-  off : 'off',
-  settings : 'settings',
-  minimization : 'minimization',
-  usingBabel : 'usingBabel',
-  settingsOfBabel : 'settingsOfBabel',
-  usingButternut : 'usingButternut',
-  settingsOfButternut : 'settingsOfButternut',
-  usingBabili : 'usingBabili',
-  settingsOfBabili : 'settingsOfBabili',
-  usingPrepack : 'usingPrepack',
-  settingsOfPrepack : 'settingsOfPrepack',
-  usingClosure : 'usingClosure',
-  settingsOfClosure : 'settingsOfClosure',
-  usingUglify : 'usingUglify',
-  settingsOfUglify : 'settingsOfUglify',
-  transpiler : 'transpiler',
-  session : 'session',
-  mapFilePath : 'mapFilePath',
-
 }
 
 let Accessors =

@@ -68,30 +68,79 @@ function singleFileInputTerminal( test )
 {
   let self = this;
   let routinePath = _.path.join( self.tempDir, test.name );
+  let con = new _.Consequence().take( null );
 
-  test.description = 'single input terminal';
+  /* - */
 
-  let outputPath = _.path.join( routinePath, 'Output.js' );
-  let ts = new _.TranspilationStrategy().form();
-  let multiple = ts.multiple
-  ({
-    inputPath : __filename,
-    outputPath : outputPath,
-  });
-
-  return multiple.form().perform()
-  .finally( ( err, got ) =>
+  con.then( () =>
   {
-    test.is( _.fileProvider.fileExists( outputPath ) );
-    let expected = [ '.', './Output.js' ];
-    test.is( _.fileProvider.fileSize( outputPath ) > 100 );
-    let found = self.find1( routinePath );
-    test.identical( found, expected );
-    if( err )
-    throw _.errLogOnce( err );
-    return true;
-  });
 
+    test.description = 'single input terminal';
+
+    let outputPath = _.path.join( routinePath, 'Output.js' );
+    let ts = new _.TranspilationStrategy().form();
+    let multiple = ts.multiple
+    ({
+      inputPath : __filename,
+      outputPath : outputPath,
+    });
+
+    return multiple.form().perform()
+    .finally( ( err, got ) =>
+    {
+      test.is( _.fileProvider.fileExists( outputPath ) );
+      let expected = [ '.', './Output.js' ];
+      test.is( _.fileProvider.fileSize( outputPath ) > 100 );
+      let found = self.find1( routinePath );
+      test.identical( found, expected );
+
+      test.identical( multiple.dstCounter, 1 );
+      test.identical( multiple.srcCounter, 1 );
+
+      if( err )
+      throw _.errLogOnce( err );
+      return true;
+    });
+
+  })
+
+  /* - */
+
+  con.then( () =>
+  {
+
+    test.description = 'single input terminal';
+
+    let outputPath = _.path.join( routinePath, 'Output.js' );
+    let ts = new _.TranspilationStrategy().form();
+    let multiple = ts.multiple
+    ({
+      inputPath : __filename,
+      outputPath : outputPath,
+    });
+
+    return multiple.form().perform()
+    .finally( ( err, got ) =>
+    {
+      test.is( _.fileProvider.fileExists( outputPath ) );
+      let expected = [ '.', './Output.js' ];
+      test.is( _.fileProvider.fileSize( outputPath ) > 100 );
+      let found = self.find1( routinePath );
+      test.identical( found, expected );
+
+      test.identical( multiple.dstCounter, 0 );
+      test.identical( multiple.srcCounter, 0 );
+
+      if( err )
+      throw _.errLogOnce( err );
+      return true;
+    });
+
+  })
+
+  /* - */
+
+  return con;
 }
 
 //
@@ -175,8 +224,8 @@ function severalDst( test )
     'File1.s' : `console.log( 'File1.s' );`,
     'File2.s' : `console.log( 'File2.s' );`,
   }
-  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
+  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
   var inputPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
   var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
