@@ -8,14 +8,17 @@ about:
     plugins. Default options of transpilation can be written into a config file
     to avoid retyping. Use the module to utilize the power of open source
     transpilation tools in single package.
-  version: 0.3.56
   enabled: 1
-  interpreters:
-    - nodejs >= 6.0.0
-    - chrome >= 60.0.0
-    - firefox >= 60.0.0
-  keywords:
-    - wTools
+  version: 0.3.56
+  values:
+    enabled: 1
+    name: wTranspilationStrategy
+    interpreters:
+      - nodejs >= 6.0.0
+      - chrome >= 60.0.0
+      - firefox >= 60.0.0
+    keywords:
+      - wTools
 execution:
   scripts:
     test: wtest proto
