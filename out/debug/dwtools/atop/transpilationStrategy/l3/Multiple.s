@@ -223,17 +223,17 @@ function singleEach( onEach )
   try
   {
 
-    let found = fileProvider.filesRead
-    ({
-      fileFilter : multiple.inputPath,
-      throwing : 1,
-      recursive : 2,
-    })
+    // let found = fileProvider.filesRead
+    // ({
+    //   /*fileFilter*/src : multiple.inputPath,
+    //   throwing : 1,
+    //   recursive : 2,
+    // })
 
     // debugger;
     let groups = fileProvider.filesFindGroups
     ({
-      fileFilter : multiple.inputPath,
+      /*fileFilter*/src : multiple.inputPath,
       throwing : 1,
       recursive : 2,
       outputFormat : 'absolute',

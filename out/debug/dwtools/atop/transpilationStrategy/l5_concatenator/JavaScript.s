@@ -54,6 +54,7 @@ let Composes =
   ext : _.define.own([ 'js', 's', 'ss', '' ]),
   prefix : '// ======================================\n( function() {\n',
   postfix : '\n})();\n',
+  entry : null,
 }
 
 let Associates =
