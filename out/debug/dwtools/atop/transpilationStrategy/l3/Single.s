@@ -52,7 +52,7 @@ function form()
   single.errors = [];
 
   if( !single.name )
-  single.name = path.name({ path : single.outputPath, withExtension : true })
+  single.name = path.name({ path : single.outputPath, full : true })
 
   if( !single.sourceMapPath )
   single.sourceMapPath = single.outputPath + '.map';
