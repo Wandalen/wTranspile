@@ -271,7 +271,11 @@ function sizeReport( o )
   if( o.input )
   inputSize = o.input.length;
   else
-  inputSize = fileProvider.filesSize( multiple.inputPath );
+  { 
+    let filePaths = _.mapOwnKeys( multiple.inputPath.filePath );
+    inputSize = fileProvider.filesSize( filePaths );
+    inputSize = _.numberFrom( inputSize );
+  }
 
   function _format( size ){ return ( size / 1024 ).toFixed( 2 ); };
   let format = _.strMetricFormatBytes || _format;
