@@ -360,6 +360,288 @@ function oneToOne( test )
 
 //
 
+function nothingFoundOneToOne( test )
+{
+  let self = this;
+  let routinePath = _.path.join( self.tempDir, test.name );
+
+  /* */
+
+  test.case = 'OneToOne';
+
+  var filesTree =
+  {
+    'File1.js' : `console.log( './File1.js' );`,
+    'File2.js' : `console.log( './File2.js' );`,
+    'File1.s' : `console.log( './File1.s' );`,
+    'File2.s' : `console.log( './File2.s' );`,
+    dir :
+    {
+      'File1.js' : `console.log( './dir/File1.js' );`,
+      'File2.js' : `console.log( './dir/File2.js' );`,
+      'File1.s' : `console.log( './dir/File1.s' );`,
+      'File2.s' : `console.log( './dir/File2.s' );`,
+    }
+  }
+  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+
+  var inputPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
+  var outputPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
+  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var multiple = ts.multiple
+  ({
+    inputPath : inputPath,
+    outputPath : outputPath,
+    splittingStrategy : 'OneToOne',
+    transpilingStrategies : [ 'Nop' ],
+  });
+
+  return multiple.form().perform()
+  .finally( ( err, got ) =>
+  {
+    var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dir', './dir/File1.js', './dir/File1.s', './dir/File2.js', './dir/File2.s' ];
+    var found = self.find2( fileProvider, '/' );
+    test.identical( found, expected );
+    if( err )
+    throw _.errLogOnce( err );
+    return true;
+  });
+
+}
+
+//
+
+function nothingFoundManyToOne( test )
+{
+  let self = this;
+  let routinePath = _.path.join( self.tempDir, test.name );
+
+  /* */
+
+  test.case = 'ManyToOne';
+
+  var filesTree =
+  {
+    'File1.js' : `console.log( './File1.js' );`,
+    'File2.js' : `console.log( './File2.js' );`,
+    'File1.s' : `console.log( './File1.s' );`,
+    'File2.s' : `console.log( './File2.s' );`,
+    dir :
+    {
+      'File1.js' : `console.log( './dir/File1.js' );`,
+      'File2.js' : `console.log( './dir/File2.js' );`,
+      'File1.s' : `console.log( './dir/File1.s' );`,
+      'File2.s' : `console.log( './dir/File2.s' );`,
+    }
+  }
+  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+
+  var inputPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
+  var outputPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
+  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var multiple = ts.multiple
+  ({
+    inputPath : inputPath,
+    outputPath : outputPath,
+    splittingStrategy : 'ManyToOne',
+    transpilingStrategies : [ 'Nop' ],
+  });
+
+  return multiple.form().perform()
+  .finally( ( err, got ) =>
+  {
+    var expected = [ '.', './dst', './File1.js', './File1.s', './File2.js', './File2.s', './dir', './dir/File1.js', './dir/File1.s', './dir/File2.js', './dir/File2.s' ];
+    var found = self.find2( fileProvider, '/' );
+    test.identical( found, expected );
+    test.is( fileProvider.fileRead( '/dst' ) === '' );
+    if( err )
+    throw _.errLogOnce( err );
+    return true;
+  });
+
+  /* */
+
+}
+
+//
+
+function transpileManyToOne( test )
+{
+  let self = this;
+  let routinePath = _.path.join( self.tempDir, test.name );
+  let con = new _.Consequence().take( null );
+
+  /* */
+
+  con.then( () =>
+  {
+
+    test.case = 'ManyToOne';
+
+    var filesTree =
+    {
+      src :
+      {
+        dir1 : {},
+        dir2 :
+        {
+          '-Excluded.js' : `console.log( 'dir2/-Ecluded.js' );`,
+          'File.js' : `console.log( 'dir2/File.js' );`,
+          'File.test.js' : `console.log( 'dir2/File.test.js' );`,
+          'File1.debug.js' : `console.log( 'dir2/File1.debug.js' );`,
+          'File1.release.js' : `console.log( 'dir2/File1.release.js' );`,
+          'File2.debug.js' : `console.log( 'dir2/File2.debug.js' );`,
+          'File2.release.js' : `console.log( 'dir2/File2.release.js' );`,
+        },
+        dir3 :
+        {
+          'File.js' : `console.log( 'dir3/File.js' );`,
+          'File.test.js' : `console.log( 'dir3/File.test.js' );`,
+        },
+      }
+    }
+    var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+
+    var inputPath =
+    {
+      filePath : { '**.test*' : false, '**.test/**' : false, '.' : '.' },
+      prefixPath : '/src',
+      maskAll : { excludeAny : [ /(^|\/)-/, /\.release($|\.|\/)/i ] }
+    }
+    var outputPath =
+    {
+      filePath : { '**.test*' : false, '**.test/**' : false, '.' : '.' },
+      prefixPath : '/dst/Main.s',
+    }
+    var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+    var multiple = ts.multiple
+    ({
+      inputPath : inputPath,
+      outputPath : outputPath,
+      totalReporting : 0,
+      transpilingStrategies : [ 'Nop' ],
+      splittingStrategy : 'ManyToOne',
+      writingTerminalUnderDirectory : 1,
+      upToDate : 'preserve',
+      verbosity : 2,
+      optimization : 9,
+      minification : 8,
+      diagnosing : 1,
+      beautifing : 0,
+    });
+
+    return multiple.form().perform()
+    .finally( ( err, got ) =>
+    {
+      var expected = [ '.', './dst', './dst/Main.s', './src', './src/dir1', './src/dir2', './src/dir2/File.js', './src/dir2/File.test.js', './src/dir2/File1.debug.js', './src/dir2/File1.release.js', './src/dir2/File2.debug.js', './src/dir2/File2.release.js', './src/dir3', './src/dir3/File.js', './src/dir3/File.test.js' ];
+      var found = self.find2( fileProvider, '/' );
+      test.identical( found, expected );
+
+      var read = fileProvider.fileRead( '/dst/Main.s' );
+      test.is( !_.strHas( read, 'dir2/-Ecluded.js' ) );
+      test.is( _.strHas( read, 'dir2/File.js' ) );
+      test.is( !_.strHas( read, 'dir2/File.test.js' ) );
+      test.is( _.strHas( read, 'dir2/File1.debug.js' ) );
+      test.is( !_.strHas( read, 'dir2/File1.release.js' ) );
+      test.is( _.strHas( read, 'dir2/File2.debug.js' ) );
+      test.is( !_.strHas( read, 'dir2/File2.release.js' ) );
+
+      if( err )
+      throw _.errLogOnce( err );
+      return true;
+    });
+
+  })
+
+  /* */
+
+  con.then( () =>
+  {
+
+    test.case = 'ManyToOne';
+
+    var filesTree =
+    {
+      src :
+      {
+        dir1 : {},
+        dir2 :
+        {
+          '-Excluded.js' : `console.log( 'dir2/-Ecluded.js' );`,
+          'File.js' : `console.log( 'dir2/File.js' );`,
+          'File.test.js' : `console.log( 'dir2/File.test.js' );`,
+          'File1.debug.js' : `console.log( 'dir2/File1.debug.js' );`,
+          'File1.release.js' : `console.log( 'dir2/File1.release.js' );`,
+          'File2.debug.js' : `console.log( 'dir2/File2.debug.js' );`,
+          'File2.release.js' : `console.log( 'dir2/File2.release.js' );`,
+        },
+        dir3 :
+        {
+          'File.js' : `console.log( 'dir3/File.js' );`,
+          'File.test.js' : `console.log( 'dir3/File.test.js' );`,
+        },
+      }
+    }
+    var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+
+    var inputPath =
+    {
+      filePath : { '**.test*' : true, '.' : '.' },
+      prefixPath : '/src',
+      maskAll : { excludeAny : [ /(^|\/)-/, /\.release($|\.|\/)/i ] },
+    }
+    var outputPath =
+    {
+      filePath : { '**.test*' : true, '.' : '.' },
+      prefixPath : '/dst/Tests.s',
+    }
+    var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+    var multiple = ts.multiple
+    ({
+      inputPath : inputPath,
+      outputPath : outputPath,
+      totalReporting : 0,
+      transpilingStrategies : [ 'Nop' ],
+      splittingStrategy : 'ManyToOne',
+      writingTerminalUnderDirectory : 1,
+      upToDate : 'preserve',
+      verbosity : 2,
+      optimization : 9,
+      minification : 8,
+      diagnosing : 1,
+      beautifing : 0,
+    });
+
+    return multiple.form().perform()
+    .finally( ( err, got ) =>
+    {
+      var expected = [ '.', './dst', './dst/Tests.s', './src', './src/dir1', './src/dir2', './src/dir2/File.js', './src/dir2/File.test.js', './src/dir2/File1.debug.js', './src/dir2/File1.release.js', './src/dir2/File2.debug.js', './src/dir2/File2.release.js', './src/dir3', './src/dir3/File.js', './src/dir3/File.test.js' ];
+      var found = self.find2( fileProvider, '/' );
+      test.identical( found, expected );
+
+      var read = fileProvider.fileRead( '/dst/Tests.s' );
+      test.is( !_.strHas( read, 'dir2/-Ecluded.js' ) );
+      test.is( !_.strHas( read, 'dir2/File.js' ) );
+      test.is( _.strHas( read, 'dir2/File.test.js' ) );
+      test.is( !_.strHas( read, 'dir2/File1.debug.js' ) );
+      test.is( !_.strHas( read, 'dir2/File1.release.js' ) );
+      test.is( !_.strHas( read, 'dir2/File2.debug.js' ) );
+      test.is( !_.strHas( read, 'dir2/File2.release.js' ) );
+
+      if( err )
+      throw _.errLogOnce( err );
+      return true;
+    });
+
+  })
+
+  /* */
+
+  return con;
+}
+
+//
+
 function shell( test )
 {
   let self = this;
@@ -440,6 +722,9 @@ var Self =
     severalDst,
     complexMask,
     oneToOne,
+    nothingFoundOneToOne,
+    nothingFoundManyToOne,
+    transpileManyToOne,
     shell,
 
   }

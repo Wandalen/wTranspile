@@ -96,7 +96,8 @@ function form()
   multiple.outputPath.prefixPath = multiple.outputPath.prefixPath || path.current();
   multiple.inputPath.prefixPath = multiple.inputPath.prefixPath || path.current();
   multiple.inputPath.pairWithDst( multiple.outputPath );
-  multiple.inputPath.pairRefine();
+  // multiple.inputPath.pairRefine();
+  multiple.inputPath.pairRefineLight();
 
   // debugger;
   multiple.outputPath.form();
@@ -223,26 +224,16 @@ function singleEach( onEach )
   try
   {
 
-    // let found = fileProvider.filesRead
-    // ({
-    //   /*fileFilter*/src : multiple.inputPath,
-    //   throwing : 1,
-    //   recursive : 2,
-    // })
-
-    // debugger;
+    debugger;
     let groups = fileProvider.filesFindGroups
     ({
-      /*fileFilter*/src : multiple.inputPath,
+      src : multiple.inputPath,
       throwing : 1,
       recursive : 2,
       outputFormat : 'absolute',
     });
+    debugger;
 
-    // groups.filesGrouped
-    // logger.log( 'Found', _.toStr( found.dstMap, { levels : 3 } ) );
-
-    // debugger;
     for( let dstPath in groups.filesGrouped )
     {
       let srcPaths = groups.filesGrouped[ dstPath ];
@@ -250,7 +241,6 @@ function singleEach( onEach )
 
       if( multiple.upToDate === 'preserve' )
       {
-        // debugger;
         let upToDate = fileProvider.filesAreUpToDate( dstPath, srcPaths );
         if( upToDate )
         continue;
@@ -279,7 +269,6 @@ function singleEach( onEach )
       else if( multiple.splittingStrategy === 'OneToOne' )
       {
 
-        // debugger;
         for( let srcPath in dataMap )
         {
 
@@ -313,65 +302,6 @@ function singleEach( onEach )
     err = _.err( err );
     throw err;
   }
-
-// xxx
-//     for( let dstPath in found.grouped )
-//     {
-//       let descriptor = found.grouped[ dstPath ];
-//
-//       if( multiple.splittingStrategy === 'ManyToOne' )
-//       {
-//
-//         let single = sys.Single
-//         ({
-//           dataMap : descriptor.dataMap,
-//           outputPath : dstPath,
-//           multiple : multiple,
-//           sys : sys,
-//         });
-//
-//         single.form();
-//         onEach( single );
-//
-//       }
-//       else if( multiple.splittingStrategy === 'OneToOne' )
-//       {
-//
-//         debugger;
-//         for( let srcPath in descriptor.dataMap )
-//         {
-//
-//           let basePath = multiple.inputPath.basePathFor( srcPath );
-//           let relativePath = path.relative( basePath, srcPath );
-//           let outputPath = path.join( dstPath, relativePath );
-//           let dataMap = Object.create( null );
-//           dataMap[ srcPath ] = descriptor.dataMap[ srcPath ];
-//
-//           let single = sys.Single
-//           ({
-//             dataMap : dataMap,
-//             outputPath : outputPath,
-//             multiple : multiple,
-//             sys : sys,
-//           });
-//
-//           single.form();
-//           onEach( single );
-//
-//         }
-//
-//       }
-//       else _.assert( 0 );
-//
-//     }
-//
-//   }
-//   catch( err )
-//   {
-//     err = _.err( err );
-//     throw err;
-//   }
-// xxx
 
 }
 

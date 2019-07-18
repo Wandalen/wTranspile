@@ -187,7 +187,6 @@ function perform()
 
     if( !single.errors.length )
     {
-      debugger;
       if( multiple.verbosity >= 3 )
       logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outputPath, 'path' ) + ' in', _.timeSpent( time ) );
       if( multiple.verbosity >= 4 )
@@ -366,6 +365,9 @@ function concatenatorFor()
 
   _.assert( arguments.length === 0 );
 
+  if( !_.mapKeys( single.dataMap ).length )
+  return concatenator;
+
   for( let inputPath in single.dataMap )
   {
     let ext = path.ext( inputPath );
@@ -389,14 +391,18 @@ function concatenate()
   let fileProvider = multiple.fileProvider;
   let path = fileProvider.path;
 
+  _.assert( arguments.length === 0 );
+
   if( !single.concatenator )
   single.concatenator = single.concatenatorFor();
 
-  _.assert( arguments.length === 0 );
+  if( single.concatenator )
+  {
+    let result = single.concatenator.perform( single );
+    return result;
+  }
 
-  let result = single.concatenator.perform( single );
-
-  return result;
+  return '';
 }
 
 // //
