@@ -72,7 +72,7 @@ function perform( stage )
     inputPath : null,
     outputPath : null,
     tempPath : null,
-    mapFilePath : null,
+    // mapFilePath : null,
 
     debug : null,
     optimization : null,

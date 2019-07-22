@@ -33,7 +33,14 @@ let ConfigProperties =
   inputPath : 'Path to terminal file or dirrectory with files to transpile.',
   outputPath : 'Path to terminal file to store.',
   tempPath : 'Path to temporary directory to store intermediate results. Default : temp.tmp.',
-  mapFilePath : 'Path to store map-file. Default : null.',
+  entryPath : 'Path to entry files. Files to launch among input files.',
+  externalBeforePath : 'Path to external files. Files beyond input files to launch before entry files.',
+  externalAfterPath : 'Path to external files. Files beyond input files to launch after entry files.',
+
+  splittingStrategy : 'Strategy to handle multiple files. Known strategies: ManyToOne, OneToOne.',
+  transpilingStrategy : 'Strategy to transpile code. Known strategies: Nop, Uglify, Babel and other. Could be combination.',
+
+  // mapFilePath : 'Path to store map-file. Default : null.',
 
   debug : 'Level of debug, should be in range [ 0 .. 9 ]. Default : 0.',
   optimization : 'Level of optimization, should be in range [ 0 .. 9 ]. Default : 9.',
@@ -162,8 +169,8 @@ function commandTranspile( e )
 
   e.propertiesMap.outputPath = e.propertiesMap.outputPath || path.current();
 
-  debugger;
-  logger.log( 'e.propertiesMap', e.propertiesMap );
+  // debugger;
+  // logger.log( 'e.propertiesMap', e.propertiesMap );
 
   _.sureMapHasOnly( e.propertiesMap, commandTranspile.commandProperties );
   _.sureBriefly( _.strIs( e.propertiesMap.inputPath ), 'Expects path to file to transpile {-inputPath-}' );
@@ -173,16 +180,18 @@ function commandTranspile( e )
   // logger.log( ' # Transpiling', e.propertiesMap.outputPath, '<-', e.propertiesMap.inputPath );
   // logger.up();
 
+  // debugger;
   let multiple = sys.Multiple
   ({
     sys : sys,
-    inputPath : { filePath : e.propertiesMap.inputPath, basePath : path.join( e.propertiesMap.inputPath, '.' ) },
     // inputPath : e.propertiesMap.inputPath,
-    outputPath : e.propertiesMap.outputPath,
+    // inputPath : { filePath : e.propertiesMap.inputPath, basePath : path.join( e.propertiesMap.inputPath, '.' ) },
+    // inputPath : e.propertiesMap.inputPath,
+    // outputPath : e.propertiesMap.outputPath,
   });
 
-  delete e.propertiesMap.inputPath;
-  delete e.propertiesMap.outputPath;
+  // delete e.propertiesMap.inputPath;
+  // delete e.propertiesMap.outputPath;
 
   sys.storageLoad();
 
@@ -221,7 +230,14 @@ function commandTranspile( e )
     {
       'inputPath' : 'inputPath',
       'outputPath' : 'outputPath',
-      'strategies' : 'strategies',
+      'tempPath' : 'tempPath',
+      'entryPath' : 'entryPath',
+      'externalBeforePath' : 'externalBeforePath',
+      'externalAfterPath' : 'externalAfterPath',
+
+      'splittingStrategy' : 'splittingStrategy',
+      'transpilingStrategy' : 'transpilingStrategy',
+
       'debug' : 'debug',
       'optimization' : 'optimization',
       'minification' : 'minification',
@@ -240,7 +256,14 @@ function commandTranspile( e )
     {
       'inputPath' : 'inputPath',
       'outputPath' : 'outputPath',
-      'strategies' : 'strategies',
+      'tempPath' : 'tempPath',
+      'entryPath' : 'entryPath',
+      'externalBeforePath' : 'externalBeforePath',
+      'externalAfterPath' : 'externalAfterPath',
+
+      'splittingStrategy' : 'splittingStrategy',
+      'transpilingStrategy' : 'transpilingStrategy',
+
       'debug' : 'debug',
       'optimization' : 'optimization',
       'minification' : 'minification',
@@ -250,18 +273,23 @@ function commandTranspile( e )
     },
   });
 
+  if( _.strIs( multiple.inputPath ) || _.arrayIs( multiple.inputPath ) )
+  multiple.inputPath = path.s.join( path.current(), multiple.inputPath );
+  if( _.strIs( multiple.outputPath ) || _.arrayIs( multiple.outputPath ) )
+  multiple.outputPath = path.s.join( path.current(), multiple.outputPath );
+
   multiple.verbosity = sys.verbosity;
 
   multiple.form();
 
-  debugger;
   return multiple.perform()
   .finally( ( err, arg ) =>
   {
-    debugger;
     if( err )
-    _.errLogOnce( err );
-    // logger.down();
+    {
+      _.appExitCode( -1 );
+      _.errLogOnce( err );
+    }
     multiple.finit();
     return null;
   });

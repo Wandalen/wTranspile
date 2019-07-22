@@ -110,7 +110,7 @@ function singleFileInputTerminal( test )
   con.then( () =>
   {
 
-    test.description = 'single input terminal';
+    test.description = 'repeat, should do nothing';
 
     let outputPath = _.path.join( routinePath, 'Output.js' );
     let ts = new _.TranspilationStrategy().form();
@@ -151,13 +151,15 @@ function singleFileInputDir( test )
   let self = this;
   let routinePath = _.path.join( self.tempDir, test.name );
 
-  test.description = 'single input dir';
+  /* - */
+
+  test.case = 'single input dir with glob';
 
   let outputPath = _.path.join( routinePath, 'Output.js' );
   let ts = new _.TranspilationStrategy().form();
   let multiple = ts.multiple
   ({
-    inputPath : __dirname,
+    inputPath : __dirname + '/**',
     outputPath : outputPath,
   });
 
@@ -178,6 +180,36 @@ function singleFileInputDir( test )
 
 //
 
+function singleFileInputDirThrowing( test )
+{
+  let self = this;
+  let routinePath = _.path.join( self.tempDir, test.name );
+
+  /* - */
+
+  test.case = 'single input dir without glob';
+
+  let outputPath = _.path.join( routinePath, 'Output.js' );
+  let ts = new _.TranspilationStrategy().form();
+  let multiple = ts.multiple
+  ({
+    inputPath : __dirname + '',
+    outputPath : outputPath,
+  });
+
+  return multiple.form().perform()
+  .finally( ( err, got ) =>
+  {
+    test.is( !!err );
+    return true;
+  });
+
+  /* - */
+
+}
+
+//
+
 function singleDst( test )
 {
   let self = this;
@@ -190,7 +222,7 @@ function singleDst( test )
   let ts = new _.TranspilationStrategy().form();
   let multiple = ts.multiple
   ({
-    inputPath : originalDirPath,
+    inputPath : originalDirPath + '/**',
     outputPath : outputPath,
   });
 
@@ -332,7 +364,7 @@ function oneToOne( test )
     inputPath : inputPath,
     outputPath : { prefixPath : '/dst' },
     splittingStrategy : 'OneToOne',
-    transpilingStrategies : [ 'Nop' ],
+    transpilingStrategy : [ 'Nop' ],
   });
 
   return multiple.form().perform()
@@ -394,18 +426,19 @@ function nothingFoundOneToOne( test )
     inputPath : inputPath,
     outputPath : outputPath,
     splittingStrategy : 'OneToOne',
-    transpilingStrategies : [ 'Nop' ],
+    transpilingStrategy : [ 'Nop' ],
   });
 
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
+    test.is( !!err );
     var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dir', './dir/File1.js', './dir/File1.s', './dir/File2.js', './dir/File2.s' ];
     var found = self.findIn( fileProvider, '/' );
     test.identical( found, expected );
     if( err )
-    throw _.errLogOnce( err );
-    return true;
+    _.errLogOnce( err );
+    return null;
   });
 
 }
@@ -445,19 +478,21 @@ function nothingFoundManyToOne( test )
     inputPath : inputPath,
     outputPath : outputPath,
     splittingStrategy : 'ManyToOne',
-    transpilingStrategies : [ 'Nop' ],
+    transpilingStrategy : [ 'Nop' ],
   });
 
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
-    var expected = [ '.', './dst', './File1.js', './File1.s', './File2.js', './File2.s', './dir', './dir/File1.js', './dir/File1.s', './dir/File2.js', './dir/File2.s' ];
+    test.is( !!err );
+    var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dir', './dir/File1.js', './dir/File1.s', './dir/File2.js', './dir/File2.s' ];
     var found = self.findIn( fileProvider, '/' );
     test.identical( found, expected );
-    test.is( fileProvider.fileRead( '/dst' ) === '' );
+    test.is( !fileProvider.fileExists( '/dst' ) );
+    // test.is( fileProvider.fileRead( '/dst' ) === '' );
     if( err )
-    throw _.errLogOnce( err );
-    return true;
+    _.errLogOnce( err );
+    return null;
   });
 
   /* */
@@ -520,7 +555,7 @@ function transpileManyToOne( test )
       inputPath : inputPath,
       outputPath : outputPath,
       totalReporting : 0,
-      transpilingStrategies : [ 'Nop' ],
+      transpilingStrategy : [ 'Nop' ],
       splittingStrategy : 'ManyToOne',
       writingTerminalUnderDirectory : 1,
       upToDate : 'preserve',
@@ -602,7 +637,7 @@ function transpileManyToOne( test )
       inputPath : inputPath,
       outputPath : outputPath,
       totalReporting : 0,
-      transpilingStrategies : [ 'Nop' ],
+      transpilingStrategy : [ 'Nop' ],
       splittingStrategy : 'ManyToOne',
       writingTerminalUnderDirectory : 1,
       upToDate : 'preserve',
@@ -648,9 +683,9 @@ function shell( test )
   let self = this;
   let originalDirPath = _.path.join( __dirname, '../transpilationStrategy' );
   let routinePath = _.path.join( self.tempDir, test.name );
-  let outPath = _.path.join( routinePath, 'out.js' );
+  let inputPath = _.path.normalize( __dirname ) + '/**';
+  let outputPath = _.path.join( routinePath, 'out.js' );
   let execRelativePath = '../transpilationStrategy/Exec';
-  let srcPath = _.path.normalize( __dirname );
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let ready = new _.Consequence().take( null );
   let shell = _.sheller
@@ -675,14 +710,14 @@ function shell( test )
     return null;
   })
 
-  shell({ args : [ '.transpile inputPath:' + srcPath + ' outputPath:' + outPath + ' writingTempFiles:0' ] })
+  shell({ args : [ '.transpile inputPath:' + inputPath + ' outputPath:' + outputPath + ' writingTempFiles:0' ] })
   .then( ( got ) =>
   {
 
     var files = self.find( routinePath );
     test.identical( files, [ '.', './out.js' ] );
     test.identical( got.exitCode, 0 );
-    test.is( _.fileProvider.isTerminal( outPath ) );
+    test.is( _.fileProvider.isTerminal( outputPath ) );
 
     return null;
   })
@@ -704,12 +739,17 @@ function combinedShell( test )
   let routinePath = _.path.join( self.tempDir, test.name );
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
+  let inputPath = 'main/**';
+  let outputPath = 'out/Main.s';
+  let entryPath = 'main/File1.s';
+  let externalBeforePath = 'External.s';
   let ready = new _.Consequence().take( null );
   let shell = _.sheller
   ({
     execPath : 'node ' + execPath,
     currentPath : routinePath,
     outputCollecting : 1,
+    throwingExitCode : 0,
     ready : ready,
   });
 
@@ -719,16 +759,20 @@ function combinedShell( test )
   .then( ( got ) =>
   {
     test.case = '.transpile';
-
     _.fileProvider.filesDelete( routinePath );
     _.fileProvider.dirMake( routinePath );
     _.fileProvider.filesReflect({ reflectMap : { [ originalDirPath ] : routinePath } });
+    return null;
   })
 
-  shell({ args : [ '.transpile inputPath:' + srcPath + ' outputPath:' + outPath + ' writingTempFiles:0' ] })
+  shell({ args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
+  /* node ../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
+    test.identical( got.exitCode, 0 );
+
+    test.identical( _.strCount( got.output, /# Transpiled 2 file\(s\) to .*out\/Main\.s.* in/ ), 1 );
 
     var files = self.find( routinePath );
     test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s', './out', './out/Main.s' ] );
@@ -743,8 +787,42 @@ function combinedShell( test )
 
   /* - */
 
+  ready
+  .then( ( got ) =>
+  {
+    test.case = 'throwing';
+    _.fileProvider.filesDelete( routinePath );
+    _.fileProvider.dirMake( routinePath );
+    _.fileProvider.filesReflect({ reflectMap : { [ originalDirPath ] : routinePath } });
+    return null;
+  })
+
+  shell({ currentPath : routinePath + '/..', args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
+  /* node ../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+
+  .then( ( got ) =>
+  {
+    test.notIdentical( got.exitCode, 0 );
+
+    test.identical( _.strCount( got.output, /Nothing found. Stem file .*main.* does not exist!/ ), 1 );
+
+    var files = self.find( routinePath );
+    test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s' ] );
+
+    return null;
+  })
+  .then( ( got ) =>
+  {
+    _.fileProvider.filesDelete( routinePath );
+    return null;
+  })
+
+  /* - */
+
   return ready;
 }
+
+combinedShell.timeOut = 150000;
 
 //
 
@@ -755,6 +833,10 @@ function combinedProgramatic( test )
   let routinePath = _.path.join( self.tempDir, test.name );
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
+  let inputPath = _.path.join( routinePath, 'main/**' );
+  let outputPath = _.path.join( routinePath, 'out/Main.s' );
+  let entryPath = 'main/File1.s';
+  let externalBeforePath = 'External.s';
   let ready = new _.Consequence().take( null );
   let shell = _.sheller
   ({
@@ -779,12 +861,12 @@ function combinedProgramatic( test )
     let multiple = ts.multiple
     ({
 
-      inputPath : _.path.join( routinePath, 'main/**' ),
-      outputPath : _.path.join( routinePath, 'out/Main.s' ),
-      entryPath : 'main/File1.s',
-      externalBeforePath : 'External.s',
+      inputPath : inputPath,
+      outputPath : outputPath,
+      entryPath : entryPath,
+      externalBeforePath : externalBeforePath,
       totalReporting : 0,
-      transpilingStrategies : [ 'Nop' ],
+      transpilingStrategy : [ 'Nop' ],
       splittingStrategy : 'ManyToOne',
       writingTerminalUnderDirectory : 1,
       simpleConcatenator : 0,
@@ -827,6 +909,8 @@ function combinedProgramatic( test )
   return ready;
 }
 
+combinedProgramatic.timeOut = 150000;
+
 // --
 // define
 // --
@@ -851,6 +935,7 @@ var Self =
 
     singleFileInputTerminal,
     singleFileInputDir,
+    singleFileInputDirThrowing,
     singleDst,
     severalDst,
     complexMask,

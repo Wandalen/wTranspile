@@ -55,7 +55,6 @@ function form()
   _.assert( _.boolLike( multiple.beautifing ), 'Expects bool-like {-multiple.beautifing-}' );
   _.sure( _.arrayHas( [ 'ManyToOne', 'OneToOne' ], multiple.splittingStrategy ) );
   _.sure( _.arrayHas( [ 'preserve', 'rebuild' ], multiple.upToDate ), () => 'Unknown value of upToDate ' + _.strQuote( multiple.upToDate ) );
-  // _.assert( multiple.entryPath === null || _.strIs( multiple.entryPath ) || _.arrayIs( multiple.entryPath ) );
 
   /* parent */
 
@@ -65,7 +64,6 @@ function form()
   _.assert( arguments.length === 0 );
 
   multiple.errors = [];
-
   multiple.onBegin = _.routinesCompose( multiple.onBegin );
   multiple.onEnd = _.routinesCompose( multiple.onEnd );
 
@@ -146,17 +144,17 @@ function form()
 
   /* transpilation strategies */
 
-  if( _.strIs( multiple.transpilingStrategies ) )
-  multiple.transpilingStrategies = [ multiple.transpilingStrategies ];
-  else if( !multiple.transpilingStrategies )
-  multiple.transpilingStrategies = [ 'Uglify' ];
-  // multiple.transpilingStrategies = [ 'Babel', 'Uglify', 'Babel' ];
+  if( _.strIs( multiple.transpilingStrategy ) )
+  multiple.transpilingStrategy = [ multiple.transpilingStrategy ];
+  else if( !multiple.transpilingStrategy )
+  multiple.transpilingStrategy = [ 'Uglify' ];
+  // multiple.transpilingStrategy = [ 'Babel', 'Uglify', 'Babel' ];
 
-  _.assert( _.strsAreAll( multiple.transpilingStrategies ) );
+  _.assert( _.strsAreAll( multiple.transpilingStrategy ) );
 
-  for( let s = 0 ; s < multiple.transpilingStrategies.length ; s++ )
+  for( let s = 0 ; s < multiple.transpilingStrategy.length ; s++ )
   {
-    let strategy = multiple.transpilingStrategies[ s ];
+    let strategy = multiple.transpilingStrategy[ s ];
     if( _.strIs( strategy ) )
     {
       _.sure( !!_.TranspilationStrategy.Transpiler[ strategy ], 'Transpiler not found', strategy )
@@ -166,7 +164,7 @@ function form()
     if( _.routineIs( strategy ) )
     strategy = strategy({});
 
-    multiple.transpilingStrategies[ s ] = strategy;
+    multiple.transpilingStrategy[ s ] = strategy;
     _.assert( strategy instanceof _.TranspilationStrategy.Transpiler.Abstract );
   }
 
@@ -205,9 +203,14 @@ function perform()
     return _.routinesCall( multiple, multiple.onBegin, [ multiple ] );
   })
 
-  multiple.singleEach( ( single ) =>
+  result
+  .then( function( arg )
   {
-    result.then( () => single.perform() );
+    multiple.singleEach( ( single ) =>
+    {
+      result.then( () => single.perform() );
+    });
+    return arg;
   });
 
   result
@@ -222,7 +225,10 @@ function perform()
   .finally( function( err, arg )
   {
     if( err )
-    _.arrayAppendOnce( multiple.errors, err );
+    {
+      _.arrayAppendOnce( multiple.errors, err );
+      throw _.errLogOnce( err );
+    }
     if( multiple.verbosity >= 1 && multiple.totalReporting )
     logger.log( ' # Transpilation took', _.timeSpent( time ) );
     return null;
@@ -267,7 +273,7 @@ function singleEach( onEach )
 
       if( multiple.upToDate === 'preserve' )
       {
-        let upToDate = fileProvider.filesAreUpToDate( dstPath, srcPaths );
+        let upToDate = fileProvider.filesAreUpToDate2({ dst : dstPath, src : srcPaths });
         if( upToDate )
         continue;
       }
@@ -380,7 +386,7 @@ let Aggregates =
 let Associates =
 {
   sys : null,
-  transpilingStrategies : null,
+  transpilingStrategy : null,
   fileProvider : null,
   logger : null
 }
@@ -397,7 +403,7 @@ let Forbids =
 
 let Accessors =
 {
-  transpilingStrategies : { setter : _.accessor.setter.arrayCollection({ name : 'transpilingStrategies' }) },
+  transpilingStrategy : { setter : _.accessor.setter.arrayCollection({ name : 'transpilingStrategy' }) },
 }
 
 // --
@@ -413,7 +419,6 @@ let Proto =
   perform,
   performThen,
 
-  perform,
   singleEach,
 
   /* */
