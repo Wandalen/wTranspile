@@ -55,6 +55,7 @@ function form()
   _.assert( _.boolLike( multiple.beautifing ), 'Expects bool-like {-multiple.beautifing-}' );
   _.sure( _.arrayHas( [ 'ManyToOne', 'OneToOne' ], multiple.splittingStrategy ) );
   _.sure( _.arrayHas( [ 'preserve', 'rebuild' ], multiple.upToDate ), () => 'Unknown value of upToDate ' + _.strQuote( multiple.upToDate ) );
+  // _.assert( multiple.entryPath === null || _.strIs( multiple.entryPath ) || _.arrayIs( multiple.entryPath ) );
 
   /* parent */
 
@@ -81,10 +82,6 @@ function form()
 
   multiple.formed = 1;
 
-  // multiple.formed = 1;
-  // return multiple;
-  // Parent.prototype.form.call( multiple );
-
   let fileProvider = multiple.fileProvider;
   let path = fileProvider.path;
 
@@ -96,13 +93,51 @@ function form()
   multiple.outputPath.prefixPath = multiple.outputPath.prefixPath || path.current();
   multiple.inputPath.prefixPath = multiple.inputPath.prefixPath || path.current();
   multiple.inputPath.pairWithDst( multiple.outputPath );
-  // multiple.inputPath.pairRefine();
   multiple.inputPath.pairRefineLight();
 
-  // debugger;
   multiple.outputPath.form();
   multiple.inputPath.form();
-  // debugger;
+
+  multiple.entryPath = fileProvider.recordFilter( multiple.entryPath );
+  if( !multiple.entryPath.basePath )
+  multiple.entryPath.basePath = multiple.inputPath.basePaths[ 0 ];
+  multiple.entryPath = fileProvider.filesFind
+  ({
+    filter : multiple.entryPath,
+    outputFormat : 'absolute',
+    mandatory : 0,
+    allowingMissed : 1,
+  });
+
+  if( multiple.externalBeforePath )
+  {
+    multiple.externalBeforePath = fileProvider.recordFilter( multiple.externalBeforePath );
+    if( !multiple.externalBeforePath.basePath )
+    multiple.externalBeforePath.basePath = multiple.inputPath.basePaths[ 0 ];
+    multiple.externalBeforePath = fileProvider.filesFind
+    ({
+      filter : multiple.externalBeforePath,
+      outputFormat : 'absolute',
+      distinct : 1,
+    });
+  }
+
+  if( multiple.externalAfterPath )
+  {
+    multiple.externalAfterPath = fileProvider.recordFilter( multiple.externalAfterPath );
+    if( !multiple.externalAfterPath.basePath )
+    multiple.externalAfterPath.basePath = multiple.inputPath.basePaths[ 0 ];
+    multiple.externalAfterPath.distinct = 1;
+    multiple.externalAfterPath = fileProvider.filesFind
+    ({
+      filter : multiple.externalAfterPath,
+      outputFormat : 'absolute',
+      distinct : 1,
+    });
+  }
+
+  // multiple.entryPath = multiple.entryPath ? _.arrayAs( multiple.entryPath ) : [];
+  // multiple.entryPath = path.s.join( multiple.inputPath.basePaths[ 0 ], multiple.entryPath );
 
   multiple.tempPath = path.resolve( multiple.tempPath );
 
@@ -141,19 +176,10 @@ function form()
   _.assert( multiple.fileProvider instanceof _.FileProvider.Abstract );
   _.assert( _.routineIs( multiple.onBegin ) );
   _.assert( _.routineIs( multiple.onEnd ) );
+  _.assert( _.arrayIs( multiple.entryPath ) );
 
   return multiple;
 }
-
-// //
-//
-// function perform()
-// {
-//   let multiple = this;
-//   multiple.form();
-//   multiple.perform();
-//   return multiple;
-// }
 
 //
 
@@ -224,7 +250,7 @@ function singleEach( onEach )
   try
   {
 
-    debugger;
+    // debugger;
     let groups = fileProvider.filesFindGroups
     ({
       src : multiple.inputPath,
@@ -232,7 +258,7 @@ function singleEach( onEach )
       recursive : 2,
       outputFormat : 'absolute',
     });
-    debugger;
+    // debugger;
 
     for( let dstPath in groups.filesGrouped )
     {
@@ -312,7 +338,6 @@ function singleEach( onEach )
 let Composes =
 {
 
-  // debug : 0,
   optimization : 9,
   minification : 8,
   diagnosing : 0,
@@ -320,6 +345,7 @@ let Composes =
 
   /* */
 
+  simpleConcatenator : 0,
   writingTerminalUnderDirectory : 0,
   splittingStrategy : 'ManyToOne', /* [ 'ManyToOne', 'OneToOne' ] */
   upToDate : 'preserve', /* [ 'preserve', 'rebuild' ] */
@@ -333,6 +359,9 @@ let Composes =
 
   inputPath : null,
   outputPath : null,
+  entryPath : null,
+  externalBeforePath : null,
+  externalAfterPath : null,
   tempPath : 'temp.tmp',
 
   /* */
