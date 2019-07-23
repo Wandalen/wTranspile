@@ -78,25 +78,6 @@ path:
       - ../proto/dwtools/Tools.s
       - ../proto/dwtools/abase
       - ../proto/dwtools/amid
-      - ../proto/dwtools/amid/-l9
-      - ../proto/dwtools/amid/-l9/transpilationStrategy
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/Exec
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/IncludeBase.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/IncludeTop.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/MainBase.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/MainTop.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l3
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l3/SessionAbstract.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l3/SessionPartial.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l3/SessionTop.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l3/StrategyAbstract.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy/Babel.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy/Closure.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy/Prepack.s
-      - ../proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy/Uglify.s
-      - ../proto/dwtools/amid/-l9.test
-      - ../proto/dwtools/amid/-l9.test/TranspilationStrategy.test.s
       - ../proto/dwtools/atop
       - ../proto/dwtools/atop/transpilationStrategy
       - ../proto/dwtools/atop/transpilationStrategy/Exec
@@ -112,6 +93,10 @@ path:
       - ../proto/dwtools/atop/transpilationStrategy/l3/Transpiler.s
       - ../proto/dwtools/atop/transpilationStrategy/l5_concatenator
       - ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/JavaScript.s
+      - >-
+        ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterMaker.s
+      - >-
+        ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterWare.s
       - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler
       - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Babel.s
       - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Closure.s
@@ -121,6 +106,15 @@ path:
       - ../proto/dwtools/atop/transpilationStrategy.test
       - >-
         ../proto/dwtools/atop/transpilationStrategy.test/TranspilationStrategy.test.s
+      - ../proto/dwtools/atop/transpilationStrategy.test/_asset
+      - ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined
+      - >-
+        ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined/External.s
+      - ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined/main
+      - >-
+        ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined/main/File1.s
+      - >-
+        ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined/main/File2.s
     criterion:
       default: 1
       debug: 1
@@ -407,25 +401,6 @@ module:
           - proto/dwtools/Tools.s
           - proto/dwtools/abase
           - proto/dwtools/amid
-          - proto/dwtools/amid/-l9
-          - proto/dwtools/amid/-l9/transpilationStrategy
-          - proto/dwtools/amid/-l9/transpilationStrategy/Exec
-          - proto/dwtools/amid/-l9/transpilationStrategy/IncludeBase.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/IncludeTop.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/MainBase.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/MainTop.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/l3
-          - proto/dwtools/amid/-l9/transpilationStrategy/l3/SessionAbstract.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/l3/SessionPartial.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/l3/SessionTop.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/l3/StrategyAbstract.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy
-          - proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy/Babel.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy/Closure.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy/Prepack.s
-          - proto/dwtools/amid/-l9/transpilationStrategy/l5_strategy/Uglify.s
-          - proto/dwtools/amid/-l9.test
-          - proto/dwtools/amid/-l9.test/TranspilationStrategy.test.s
           - proto/dwtools/atop
           - proto/dwtools/atop/transpilationStrategy
           - proto/dwtools/atop/transpilationStrategy/Exec
@@ -442,6 +417,10 @@ module:
           - proto/dwtools/atop/transpilationStrategy/l5_concatenator
           - >-
             proto/dwtools/atop/transpilationStrategy/l5_concatenator/JavaScript.s
+          - >-
+            proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterMaker.s
+          - >-
+            proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterWare.s
           - proto/dwtools/atop/transpilationStrategy/l5_transpiler
           - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Babel.s
           - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Closure.s
@@ -451,6 +430,15 @@ module:
           - proto/dwtools/atop/transpilationStrategy.test
           - >-
             proto/dwtools/atop/transpilationStrategy.test/TranspilationStrategy.test.s
+          - proto/dwtools/atop/transpilationStrategy.test/_asset
+          - proto/dwtools/atop/transpilationStrategy.test/_asset/combined
+          - >-
+            proto/dwtools/atop/transpilationStrategy.test/_asset/combined/External.s
+          - proto/dwtools/atop/transpilationStrategy.test/_asset/combined/main
+          - >-
+            proto/dwtools/atop/transpilationStrategy.test/_asset/combined/main/File1.s
+          - >-
+            proto/dwtools/atop/transpilationStrategy.test/_asset/combined/main/File2.s
         criterion:
           default: 1
           debug: 1
