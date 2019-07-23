@@ -273,8 +273,6 @@ function commandTranspile( e )
     },
   });
 
-  debugger;
-
   if( !_.mapIs( multiple.inputPath ) )
   multiple.inputPath = { filePath : multiple.inputPath }
   multiple.inputPath.prefixPath = multiple.inputPath.prefixPath || path.current();

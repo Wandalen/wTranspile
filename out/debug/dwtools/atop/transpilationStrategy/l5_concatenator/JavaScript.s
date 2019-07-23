@@ -78,7 +78,6 @@ function _performAct( single )
 
   result = _.mapVals( files ).join( '\n' );
 
-  debugger;
   if( !multiple.simpleConcatenator && multiple.splittingStrategy !== 'OneToOne' )
   {
     let fixes = starter.filesFixesGet

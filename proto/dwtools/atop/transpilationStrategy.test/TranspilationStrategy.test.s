@@ -824,8 +824,13 @@ function combinedShell( test )
   .then( ( got ) =>
   {
     test.case = 'repeat';
+    debugger;
     return null;
   })
+
+  /*
+    qqq xxx : why does it thow error???
+  */
 
   shell({ args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
   /* node ../../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */

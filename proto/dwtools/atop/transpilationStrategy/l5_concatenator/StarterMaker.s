@@ -30,7 +30,7 @@ function filesFixesGet( o )
   r.postfix = '';
   Object.preventExtensions( r );
 
-  _.routineOptions( filesFixesGet, arguments ); debugger;
+  _.routineOptions( filesFixesGet, arguments );
 
   if( o.entryPath )
   {
