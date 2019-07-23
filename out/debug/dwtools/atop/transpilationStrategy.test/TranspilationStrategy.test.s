@@ -742,11 +742,21 @@ function combinedShell( test )
   let inputPath = 'main/**';
   let outputPath = 'out/Main.s';
   let entryPath = 'main/File1.s';
+  let outMainPath = _.path.join( routinePath, './out/Main.s' );
   let externalBeforePath = 'External.s';
   let ready = new _.Consequence().take( null );
+
   let shell = _.sheller
   ({
     execPath : 'node ' + execPath,
+    currentPath : routinePath,
+    outputCollecting : 1,
+    throwingExitCode : 0,
+    ready : ready,
+  });
+
+  let shell2 = _.sheller
+  ({
     currentPath : routinePath,
     outputCollecting : 1,
     throwingExitCode : 0,
@@ -766,7 +776,7 @@ function combinedShell( test )
   })
 
   shell({ args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  /* node ../../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
@@ -777,8 +787,31 @@ function combinedShell( test )
     var files = self.find( routinePath );
     test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s', './out', './out/Main.s' ] );
 
+    var read = _.fileProvider.fileRead( outMainPath );
+    test.identical( _.strCount( read, `console.log( 'main/File1.s' );` ), 1 );
+    test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
+    test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
+    test.identical( _.strCount( read, `_starter_._fileInclude( _libraryDirPath_, '../External.s' );` ), 1 );
+    test.identical( _.strCount( read, `module.exports = _starter_._fileInclude( _libraryDirPath_, './main/File1.s' );` ), 1 );
+    test.identical( _.strCount( read, `_starter_._fileInclude(` ), 2 );
+    test.identical( _.strCount( read, `module.exports = _starter_._fileInclude` ), 1 );
+
     return null;
   })
+
+  shell2({ execPath : 'node ' + _.path.nativize( outMainPath ) })
+
+  .then( ( got ) =>
+  {
+    test.identical( got.exitCode, 0 );
+
+    test.identical( _.strCount( got.output, `External.s` ), 1 );
+    test.identical( _.strCount( got.output, `main/File1.s` ), 1 );
+    test.identical( _.strCount( got.output, `external 13` ), 1 );
+
+    return null;
+  })
+
   .then( ( got ) =>
   {
     _.fileProvider.filesDelete( routinePath );
@@ -790,32 +823,84 @@ function combinedShell( test )
   ready
   .then( ( got ) =>
   {
-    test.case = 'throwing';
-    _.fileProvider.filesDelete( routinePath );
-    _.fileProvider.dirMake( routinePath );
-    _.fileProvider.filesReflect({ reflectMap : { [ originalDirPath ] : routinePath } });
+    test.case = 'repeat';
     return null;
   })
 
-  shell({ currentPath : routinePath + '/..', args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  shell({ args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
+  /* node ../../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
-    test.notIdentical( got.exitCode, 0 );
+    test.identical( got.exitCode, 0 );
 
-    test.identical( _.strCount( got.output, /Nothing found. Stem file .*main.* does not exist!/ ), 1 );
+    test.identical( _.strCount( got.output, /# Transpiled/ ), 0 );
 
     var files = self.find( routinePath );
-    test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s' ] );
+    test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s', './out', './out/Main.s' ] );
+
+    var read = _.fileProvider.fileRead( outMainPath );
+    test.identical( _.strCount( read, `console.log( 'main/File1.s' );` ), 1 );
+    test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
+    test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
+    test.identical( _.strCount( read, `_starter_._fileInclude( _libraryDirPath_, '../External.s' );` ), 1 );
+    test.identical( _.strCount( read, `module.exports = _starter_._fileInclude( _libraryDirPath_, './main/File1.s' );` ), 1 );
+    test.identical( _.strCount( read, `_starter_._fileInclude(` ), 2 );
+    test.identical( _.strCount( read, `module.exports = _starter_._fileInclude` ), 1 );
 
     return null;
   })
+
+  shell2({ execPath : 'node ' + _.path.nativize( outMainPath ) })
+
+  .then( ( got ) =>
+  {
+    test.identical( got.exitCode, 0 );
+
+    test.identical( _.strCount( got.output, `External.s` ), 1 );
+    test.identical( _.strCount( got.output, `main/File1.s` ), 1 );
+    test.identical( _.strCount( got.output, `external 13` ), 1 );
+
+    return null;
+  })
+
   .then( ( got ) =>
   {
     _.fileProvider.filesDelete( routinePath );
     return null;
   })
+
+  /* - */
+
+  // ready
+  // .then( ( got ) =>
+  // {
+  //   test.case = 'throwing';
+  //   _.fileProvider.filesDelete( routinePath );
+  //   _.fileProvider.dirMake( routinePath );
+  //   _.fileProvider.filesReflect({ reflectMap : { [ originalDirPath ] : routinePath } });
+  //   return null;
+  // })
+  //
+  // shell({ currentPath : routinePath + '/..', args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
+  // /* node ../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  //
+  // .then( ( got ) =>
+  // {
+  //   test.notIdentical( got.exitCode, 0 );
+  //
+  //   test.identical( _.strCount( got.output, /Nothing found. Stem file .*main.* does not exist!/ ), 1 );
+  //
+  //   var files = self.find( routinePath );
+  //   test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s' ] );
+  //
+  //   return null;
+  // })
+  // .then( ( got ) =>
+  // {
+  //   _.fileProvider.filesDelete( routinePath );
+  //   return null;
+  // })
 
   /* - */
 

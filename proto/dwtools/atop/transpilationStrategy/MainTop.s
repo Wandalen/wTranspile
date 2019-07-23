@@ -273,10 +273,17 @@ function commandTranspile( e )
     },
   });
 
-  if( _.strIs( multiple.inputPath ) || _.arrayIs( multiple.inputPath ) )
-  multiple.inputPath = path.s.join( path.current(), multiple.inputPath );
-  if( _.strIs( multiple.outputPath ) || _.arrayIs( multiple.outputPath ) )
-  multiple.outputPath = path.s.join( path.current(), multiple.outputPath );
+  debugger;
+
+  if( !_.mapIs( multiple.inputPath ) )
+  multiple.inputPath = { filePath : multiple.inputPath }
+  multiple.inputPath.prefixPath = multiple.inputPath.prefixPath || path.current();
+  multiple.inputPath.basePath = multiple.inputPath.basePath || path.current();
+
+  if( !_.mapIs( multiple.outputPath ) )
+  multiple.outputPath = { filePath : multiple.outputPath }
+  multiple.outputPath.prefixPath = multiple.outputPath.prefixPath || path.current();
+  multiple.outputPath.basePath = multiple.outputPath.basePath || path.current();
 
   multiple.verbosity = sys.verbosity;
 

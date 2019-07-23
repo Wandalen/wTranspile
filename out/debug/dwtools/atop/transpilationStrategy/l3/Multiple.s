@@ -104,6 +104,7 @@ function form()
     filter : multiple.entryPath,
     outputFormat : 'absolute',
     mandatory : 0,
+    distinct : 1,
     allowingMissed : 1,
   });
 

@@ -78,6 +78,7 @@ function _performAct( single )
 
   result = _.mapVals( files ).join( '\n' );
 
+  debugger;
   if( !multiple.simpleConcatenator && multiple.splittingStrategy !== 'OneToOne' )
   {
     let fixes = starter.filesFixesGet
@@ -102,7 +103,7 @@ function fileWrapSimple( o )
 
   _.routineOptions( fileWrapSimple, arguments );
 
-  let fileName = _.strVarNameFor( _.path.fullName( o.filePath ) ); 
+  let fileName = _.strVarNameFor( _.path.fullName( o.filePath ) );
 
   let prefix = `( function ${fileName}() { // == begin of file ${fileName}\n`;
 
