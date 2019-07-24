@@ -812,11 +812,11 @@ function combinedShell( test )
     return null;
   })
 
-  .then( ( got ) =>
-  {
-    _.fileProvider.filesDelete( routinePath );
-    return null;
-  })
+  // .then( ( got ) =>
+  // {
+  //   _.fileProvider.filesDelete( routinePath );
+  //   return null;
+  // })
 
   /* - */
 
@@ -830,6 +830,7 @@ function combinedShell( test )
 
   /*
     qqq xxx : why does it thow error???
+    aaa : because test removes routinePath directory few lines above, routinePath is used in shell as currentPath
   */
 
   shell({ args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
