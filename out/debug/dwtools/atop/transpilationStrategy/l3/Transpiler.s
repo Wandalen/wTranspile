@@ -72,7 +72,7 @@ function perform( stage )
     inputPath : null,
     outputPath : null,
     tempPath : null,
-    mapFilePath : null,
+    // mapFilePath : null,
 
     debug : null,
     optimization : null,
@@ -136,7 +136,7 @@ function perform( stage )
     _.assert( stage.formed === 2 );
     return true;
   })
-  .except( function( err )
+  .catch( function( err )
   {
     debugger;
     err = _.err( err )

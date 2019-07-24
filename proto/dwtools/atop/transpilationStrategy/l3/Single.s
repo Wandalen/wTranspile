@@ -104,11 +104,11 @@ function perform()
     return single.input;
   });
 
-  for( let s = 0 ; s < multiple.transpilingStrategies.length ; s++ ) (function()
+  for( let s = 0 ; s < multiple.transpilingStrategy.length ; s++ ) (function()
   {
     let index = s;
-    let strategy = multiple.transpilingStrategies[ s ];
-    let isLast = index === multiple.transpilingStrategies.length - 1;
+    let strategy = multiple.transpilingStrategy[ s ];
+    let isLast = index === multiple.transpilingStrategy.length - 1;
     con.thenKeep( function( input )
     {
       let output = input.outputMake

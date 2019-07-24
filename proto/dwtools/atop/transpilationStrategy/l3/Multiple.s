@@ -64,7 +64,6 @@ function form()
   _.assert( arguments.length === 0 );
 
   multiple.errors = [];
-
   multiple.onBegin = _.routinesCompose( multiple.onBegin );
   multiple.onEnd = _.routinesCompose( multiple.onEnd );
 
@@ -81,10 +80,6 @@ function form()
 
   multiple.formed = 1;
 
-  // multiple.formed = 1;
-  // return multiple;
-  // Parent.prototype.form.call( multiple );
-
   let fileProvider = multiple.fileProvider;
   let path = fileProvider.path;
 
@@ -96,13 +91,52 @@ function form()
   multiple.outputPath.prefixPath = multiple.outputPath.prefixPath || path.current();
   multiple.inputPath.prefixPath = multiple.inputPath.prefixPath || path.current();
   multiple.inputPath.pairWithDst( multiple.outputPath );
-  // multiple.inputPath.pairRefine();
   multiple.inputPath.pairRefineLight();
 
-  // debugger;
   multiple.outputPath.form();
   multiple.inputPath.form();
-  // debugger;
+
+  multiple.entryPath = fileProvider.recordFilter( multiple.entryPath );
+  if( !multiple.entryPath.basePath )
+  multiple.entryPath.basePath = multiple.inputPath.basePaths[ 0 ];
+  multiple.entryPath = fileProvider.filesFind
+  ({
+    filter : multiple.entryPath,
+    outputFormat : 'absolute',
+    mandatory : 0,
+    distinct : 1,
+    allowingMissed : 1,
+  });
+
+  if( multiple.externalBeforePath )
+  {
+    multiple.externalBeforePath = fileProvider.recordFilter( multiple.externalBeforePath );
+    if( !multiple.externalBeforePath.basePath )
+    multiple.externalBeforePath.basePath = multiple.inputPath.basePaths[ 0 ];
+    multiple.externalBeforePath = fileProvider.filesFind
+    ({
+      filter : multiple.externalBeforePath,
+      outputFormat : 'absolute',
+      distinct : 1,
+    });
+  }
+
+  if( multiple.externalAfterPath )
+  {
+    multiple.externalAfterPath = fileProvider.recordFilter( multiple.externalAfterPath );
+    if( !multiple.externalAfterPath.basePath )
+    multiple.externalAfterPath.basePath = multiple.inputPath.basePaths[ 0 ];
+    multiple.externalAfterPath.distinct = 1;
+    multiple.externalAfterPath = fileProvider.filesFind
+    ({
+      filter : multiple.externalAfterPath,
+      outputFormat : 'absolute',
+      distinct : 1,
+    });
+  }
+
+  // multiple.entryPath = multiple.entryPath ? _.arrayAs( multiple.entryPath ) : [];
+  // multiple.entryPath = path.s.join( multiple.inputPath.basePaths[ 0 ], multiple.entryPath );
 
   multiple.tempPath = path.resolve( multiple.tempPath );
 
@@ -111,17 +145,17 @@ function form()
 
   /* transpilation strategies */
 
-  if( _.strIs( multiple.transpilingStrategies ) )
-  multiple.transpilingStrategies = [ multiple.transpilingStrategies ];
-  else if( !multiple.transpilingStrategies )
-  multiple.transpilingStrategies = [ 'Uglify' ];
-  // multiple.transpilingStrategies = [ 'Babel', 'Uglify', 'Babel' ];
+  if( _.strIs( multiple.transpilingStrategy ) )
+  multiple.transpilingStrategy = [ multiple.transpilingStrategy ];
+  else if( !multiple.transpilingStrategy )
+  multiple.transpilingStrategy = [ 'Uglify' ];
+  // multiple.transpilingStrategy = [ 'Babel', 'Uglify', 'Babel' ];
 
-  _.assert( _.strsAreAll( multiple.transpilingStrategies ) );
+  _.assert( _.strsAreAll( multiple.transpilingStrategy ) );
 
-  for( let s = 0 ; s < multiple.transpilingStrategies.length ; s++ )
+  for( let s = 0 ; s < multiple.transpilingStrategy.length ; s++ )
   {
-    let strategy = multiple.transpilingStrategies[ s ];
+    let strategy = multiple.transpilingStrategy[ s ];
     if( _.strIs( strategy ) )
     {
       _.sure( !!_.TranspilationStrategy.Transpiler[ strategy ], 'Transpiler not found', strategy )
@@ -131,7 +165,7 @@ function form()
     if( _.routineIs( strategy ) )
     strategy = strategy({});
 
-    multiple.transpilingStrategies[ s ] = strategy;
+    multiple.transpilingStrategy[ s ] = strategy;
     _.assert( strategy instanceof _.TranspilationStrategy.Transpiler.Abstract );
   }
 
@@ -141,19 +175,10 @@ function form()
   _.assert( multiple.fileProvider instanceof _.FileProvider.Abstract );
   _.assert( _.routineIs( multiple.onBegin ) );
   _.assert( _.routineIs( multiple.onEnd ) );
+  _.assert( _.arrayIs( multiple.entryPath ) );
 
   return multiple;
 }
-
-// //
-//
-// function perform()
-// {
-//   let multiple = this;
-//   multiple.form();
-//   multiple.perform();
-//   return multiple;
-// }
 
 //
 
@@ -179,9 +204,14 @@ function perform()
     return _.routinesCall( multiple, multiple.onBegin, [ multiple ] );
   })
 
-  multiple.singleEach( ( single ) =>
+  result
+  .then( function( arg )
   {
-    result.then( () => single.perform() );
+    multiple.singleEach( ( single ) =>
+    {
+      result.then( () => single.perform() );
+    });
+    return arg;
   });
 
   result
@@ -196,7 +226,10 @@ function perform()
   .finally( function( err, arg )
   {
     if( err )
-    _.arrayAppendOnce( multiple.errors, err );
+    {
+      _.arrayAppendOnce( multiple.errors, err );
+      throw _.errLogOnce( err );
+    }
     if( multiple.verbosity >= 1 && multiple.totalReporting )
     logger.log( ' # Transpilation took', _.timeSpent( time ) );
     return null;
@@ -224,7 +257,7 @@ function singleEach( onEach )
   try
   {
 
-    debugger;
+    // debugger;
     let groups = fileProvider.filesFindGroups
     ({
       src : multiple.inputPath,
@@ -232,7 +265,7 @@ function singleEach( onEach )
       recursive : 2,
       outputFormat : 'absolute',
     });
-    debugger;
+    // debugger;
 
     for( let dstPath in groups.filesGrouped )
     {
@@ -241,7 +274,7 @@ function singleEach( onEach )
 
       if( multiple.upToDate === 'preserve' )
       {
-        let upToDate = fileProvider.filesAreUpToDate( dstPath, srcPaths );
+        let upToDate = fileProvider.filesAreUpToDate2({ dst : dstPath, src : srcPaths });
         if( upToDate )
         continue;
       }
@@ -312,7 +345,6 @@ function singleEach( onEach )
 let Composes =
 {
 
-  // debug : 0,
   optimization : 9,
   minification : 8,
   diagnosing : 0,
@@ -320,6 +352,7 @@ let Composes =
 
   /* */
 
+  simpleConcatenator : 0,
   writingTerminalUnderDirectory : 0,
   splittingStrategy : 'ManyToOne', /* [ 'ManyToOne', 'OneToOne' ] */
   upToDate : 'preserve', /* [ 'preserve', 'rebuild' ] */
@@ -333,6 +366,9 @@ let Composes =
 
   inputPath : null,
   outputPath : null,
+  entryPath : null,
+  externalBeforePath : null,
+  externalAfterPath : null,
   tempPath : 'temp.tmp',
 
   /* */
@@ -351,7 +387,7 @@ let Aggregates =
 let Associates =
 {
   sys : null,
-  transpilingStrategies : null,
+  transpilingStrategy : null,
   fileProvider : null,
   logger : null
 }
@@ -368,7 +404,7 @@ let Forbids =
 
 let Accessors =
 {
-  transpilingStrategies : { setter : _.accessor.setter.arrayCollection({ name : 'transpilingStrategies' }) },
+  transpilingStrategy : { setter : _.accessor.setter.arrayCollection({ name : 'transpilingStrategy' }) },
 }
 
 // --
@@ -384,7 +420,6 @@ let Proto =
   perform,
   performThen,
 
-  perform,
   singleEach,
 
   /* */

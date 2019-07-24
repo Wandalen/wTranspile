@@ -13,6 +13,7 @@ if( typeof module !== 'undefined' )
   require( './l3/Stage.s' );
   require( './l3/Transpiler.s' );
 
+  require( './l5_concatenator/StarterMaker.s' );
   require( './l5_concatenator/JavaScript.s' );
 
   require( './l5_transpiler/Babel.s' );

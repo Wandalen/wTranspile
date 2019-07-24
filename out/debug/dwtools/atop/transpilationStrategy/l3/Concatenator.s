@@ -21,17 +21,18 @@ Self.shortName = 'Abstract';
 
 function finit()
 {
-  let stage = this;
-  Parent.prototype.finit.call( stage );
+  let self = this;
+  Parent.prototype.finit.call( self );
 }
 
 //
 
 function init( o )
 {
-  let stage = this;
-  _.Copyable.prototype.init.call( stage, o );
-  Object.preventExtensions( stage );
+  let self = this;
+  _.Copyable.prototype.init.call( self, o );
+  Object.preventExtensions( self );
+  return self;
 }
 
 //
