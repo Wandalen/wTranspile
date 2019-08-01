@@ -97,6 +97,7 @@ path:
         ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterMaker.s
       - >-
         ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterWare.s
+      - ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/Text.s
       - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler
       - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Babel.s
       - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Closure.s
@@ -421,6 +422,7 @@ module:
             proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterMaker.s
           - >-
             proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterWare.s
+          - proto/dwtools/atop/transpilationStrategy/l5_concatenator/Text.s
           - proto/dwtools/atop/transpilationStrategy/l5_transpiler
           - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Babel.s
           - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Closure.s
