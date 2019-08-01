@@ -10,7 +10,7 @@ let _ = wTools;
 let Parent = null;
 let Self = function wTsStage( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Stage';

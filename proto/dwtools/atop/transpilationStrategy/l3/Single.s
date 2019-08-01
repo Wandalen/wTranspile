@@ -10,7 +10,7 @@ let _ = wTools;
 let Parent = null;
 let Self = function wTsSingle( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Single';
@@ -364,12 +364,22 @@ function concatenatorFor()
   if( !_.mapKeys( single.dataMap ).length )
   return concatenator;
 
+  let prevPath;
   for( let inputPath in single.dataMap )
   {
     let ext = path.ext( inputPath );
     let concatenator2 = sys.extToConcatenatorMap[ ext ];
-    _.assert( concatenator === null || concatenator === concatenator2, 'Found more than single concatenator' );
+    _.assert( !!concatenator2, () => 'No concatenator for extension ' + _.strQuote( ext ) );
+    debugger;
+    _.assert
+    (
+      concatenator === null || concatenator === concatenator2,
+      () => 'Found more than single concatenator\n' +
+            concatenator.nickName + ' for ' + prevPath + '\n' +
+            concatenator2.nickName + ' for ' + inputPath + '\n'
+    );
     concatenator = concatenator2;
+    prevPath = inputPath;
   }
 
   _.assert( concatenator instanceof sys.Concatenator.Abstract, 'Found none concatenator' );

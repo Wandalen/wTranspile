@@ -6,9 +6,9 @@
 
 let _ = wTools;
 let Parent = _.TranspilationStrategy.Concatenator.Abstract;
-let Self = function wTsTranspilerJavaScript( o )
+let Self = function wTsConcatenatorJavaScript( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'JavaScript';
@@ -129,10 +129,9 @@ fileWrapSimple.defaults =
 
 let Composes =
 {
-  ext : _.define.own([ 'js', 's', 'ss', '' ]),
+  ext : _.define.own([ 'js', 's', 'ss' ]),
   removingShellPrologue : 1,
   wrapping : 1,
-  entryFilePath : null,
 }
 
 let Associates =

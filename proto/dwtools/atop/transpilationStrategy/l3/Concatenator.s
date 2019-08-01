@@ -10,7 +10,7 @@ let _ = wTools;
 let Parent = null;
 let Self = function wTsConcatenatorAbstract( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Abstract';
@@ -56,7 +56,7 @@ function form()
 
   self.ext.forEach( ( ext ) =>
   {
-    _.assert( sys.extToConcatenatorMap[ ext ] === undefined );
+    _.assert( sys.extToConcatenatorMap[ ext ] === undefined, () => 'Concatenator associated with extension ' + _.strQuote( ext ) + ' was already registered' );
     sys.extToConcatenatorMap[ ext ] = self;
   });
 

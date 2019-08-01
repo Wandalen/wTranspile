@@ -222,7 +222,14 @@ function singleDst( test )
   let ts = new _.TranspilationStrategy().form();
   let multiple = ts.multiple
   ({
-    inputPath : originalDirPath + '/**',
+    inputPath :
+    {
+      filePath :
+      {
+        [ originalDirPath + '/**' ] : '',
+        [ originalDirPath + '/Exec' ] : 0,
+      }
+    },
     outputPath : outputPath,
   });
 

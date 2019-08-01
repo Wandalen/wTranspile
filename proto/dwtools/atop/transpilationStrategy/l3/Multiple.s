@@ -10,7 +10,7 @@ let _ = wTools;
 let Parent = null;
 let Self = function wTsMultiple( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Multiple';
@@ -96,17 +96,26 @@ function form()
   multiple.outputPath.form();
   multiple.inputPath.form();
 
-  multiple.entryPath = fileProvider.recordFilter( multiple.entryPath );
-  if( !multiple.entryPath.basePath )
-  multiple.entryPath.basePath = multiple.inputPath.basePaths[ 0 ];
-  multiple.entryPath = fileProvider.filesFind
-  ({
-    filter : multiple.entryPath,
-    outputFormat : 'absolute',
-    mandatory : 0,
-    distinct : 1,
-    allowingMissed : 1,
-  });
+  if( multiple.entryPath )
+  {
+    multiple.entryPath = fileProvider.recordFilter( multiple.entryPath );
+    if( !multiple.entryPath.basePath )
+    multiple.entryPath.basePath = multiple.inputPath.basePaths[ 0 ];
+    multiple.entryPath = fileProvider.filesFind
+    ({
+      filter : multiple.entryPath,
+      outputFormat : 'absolute',
+      distinct : 1,
+    });
+
+    // qqq xxx : cover the condition
+    _.sure
+    (
+      multiple.entryPath.length === 0 || multiple.splittingStrategy === 'ManyToOne',
+      () => 'Splitting strategy should be "ManyToOne" if entryPath defined'
+    );
+
+  }
 
   if( multiple.externalBeforePath )
   {
@@ -119,6 +128,14 @@ function form()
       outputFormat : 'absolute',
       distinct : 1,
     });
+
+    // qqq xxx : cover the condition
+    _.sure
+    (
+      multiple.externalBeforePath.length === 0 || multiple.splittingStrategy === 'ManyToOne',
+      () => 'Splitting strategy should be "ManyToOne" if externalBeforePath defined'
+    );
+
   }
 
   if( multiple.externalAfterPath )
@@ -133,6 +150,14 @@ function form()
       outputFormat : 'absolute',
       distinct : 1,
     });
+
+    // qqq xxx : cover the condition
+    _.sure
+    (
+      multiple.externalAfterPath.length === 0 || multiple.splittingStrategy === 'ManyToOne',
+      () => 'Splitting strategy should be "ManyToOne" if externalAfterPath defined'
+    );
+
   }
 
   // multiple.entryPath = multiple.entryPath ? _.arrayAs( multiple.entryPath ) : [];
@@ -175,10 +200,15 @@ function form()
   _.assert( multiple.fileProvider instanceof _.FileProvider.Abstract );
   _.assert( _.routineIs( multiple.onBegin ) );
   _.assert( _.routineIs( multiple.onEnd ) );
-  _.assert( _.arrayIs( multiple.entryPath ) );
+  _.assert( multiple.entryPath === null || _.arrayIs( multiple.entryPath ) );
 
   return multiple;
 }
+
+// MakeForEachCriterion.defaults
+// {
+//
+// }
 
 //
 
@@ -219,19 +249,29 @@ function perform()
   {
     return _.routinesCall( multiple, multiple.onEnd, [ multiple ] );
   })
-  .then( function( arg )
-  {
-    return _.routinesCall( multiple, multiple.onEnd, [ multiple ] );
-  })
+  // .then( function( arg )
+  // {
+  //   return _.routinesCall( multiple, multiple.onEnd, [ multiple ] );
+  // })
   .finally( function( err, arg )
   {
     if( err )
     {
       _.arrayAppendOnce( multiple.errors, err );
-      throw _.errLogOnce( err );
+      throw _.err( err );
+      // throw _.errLogOnce( err );
     }
-    if( multiple.verbosity >= 1 && multiple.totalReporting )
-    logger.log( ' # Transpilation took', _.timeSpent( time ) );
+    // if( multiple.verbosity >= 1 && multiple.totalReporting )
+    // if( multiple.verbosity >= 1 && multiple.totalReporting )
+
+    let reporting = false;
+    if( multiple.totalReporting === null )
+    reporting = multiple.verbosity === 1 || multiple.verbosity === 2 || multiple.verbosity > 5;
+    else if( multiple.totalReporting )
+    reporting = multiple.verbosity >= 1
+
+    if( reporting )
+    logger.log( ` # Transpiled ${multiple.srcCounter} source files to ${multiple.dstCounter} in ${_.timeSpent( time )}` );
     return null;
   });
 
@@ -257,7 +297,7 @@ function singleEach( onEach )
   try
   {
 
-    // debugger;
+    debugger;
     let groups = fileProvider.filesFindGroups
     ({
       src : multiple.inputPath,
@@ -265,7 +305,7 @@ function singleEach( onEach )
       recursive : 2,
       outputFormat : 'absolute',
     });
-    // debugger;
+    debugger;
 
     for( let dstPath in groups.filesGrouped )
     {
@@ -373,7 +413,7 @@ let Composes =
 
   /* */
 
-  totalReporting : 1,
+  totalReporting : null,
   verbosity : 4,
   onBegin : null,
   onEnd : null,

@@ -8,7 +8,7 @@ let _ = wTools;
 let Parent = _.TranspilationStrategy.Transpiler.Abstract;
 let Self = function wTsTranspilerNop( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Nop';

@@ -15,6 +15,7 @@ if( typeof module !== 'undefined' )
 
   require( './l5_concatenator/StarterMaker.s' );
   require( './l5_concatenator/JavaScript.s' );
+  require( './l5_concatenator/Text.s' );
 
   require( './l5_transpiler/Babel.s' );
   require( './l5_transpiler/Closure.s' );

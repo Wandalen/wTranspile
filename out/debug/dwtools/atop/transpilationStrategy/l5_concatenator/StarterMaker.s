@@ -9,7 +9,7 @@ let _ = wTools;
 let Parent = null
 let Self = function wStarterMaker2( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'StarterMaker2';

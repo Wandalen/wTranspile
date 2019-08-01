@@ -8,7 +8,7 @@ let _ = wTools;
 let Parent = null;
 let Self = function wTsTranspilerAbstract( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Abstract';
