@@ -15,7 +15,7 @@
     "production"
   ],
   "scripts": {
-    "test": "wtest proto",
+    "test": "wtest .run proto/**",
     "docgen": "wdocgen proto",
     "ts": "node proto/dwtools/atop/transpilationStrategy/MainTop.s"
   },
