@@ -370,7 +370,6 @@ function concatenatorFor()
     let ext = path.ext( inputPath );
     let concatenator2 = sys.extToConcatenatorMap[ ext ];
     _.assert( !!concatenator2, () => 'No concatenator for extension ' + _.strQuote( ext ) );
-    debugger;
     _.assert
     (
       concatenator === null || concatenator === concatenator2,

@@ -227,7 +227,7 @@ function singleDst( test )
       filePath :
       {
         [ originalDirPath + '/**' ] : '',
-        [ originalDirPath + '/Exec' ] : 0,
+        [ originalDirPath + '/Exec*' ] : 0,
       }
     },
     outputPath : outputPath,
@@ -816,12 +816,6 @@ function combinedShell( test )
     test.identical( _.strCount( got.output, `main/File1.s` ), 1 );
     test.identical( _.strCount( got.output, `external 13` ), 1 );
 
-    return null;
-  })
-
-  .then( ( got ) =>
-  {
-    _.fileProvider.filesDelete( routinePath );
     return null;
   })
 

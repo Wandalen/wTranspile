@@ -209,8 +209,6 @@ global_defs   : {}     // global definitions
 
   _.mapSupplement( output, defOutput );
 
-  debugger;
-
   stage.formed = 1;
   return stage;
 }

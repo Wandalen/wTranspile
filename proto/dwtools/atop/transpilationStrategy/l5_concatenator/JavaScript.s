@@ -21,7 +21,7 @@ function init()
 {
   let self = Parent.prototype.init.apply( this, arguments );
 
-  self.starter = new _.StarterMaker2();
+  self.starter = new _.StarterMakerLight();
 
   return self;
 }
@@ -33,7 +33,7 @@ function _performAct( single )
   let self = this;
   let sys = self.sys;
   let result = '';
-  let files = single.dataMap;
+  let filesMap = single.dataMap;
   let starter = self.starter;
   let multiple = single.multiple;
   let basePath = multiple.inputPath.basePaths[ 0 ];
@@ -41,55 +41,45 @@ function _performAct( single )
   let externalBeforePath = multiple.externalBeforePath;
   let externalAfterPath = multiple.externalAfterPath;
 
-  _.assert( _.mapIs( files ) );
+  _.assert( _.mapIs( filesMap ) );
   _.assert( arguments.length === 1 );
   _.assert( single instanceof sys.Single );
 
-  /* remove #! ... */
-
-  if( self.removingShellPrologue )
-  files = _.map( files, ( fileData, filePath ) =>
-  {
-    return starter.fileRemoveShellPrologue( filePath, fileData );
-  });
-
   /* wrap */
 
-  if( self.wrapping )
-  files = _.map( files, ( fileData, filePath ) =>
+  if( multiple.simpleConcatenator || multiple.splittingStrategy === 'OneToOne' )
   {
-    if( multiple.simpleConcatenator || multiple.splittingStrategy === 'OneToOne' )
-    return starter.fileWrapSimple
-    ({
-      filePath,
-      basePath,
-      fileData,
+
+    filesMap = _.map( filesMap, ( fileData, filePath ) =>
+    {
+      return starter.fileWrapSimple
+      ({
+        filePath,
+        fileData,
+        removingShellPrologue : self.removingShellPrologue,
+      });
     });
-    else
-    return starter.fileWrap
+
+    result = _.mapVals( filesMap ).join( '\n' );
+
+  }
+  else
+  {
+
+    result = starter.filesWrap
     ({
-      filePath,
-      basePath,
-      fileData,
+      outputPath : single.outputPath,
+      entryPath : entryPath,
+      basePath : basePath,
+      externalBeforePath : externalBeforePath,
+      externalAfterPath : externalAfterPath,
+      filesMap : filesMap,
+      removingShellPrologue : self.removingShellPrologue,
     });
-  });
+
+  }
 
   /* */
-
-  result = _.mapVals( files ).join( '\n' );
-
-  if( !multiple.simpleConcatenator && multiple.splittingStrategy !== 'OneToOne' )
-  {
-    let fixes = starter.filesFixesGet
-    ({
-      entryPath,
-      basePath,
-      externalBeforePath,
-      externalAfterPath,
-      outputPath : single.outputPath,
-    });
-    result = fixes.prefix + fixes.ware + result + fixes.externalBefore + fixes.entry + fixes.externalAfter + fixes.postfix;
-  }
 
   return result;
 }
@@ -131,7 +121,6 @@ let Composes =
 {
   ext : _.define.own([ 'js', 's', 'ss' ]),
   removingShellPrologue : 1,
-  wrapping : 1,
 }
 
 let Associates =

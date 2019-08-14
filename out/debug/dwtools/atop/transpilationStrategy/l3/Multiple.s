@@ -105,7 +105,7 @@ function form()
     ({
       filter : multiple.entryPath,
       outputFormat : 'absolute',
-      distinct : 1,
+      mode : 'distinct',
     });
 
     // qqq xxx : cover the condition
@@ -126,7 +126,7 @@ function form()
     ({
       filter : multiple.externalBeforePath,
       outputFormat : 'absolute',
-      distinct : 1,
+      mode : 'distinct',
     });
 
     // qqq xxx : cover the condition
@@ -143,12 +143,11 @@ function form()
     multiple.externalAfterPath = fileProvider.recordFilter( multiple.externalAfterPath );
     if( !multiple.externalAfterPath.basePath )
     multiple.externalAfterPath.basePath = multiple.inputPath.basePaths[ 0 ];
-    multiple.externalAfterPath.distinct = 1;
     multiple.externalAfterPath = fileProvider.filesFind
     ({
       filter : multiple.externalAfterPath,
       outputFormat : 'absolute',
-      distinct : 1,
+      mode : 'distinct',
     });
 
     // qqq xxx : cover the condition
@@ -205,11 +204,6 @@ function form()
   return multiple;
 }
 
-// MakeForEachCriterion.defaults
-// {
-//
-// }
-
 //
 
 function performThen()
@@ -249,20 +243,13 @@ function perform()
   {
     return _.routinesCall( multiple, multiple.onEnd, [ multiple ] );
   })
-  // .then( function( arg )
-  // {
-  //   return _.routinesCall( multiple, multiple.onEnd, [ multiple ] );
-  // })
   .finally( function( err, arg )
   {
     if( err )
     {
       _.arrayAppendOnce( multiple.errors, err );
       throw _.err( err );
-      // throw _.errLogOnce( err );
     }
-    // if( multiple.verbosity >= 1 && multiple.totalReporting )
-    // if( multiple.verbosity >= 1 && multiple.totalReporting )
 
     let reporting = false;
     if( multiple.totalReporting === null )
@@ -297,15 +284,14 @@ function singleEach( onEach )
   try
   {
 
-    debugger;
     let groups = fileProvider.filesFindGroups
     ({
       src : multiple.inputPath,
+      dst : multiple.outputPath, // yyy
       throwing : 1,
       recursive : 2,
       outputFormat : 'absolute',
     });
-    debugger;
 
     for( let dstPath in groups.filesGrouped )
     {

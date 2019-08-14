@@ -6,22 +6,20 @@ if( typeof module !== 'undefined' )
 {
 
   require( './MainBase.s' );
+  require( './IncludeTop.s' );
 
 }
 
-let _ = wTools;
-
-_.include( 'wCommandsAggregator' );
-_.include( 'wCommandsConfig' );
-_.include( 'wStateStorage' );
-_.include( 'wStateSession' );
-
 //
 
-let Parent = null;
-let Self = _.TranspilationStrategy;
+let _ = wTools;
+let Parent = _.TranspilationStrategy;
+let Self = function wTranspilationStrategyCli( o )
+{
+  return _.workpiece.construct( Self, this, arguments );
+}
 
-_.assert( _.routineIs( _.TranspilationStrategy ) );
+Self.shortName = 'TranspilationStrategyCli';
 
 // --
 //
@@ -169,31 +167,16 @@ function commandTranspile( e )
 
   e.propertiesMap.outputPath = e.propertiesMap.outputPath || path.current();
 
-  // debugger;
-  // logger.log( 'e.propertiesMap', e.propertiesMap );
-
   _.sureMapHasOnly( e.propertiesMap, commandTranspile.commandProperties );
   _.sureBriefly( _.strIs( e.propertiesMap.inputPath ), 'Expects path to file to transpile {-inputPath-}' );
   _.sureBriefly( _.strIs( e.propertiesMap.outputPath ), 'Expects path to file to save transpiled {-outputPath-}' );
 
-  // if( sys.verbosity >= 3 )
-  // logger.log( ' # Transpiling', e.propertiesMap.outputPath, '<-', e.propertiesMap.inputPath );
-  // logger.up();
-
-  // debugger;
   let multiple = sys.Multiple
   ({
     sys : sys,
-    // inputPath : e.propertiesMap.inputPath,
-    // inputPath : { filePath : e.propertiesMap.inputPath, basePath : path.join( e.propertiesMap.inputPath, '.' ) },
-    // inputPath : e.propertiesMap.inputPath,
-    // outputPath : e.propertiesMap.outputPath,
   });
 
-  // delete e.propertiesMap.inputPath;
-  // delete e.propertiesMap.outputPath;
-
-  sys.storageLoad();
+  // sys.storageLoad(); // xxx
 
   _.appArgsReadTo
   ({
@@ -350,8 +333,8 @@ let Restricts =
 
 let Statics =
 {
-  Exec : Exec,
-  ConfigProperties : ConfigProperties,
+  Exec,
+  ConfigProperties,
 }
 
 let Forbids =
@@ -389,18 +372,22 @@ let Extend =
 
 }
 
-//
+_.classDeclare
+({
+  cls : Self,
+  parent : Parent,
+  extend : Extend,
+});
 
-_.classExtend( Self, Extend );
-_.StateStorage.mixin( Self );
-_.StateSession.mixin( Self );
+// _.StateStorage.mixin( Self );
+// _.StateSession.mixin( Self );
 _.CommandsConfig.mixin( Self );
 
 //
 
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
-_global_[ Self.name ] = wTools[ Self.shortName ] = Self;
+wTools[ Self.shortName ] = Self;
 
 if( !module.parent )
 Self.Exec();

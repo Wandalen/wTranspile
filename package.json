@@ -29,9 +29,10 @@
   "dependencies": {
     "wTools": "",
     "wCopyable": "",
-    "wpathfundamentals": "",
+    "wpathbasic": "",
     "wverbal": "",
     "wFiles": "",
+    "wstarter": "",
     "wcommandsaggregator": "",
     "wcommandsconfig": "",
     "wstatestorage": "",
