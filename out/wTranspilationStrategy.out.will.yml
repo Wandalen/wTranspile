@@ -87,10 +87,35 @@ path:
       - ../proto/dwtools/abase
       - ../proto/dwtools/amid
       - ../proto/dwtools/atop
+      - ../proto/dwtools/atop/-transpilationStrategy
+      - ../proto/dwtools/atop/-transpilationStrategy/Exec
+      - ../proto/dwtools/atop/-transpilationStrategy/IncludeBase.s
+      - ../proto/dwtools/atop/-transpilationStrategy/IncludeMid.s
+      - ../proto/dwtools/atop/-transpilationStrategy/MainBase.s
+      - ../proto/dwtools/atop/-transpilationStrategy/MainTop.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l3
+      - ../proto/dwtools/atop/-transpilationStrategy/l3/Concatenator.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l3/Multiple.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l3/Single.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l3/Stage.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l3/Transpiler.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l5_concatenator
+      - >-
+        ../proto/dwtools/atop/-transpilationStrategy/l5_concatenator/JavaScript.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l5_concatenator/Text.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler
+      - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Babel.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Closure.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Nop.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Prepack.s
+      - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Uglify.s
       - ../proto/dwtools/atop/transpilationStrategy
       - ../proto/dwtools/atop/transpilationStrategy/Exec
+      - ../proto/dwtools/atop/transpilationStrategy/ExecDebug
+      - ../proto/dwtools/atop/transpilationStrategy/ExecUnrestricted
       - ../proto/dwtools/atop/transpilationStrategy/IncludeBase.s
       - ../proto/dwtools/atop/transpilationStrategy/IncludeMid.s
+      - ../proto/dwtools/atop/transpilationStrategy/IncludeTop.s
       - ../proto/dwtools/atop/transpilationStrategy/MainBase.s
       - ../proto/dwtools/atop/transpilationStrategy/MainTop.s
       - ../proto/dwtools/atop/transpilationStrategy/l3
@@ -101,10 +126,6 @@ path:
       - ../proto/dwtools/atop/transpilationStrategy/l3/Transpiler.s
       - ../proto/dwtools/atop/transpilationStrategy/l5_concatenator
       - ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/JavaScript.s
-      - >-
-        ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterMaker.s
-      - >-
-        ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterWare.s
       - ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/Text.s
       - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler
       - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Babel.s
@@ -411,10 +432,35 @@ module:
           - proto/dwtools/abase
           - proto/dwtools/amid
           - proto/dwtools/atop
+          - proto/dwtools/atop/-transpilationStrategy
+          - proto/dwtools/atop/-transpilationStrategy/Exec
+          - proto/dwtools/atop/-transpilationStrategy/IncludeBase.s
+          - proto/dwtools/atop/-transpilationStrategy/IncludeMid.s
+          - proto/dwtools/atop/-transpilationStrategy/MainBase.s
+          - proto/dwtools/atop/-transpilationStrategy/MainTop.s
+          - proto/dwtools/atop/-transpilationStrategy/l3
+          - proto/dwtools/atop/-transpilationStrategy/l3/Concatenator.s
+          - proto/dwtools/atop/-transpilationStrategy/l3/Multiple.s
+          - proto/dwtools/atop/-transpilationStrategy/l3/Single.s
+          - proto/dwtools/atop/-transpilationStrategy/l3/Stage.s
+          - proto/dwtools/atop/-transpilationStrategy/l3/Transpiler.s
+          - proto/dwtools/atop/-transpilationStrategy/l5_concatenator
+          - >-
+            proto/dwtools/atop/-transpilationStrategy/l5_concatenator/JavaScript.s
+          - proto/dwtools/atop/-transpilationStrategy/l5_concatenator/Text.s
+          - proto/dwtools/atop/-transpilationStrategy/l5_transpiler
+          - proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Babel.s
+          - proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Closure.s
+          - proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Nop.s
+          - proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Prepack.s
+          - proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Uglify.s
           - proto/dwtools/atop/transpilationStrategy
           - proto/dwtools/atop/transpilationStrategy/Exec
+          - proto/dwtools/atop/transpilationStrategy/ExecDebug
+          - proto/dwtools/atop/transpilationStrategy/ExecUnrestricted
           - proto/dwtools/atop/transpilationStrategy/IncludeBase.s
           - proto/dwtools/atop/transpilationStrategy/IncludeMid.s
+          - proto/dwtools/atop/transpilationStrategy/IncludeTop.s
           - proto/dwtools/atop/transpilationStrategy/MainBase.s
           - proto/dwtools/atop/transpilationStrategy/MainTop.s
           - proto/dwtools/atop/transpilationStrategy/l3
@@ -426,10 +472,6 @@ module:
           - proto/dwtools/atop/transpilationStrategy/l5_concatenator
           - >-
             proto/dwtools/atop/transpilationStrategy/l5_concatenator/JavaScript.s
-          - >-
-            proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterMaker.s
-          - >-
-            proto/dwtools/atop/transpilationStrategy/l5_concatenator/StarterWare.s
           - proto/dwtools/atop/transpilationStrategy/l5_concatenator/Text.s
           - proto/dwtools/atop/transpilationStrategy/l5_transpiler
           - proto/dwtools/atop/transpilationStrategy/l5_transpiler/Babel.s
