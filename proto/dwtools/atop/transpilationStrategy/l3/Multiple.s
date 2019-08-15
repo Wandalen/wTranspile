@@ -85,22 +85,22 @@ function form()
 
   /* path temp */
 
-  multiple.outputPath = fileProvider.recordFilter( multiple.outputPath );
-  multiple.inputPath = fileProvider.recordFilter( multiple.inputPath );
+  multiple.outPath = fileProvider.recordFilter( multiple.outPath );
+  multiple.inPath = fileProvider.recordFilter( multiple.inPath );
 
-  multiple.outputPath.prefixPath = multiple.outputPath.prefixPath || path.current();
-  multiple.inputPath.prefixPath = multiple.inputPath.prefixPath || path.current();
-  multiple.inputPath.pairWithDst( multiple.outputPath );
-  multiple.inputPath.pairRefineLight();
+  multiple.outPath.prefixPath = multiple.outPath.prefixPath || path.current();
+  multiple.inPath.prefixPath = multiple.inPath.prefixPath || path.current();
+  multiple.inPath.pairWithDst( multiple.outPath );
+  multiple.inPath.pairRefineLight();
 
-  multiple.outputPath.form();
-  multiple.inputPath.form();
+  multiple.outPath.form();
+  multiple.inPath.form();
 
   if( multiple.entryPath )
   {
     multiple.entryPath = fileProvider.recordFilter( multiple.entryPath );
     if( !multiple.entryPath.basePath )
-    multiple.entryPath.basePath = multiple.inputPath.basePaths[ 0 ];
+    multiple.entryPath.basePath = multiple.inPath.basePaths[ 0 ];
     multiple.entryPath = fileProvider.filesFind
     ({
       filter : multiple.entryPath,
@@ -121,7 +121,7 @@ function form()
   {
     multiple.externalBeforePath = fileProvider.recordFilter( multiple.externalBeforePath );
     if( !multiple.externalBeforePath.basePath )
-    multiple.externalBeforePath.basePath = multiple.inputPath.basePaths[ 0 ];
+    multiple.externalBeforePath.basePath = multiple.inPath.basePaths[ 0 ];
     multiple.externalBeforePath = fileProvider.filesFind
     ({
       filter : multiple.externalBeforePath,
@@ -142,7 +142,7 @@ function form()
   {
     multiple.externalAfterPath = fileProvider.recordFilter( multiple.externalAfterPath );
     if( !multiple.externalAfterPath.basePath )
-    multiple.externalAfterPath.basePath = multiple.inputPath.basePaths[ 0 ];
+    multiple.externalAfterPath.basePath = multiple.inPath.basePaths[ 0 ];
     multiple.externalAfterPath = fileProvider.filesFind
     ({
       filter : multiple.externalAfterPath,
@@ -160,7 +160,7 @@ function form()
   }
 
   // multiple.entryPath = multiple.entryPath ? _.arrayAs( multiple.entryPath ) : [];
-  // multiple.entryPath = path.s.join( multiple.inputPath.basePaths[ 0 ], multiple.entryPath );
+  // multiple.entryPath = path.s.join( multiple.inPath.basePaths[ 0 ], multiple.entryPath );
 
   multiple.tempPath = path.resolve( multiple.tempPath );
 
@@ -276,22 +276,24 @@ function singleEach( onEach )
   let path = fileProvider.path;
 
   _.assert( arguments.length === 1 );
-  _.assert( multiple.inputPath.formed === 5 );
-  _.assert( multiple.outputPath.formed === 5 );
+  _.assert( multiple.inPath.formed === 5 );
+  _.assert( multiple.outPath.formed === 5 );
 
   /* */
 
   try
   {
 
+    debugger;
     let groups = fileProvider.filesFindGroups
     ({
-      src : multiple.inputPath,
-      dst : multiple.outputPath, // yyy
+      src : multiple.inPath,
+      dst : multiple.outPath, // yyy
       throwing : 1,
       recursive : 2,
       outputFormat : 'absolute',
     });
+    debugger;
 
     for( let dstPath in groups.filesGrouped )
     {
@@ -316,7 +318,7 @@ function singleEach( onEach )
         let single = sys.Single
         ({
           dataMap : dataMap,
-          outputPath : dstPath,
+          outPath : dstPath,
           multiple : multiple,
           sys : sys,
         });
@@ -331,16 +333,16 @@ function singleEach( onEach )
         for( let srcPath in dataMap )
         {
 
-          let basePath = multiple.inputPath.basePathFor( srcPath );
+          let basePath = multiple.inPath.basePathForBasePath( srcPath );
           let relativePath = path.relative( basePath, srcPath );
-          let outputPath = path.join( dstPath, relativePath );
+          let outPath = path.join( dstPath, relativePath );
           let dataMap2 = Object.create( null );
           dataMap2[ srcPath ] = dataMap[ srcPath ];
 
           let single = sys.Single
           ({
             dataMap : dataMap2,
-            outputPath : outputPath,
+            outPath : outPath,
             multiple : multiple,
             sys : sys,
           });
@@ -390,8 +392,8 @@ let Composes =
 
   /* */
 
-  inputPath : null,
-  outputPath : null,
+  inPath : null,
+  outPath : null,
   entryPath : null,
   externalBeforePath : null,
   externalAfterPath : null,

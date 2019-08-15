@@ -78,28 +78,29 @@ function singleFileInputTerminal( test )
 
     test.description = 'single input terminal';
 
-    let outputPath = _.path.join( routinePath, 'Output.js' );
+    let outPath = _.path.join( routinePath, 'Output.js' );
     let ts = new _.TranspilationStrategy().form();
     let multiple = ts.multiple
     ({
-      inputPath : __filename,
-      outputPath : outputPath,
+      inPath : __filename,
+      outPath : outPath,
     });
 
     return multiple.form().perform()
     .finally( ( err, got ) =>
     {
-      test.is( _.fileProvider.fileExists( outputPath ) );
+      if( err )
+      throw _.err( err );
+
+      test.is( _.fileProvider.fileExists( outPath ) );
       let expected = [ '.', './Output.js' ];
-      test.is( _.fileProvider.fileSize( outputPath ) > 100 );
+      test.is( _.fileProvider.fileSize( outPath ) > 100 );
       let found = self.find( routinePath );
       test.identical( found, expected );
 
       test.identical( multiple.dstCounter, 1 );
       test.identical( multiple.srcCounter, 1 );
 
-      if( err )
-      throw _.errLogOnce( err );
       return true;
     });
 
@@ -112,28 +113,29 @@ function singleFileInputTerminal( test )
 
     test.description = 'repeat, should do nothing';
 
-    let outputPath = _.path.join( routinePath, 'Output.js' );
+    let outPath = _.path.join( routinePath, 'Output.js' );
     let ts = new _.TranspilationStrategy().form();
     let multiple = ts.multiple
     ({
-      inputPath : __filename,
-      outputPath : outputPath,
+      inPath : __filename,
+      outPath : outPath,
     });
 
     return multiple.form().perform()
     .finally( ( err, got ) =>
     {
-      test.is( _.fileProvider.fileExists( outputPath ) );
+      if( err )
+      throw _.err( err );
+
+      test.is( _.fileProvider.fileExists( outPath ) );
       let expected = [ '.', './Output.js' ];
-      test.is( _.fileProvider.fileSize( outputPath ) > 100 );
+      test.is( _.fileProvider.fileSize( outPath ) > 100 );
       let found = self.find( routinePath );
       test.identical( found, expected );
 
       test.identical( multiple.dstCounter, 0 );
       test.identical( multiple.srcCounter, 0 );
 
-      if( err )
-      throw _.errLogOnce( err );
       return true;
     });
 
@@ -155,24 +157,25 @@ function singleFileInputDir( test )
 
   test.case = 'single input dir with glob';
 
-  let outputPath = _.path.join( routinePath, 'Output.js' );
+  let outPath = _.path.join( routinePath, 'Output.js' );
   let ts = new _.TranspilationStrategy().form();
   let multiple = ts.multiple
   ({
-    inputPath : __dirname + '/**',
-    outputPath : outputPath,
+    inPath : __dirname + '/**',
+    outPath : outPath,
   });
 
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
-    test.is( _.fileProvider.fileExists( outputPath ) );
-    test.is( _.fileProvider.fileSize( outputPath ) > 100 );
+    if( err )
+    throw _.err( err );
+
+    test.is( _.fileProvider.fileExists( outPath ) );
+    test.is( _.fileProvider.fileSize( outPath ) > 100 );
     let expected = [ '.', './Output.js' ];
     let found = self.find( routinePath );
     test.identical( found, expected );
-    if( err )
-    throw _.errLogOnce( err );
     return true;
   });
 
@@ -189,12 +192,12 @@ function singleFileInputDirThrowing( test )
 
   test.case = 'single input dir without glob';
 
-  let outputPath = _.path.join( routinePath, 'Output.js' );
+  let outPath = _.path.join( routinePath, 'Output.js' );
   let ts = new _.TranspilationStrategy().form();
   let multiple = ts.multiple
   ({
-    inputPath : __dirname + '',
-    outputPath : outputPath,
+    inPath : __dirname + '',
+    outPath : outPath,
   });
 
   return multiple.form().perform()
@@ -218,11 +221,11 @@ function singleDst( test )
 
   test.case = 'single destination';
 
-  let outputPath = _.path.join( routinePath, 'Output.js' );
+  let outPath = _.path.join( routinePath, 'Output.js' );
   let ts = new _.TranspilationStrategy().form();
   let multiple = ts.multiple
   ({
-    inputPath :
+    inPath :
     {
       filePath :
       {
@@ -230,19 +233,21 @@ function singleDst( test )
         [ originalDirPath + '/Exec*' ] : 0,
       }
     },
-    outputPath : outputPath,
+    outPath : outPath,
   });
 
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
-    test.is( _.fileProvider.fileExists( outputPath ) ); debugger;
-    test.is( _.fileProvider.fileSize( outputPath ) > 5000 );
+    if( err )
+    throw _.err( err );
+
+    test.is( _.fileProvider.fileExists( outPath ) ); debugger;
+    test.is( _.fileProvider.fileSize( outPath ) > 5000 );
     let expected = [ '.', './Output.js' ];
     let found = self.find( routinePath );
     test.identical( found, expected );
-    if( err )
-    throw _.errLogOnce( err );
+
     return true;
   });
 
@@ -266,18 +271,21 @@ function severalDst( test )
   }
 
   var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
-  var inputPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
+  var inPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
   var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inputPath : inputPath,
-    outputPath : null,
+    inPath : inPath,
+    outPath : null,
     diagnosing : 1,
   });
 
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
+    if( err )
+    throw _.err( err );
+
     var expected = [ '.', './All.js', './All.s', './File1.js', './File1.s', './File2.js', './File2.s' ];
     var found = self.findIn( fileProvider, '/' );
     test.identical( found, expected );
@@ -285,8 +293,7 @@ function severalDst( test )
     test.is( _.strHas( fileProvider.fileRead( '/All.js' ), 'File2.js' ) );
     test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File1.s' ) );
     test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File2.s' ) );
-    if( err )
-    throw _.errLogOnce( err );
+
     return true;
   });
 
@@ -310,12 +317,12 @@ function complexMask( test )
   }
   var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
-  var inputPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
+  var inPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
   var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inputPath : inputPath,
-    outputPath : { prefixPath : '/dst' },
+    inPath : inPath,
+    outPath : { prefixPath : '/dst' },
     splittingStrategy : 'ManyToOne',
     diagnosing : 1,
   });
@@ -323,6 +330,9 @@ function complexMask( test )
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
+    if( err )
+    throw _.err( err );
+
     var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dst', './dst/All.js', './dst/All.s' ];
     var found = self.findIn( fileProvider, '/' );
     test.identical( found, expected );
@@ -330,8 +340,7 @@ function complexMask( test )
     test.is( _.strHas( fileProvider.fileRead( '/dst/All.js' ), 'File2.js' ) );
     test.is( _.strHas( fileProvider.fileRead( '/dst/All.s' ), 'File1.s' ) );
     test.is( _.strHas( fileProvider.fileRead( '/dst/All.s' ), 'File2.s' ) );
-    if( err )
-    throw _.errLogOnce( err );
+
     return true;
   });
 
@@ -362,14 +371,15 @@ function oneToOne( test )
     }
 
   }
+
   var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
-  var inputPath = { filePath : { '/' : null, '**.js' : true } }
+  var inPath = { filePath : { '/' : null, '**.js' : true } }
   var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inputPath : inputPath,
-    outputPath : { prefixPath : '/dst' },
+    inPath : inPath,
+    outPath : { prefixPath : '/dst' },
     splittingStrategy : 'OneToOne',
     transpilingStrategy : [ 'Nop' ],
   });
@@ -377,6 +387,10 @@ function oneToOne( test )
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
+
+    debugger;
+    if( err )
+    throw _.err( err );
 
     var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dir', './dir/File1.js', './dir/File1.s', './dir/File2.js', './dir/File2.s', './dst', './dst/File1.js', './dst/File2.js', './dst/dir', './dst/dir/File1.js', './dst/dir/File2.js' ];
     var found = self.findIn( fileProvider, '/' );
@@ -390,8 +404,6 @@ function oneToOne( test )
     var dst = fileProvider.fileRead( '/dst/dir/File2.js' );
     test.is( _.strHas( dst, src ) );
 
-    if( err )
-    throw _.errLogOnce( err );
     return true;
 
   });
@@ -425,13 +437,13 @@ function nothingFoundOneToOne( test )
   }
   var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
-  var inputPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
-  var outputPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
+  var inPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
+  var outPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
   var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inputPath : inputPath,
-    outputPath : outputPath,
+    inPath : inPath,
+    outPath : outPath,
     splittingStrategy : 'OneToOne',
     transpilingStrategy : [ 'Nop' ],
   });
@@ -477,13 +489,13 @@ function nothingFoundManyToOne( test )
   }
   var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
-  var inputPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
-  var outputPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
+  var inPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
+  var outPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
   var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inputPath : inputPath,
-    outputPath : outputPath,
+    inPath : inPath,
+    outPath : outPath,
     splittingStrategy : 'ManyToOne',
     transpilingStrategy : [ 'Nop' ],
   });
@@ -545,13 +557,13 @@ function transpileManyToOne( test )
     }
     var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
-    var inputPath =
+    var inPath =
     {
       filePath : { '**.test*' : false, '**.test/**' : false, '.' : '.' },
       prefixPath : '/src',
       maskAll : { excludeAny : [ /(^|\/)-/, /\.release($|\.|\/)/i ] }
     }
-    var outputPath =
+    var outPath =
     {
       filePath : { '**.test*' : false, '**.test/**' : false, '.' : '.' },
       prefixPath : '/dst/Main.s',
@@ -559,8 +571,8 @@ function transpileManyToOne( test )
     var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
     var multiple = ts.multiple
     ({
-      inputPath : inputPath,
-      outputPath : outputPath,
+      inPath : inPath,
+      outPath : outPath,
       totalReporting : 0,
       transpilingStrategy : [ 'Nop' ],
       splittingStrategy : 'ManyToOne',
@@ -576,6 +588,9 @@ function transpileManyToOne( test )
     return multiple.form().perform()
     .finally( ( err, got ) =>
     {
+      if( err )
+      throw _.err( err );
+
       var expected = [ '.', './dst', './dst/Main.s', './src', './src/dir1', './src/dir2', './src/dir2/File.js', './src/dir2/File.test.js', './src/dir2/File1.debug.js', './src/dir2/File1.release.js', './src/dir2/File2.debug.js', './src/dir2/File2.release.js', './src/dir3', './src/dir3/File.js', './src/dir3/File.test.js' ];
       var found = self.findIn( fileProvider, '/' );
       test.identical( found, expected );
@@ -589,8 +604,6 @@ function transpileManyToOne( test )
       test.is( _.strHas( read, 'dir2/File2.debug.js' ) );
       test.is( !_.strHas( read, 'dir2/File2.release.js' ) );
 
-      if( err )
-      throw _.errLogOnce( err );
       return true;
     });
 
@@ -627,13 +640,13 @@ function transpileManyToOne( test )
     }
     var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
-    var inputPath =
+    var inPath =
     {
       filePath : { '**.test*' : true, '.' : '.' },
       prefixPath : '/src',
       maskAll : { excludeAny : [ /(^|\/)-/, /\.release($|\.|\/)/i ] },
     }
-    var outputPath =
+    var outPath =
     {
       filePath : { '**.test*' : true, '.' : '.' },
       prefixPath : '/dst/Tests.s',
@@ -641,8 +654,8 @@ function transpileManyToOne( test )
     var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
     var multiple = ts.multiple
     ({
-      inputPath : inputPath,
-      outputPath : outputPath,
+      inPath : inPath,
+      outPath : outPath,
       totalReporting : 0,
       transpilingStrategy : [ 'Nop' ],
       splittingStrategy : 'ManyToOne',
@@ -658,6 +671,9 @@ function transpileManyToOne( test )
     return multiple.form().perform()
     .finally( ( err, got ) =>
     {
+      if( err )
+      throw _.err( err );
+
       var expected = [ '.', './dst', './dst/Tests.s', './src', './src/dir1', './src/dir2', './src/dir2/File.js', './src/dir2/File.test.js', './src/dir2/File1.debug.js', './src/dir2/File1.release.js', './src/dir2/File2.debug.js', './src/dir2/File2.release.js', './src/dir3', './src/dir3/File.js', './src/dir3/File.test.js' ];
       var found = self.findIn( fileProvider, '/' );
       test.identical( found, expected );
@@ -671,8 +687,6 @@ function transpileManyToOne( test )
       test.is( !_.strHas( read, 'dir2/File2.debug.js' ) );
       test.is( !_.strHas( read, 'dir2/File2.release.js' ) );
 
-      if( err )
-      throw _.errLogOnce( err );
       return true;
     });
 
@@ -690,8 +704,8 @@ function shell( test )
   let self = this;
   let originalDirPath = _.path.join( __dirname, '../transpilationStrategy' );
   let routinePath = _.path.join( self.tempDir, test.name );
-  let inputPath = _.path.normalize( __dirname ) + '/**';
-  let outputPath = _.path.join( routinePath, 'out.js' );
+  let inPath = _.path.normalize( __dirname ) + '/**';
+  let outPath = _.path.join( routinePath, 'out.js' );
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let ready = new _.Consequence().take( null );
@@ -717,14 +731,14 @@ function shell( test )
     return null;
   })
 
-  shell({ args : [ '.transpile inputPath:' + inputPath + ' outputPath:' + outputPath + ' writingTempFiles:0' ] })
+  shell({ args : [ '.transpile inPath:' + inPath + ' outPath:' + outPath + ' writingTempFiles:0' ] })
   .then( ( got ) =>
   {
 
     var files = self.find( routinePath );
     test.identical( files, [ '.', './out.js' ] );
     test.identical( got.exitCode, 0 );
-    test.is( _.fileProvider.isTerminal( outputPath ) );
+    test.is( _.fileProvider.isTerminal( outPath ) );
 
     return null;
   })
@@ -746,8 +760,8 @@ function combinedShell( test )
   let routinePath = _.path.join( self.tempDir, test.name );
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
-  let inputPath = 'main/**';
-  let outputPath = 'out/Main.s';
+  let inPath = 'main/**';
+  let outPath = 'out/Main.s';
   let entryPath = 'main/File1.s';
   let outMainPath = _.path.join( routinePath, './out/Main.s' );
   let externalBeforePath = 'External.s';
@@ -782,8 +796,8 @@ function combinedShell( test )
     return null;
   })
 
-  shell({ args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
+  /* node ../../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
@@ -798,10 +812,10 @@ function combinedShell( test )
     test.identical( _.strCount( read, `console.log( 'main/File1.s' );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
-    test.identical( _.strCount( read, `_starter_._fileInclude( _libraryDirPath_, '../External.s' );` ), 1 );
-    test.identical( _.strCount( read, `module.exports = _starter_._fileInclude( _libraryDirPath_, './main/File1.s' );` ), 1 );
-    test.identical( _.strCount( read, `_starter_._fileInclude(` ), 2 );
-    test.identical( _.strCount( read, `module.exports = _starter_._fileInclude` ), 1 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../External.s' );` ), 1 );
+    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryDirPath_, './main/File1.s' );` ), 1 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
+    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
     return null;
   })
@@ -833,8 +847,8 @@ function combinedShell( test )
     qqq xxx : why does it thow error???
   */
 
-  shell({ args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
+  /* node ../../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
@@ -849,10 +863,10 @@ function combinedShell( test )
     test.identical( _.strCount( read, `console.log( 'main/File1.s' );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
-    test.identical( _.strCount( read, `_starter_._fileInclude( _libraryDirPath_, '../External.s' );` ), 1 );
-    test.identical( _.strCount( read, `module.exports = _starter_._fileInclude( _libraryDirPath_, './main/File1.s' );` ), 1 );
-    test.identical( _.strCount( read, `_starter_._fileInclude(` ), 2 );
-    test.identical( _.strCount( read, `module.exports = _starter_._fileInclude` ), 1 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../External.s' );` ), 1 );
+    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryDirPath_, './main/File1.s' );` ), 1 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
+    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
     return null;
   })
@@ -888,8 +902,8 @@ function combinedShell( test )
   //   return null;
   // })
   //
-  // shell({ currentPath : routinePath + '/..', args : `.transpile inputPath:${inputPath} outputPath:${outputPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  // /* node ../../transpilationStrategy/Exec .transpile inputPath:main/** outputPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  // shell({ currentPath : routinePath + '/..', args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
+  // /* node ../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
   //
   // .then( ( got ) =>
   // {
@@ -924,8 +938,8 @@ function combinedProgramatic( test )
   let routinePath = _.path.join( self.tempDir, test.name );
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
-  let inputPath = _.path.join( routinePath, 'main/**' );
-  let outputPath = _.path.join( routinePath, 'out/Main.s' );
+  let inPath = _.path.join( routinePath, 'main/**' );
+  let outPath = _.path.join( routinePath, 'out/Main.s' );
   let entryPath = 'main/File1.s';
   let externalBeforePath = 'External.s';
   let ready = new _.Consequence().take( null );
@@ -952,8 +966,8 @@ function combinedProgramatic( test )
     let multiple = ts.multiple
     ({
 
-      inputPath : inputPath,
-      outputPath : outputPath,
+      inPath : inPath,
+      outPath : outPath,
       entryPath : entryPath,
       externalBeforePath : externalBeforePath,
       totalReporting : 0,
@@ -975,7 +989,7 @@ function combinedProgramatic( test )
     .finally( ( err, arg ) =>
     {
       if( err )
-      throw _.errLogOnce( err );
+      throw _.err( err );
       return arg;
     });
 

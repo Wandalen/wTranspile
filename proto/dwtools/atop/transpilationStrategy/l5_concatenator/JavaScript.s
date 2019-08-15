@@ -36,7 +36,7 @@ function _performAct( single )
   let filesMap = single.dataMap;
   let starter = self.starter;
   let multiple = single.multiple;
-  let basePath = multiple.inputPath.basePaths[ 0 ];
+  let basePath = multiple.inPath.basePaths[ 0 ];
   let entryPath = multiple.entryPath;
   let externalBeforePath = multiple.externalBeforePath;
   let externalAfterPath = multiple.externalAfterPath;
@@ -68,7 +68,7 @@ function _performAct( single )
 
     result = starter.filesWrap
     ({
-      outputPath : single.outputPath,
+      outPath : single.outPath,
       entryPath : entryPath,
       basePath : basePath,
       externalBeforePath : externalBeforePath,

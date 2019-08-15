@@ -28,8 +28,8 @@ Self.shortName = 'TranspilationStrategyCli';
 let ConfigProperties =
 {
 
-  inputPath : 'Path to terminal file or dirrectory with files to transpile.',
-  outputPath : 'Path to terminal file to store.',
+  inPath : 'Path to terminal file or dirrectory with files to transpile.',
+  outPath : 'Path to terminal file to store.',
   tempPath : 'Path to temporary directory to store intermediate results. Default : temp.tmp.',
   entryPath : 'Path to entry files. Files to launch among input files.',
   externalBeforePath : 'Path to external files. Files beyond input files to launch before entry files.',
@@ -99,7 +99,7 @@ function commandsMake()
   {
     'help' :              { e : _.routineJoin( sys, sys.commandHelp ),                h : 'Get help' },
     'strategies list' :   { e : _.routineJoin( sys, sys.commandTranspilersList ),      h : 'List available strategies of transpilation' },
-    'transpile' :         { e : _.routineJoin( sys, sys.commandTranspile ),                h : 'Transpile inputPath file and store result at outputPath' },
+    'transpile' :         { e : _.routineJoin( sys, sys.commandTranspile ),                h : 'Transpile inPath file and store result at outPath' },
   }
 
   let ca = _.CommandsAggregator
@@ -165,11 +165,11 @@ function commandTranspile( e )
   let path = fileProvider.path;
   let logger = sys.logger;
 
-  e.propertiesMap.outputPath = e.propertiesMap.outputPath || path.current();
+  e.propertiesMap.outPath = e.propertiesMap.outPath || path.current();
 
   _.sureMapHasOnly( e.propertiesMap, commandTranspile.commandProperties );
-  _.sureBriefly( _.strIs( e.propertiesMap.inputPath ), 'Expects path to file to transpile {-inputPath-}' );
-  _.sureBriefly( _.strIs( e.propertiesMap.outputPath ), 'Expects path to file to save transpiled {-outputPath-}' );
+  _.sureBriefly( _.strIs( e.propertiesMap.inPath ), 'Expects path to file to transpile {-inPath-}' );
+  _.sureBriefly( _.strIs( e.propertiesMap.outPath ), 'Expects path to file to save transpiled {-outPath-}' );
 
   let multiple = sys.Multiple
   ({
@@ -211,8 +211,8 @@ function commandTranspile( e )
     propertiesMap : sys.storage,
     namesMap :
     {
-      'inputPath' : 'inputPath',
-      'outputPath' : 'outputPath',
+      'inPath' : 'inPath',
+      'outPath' : 'outPath',
       'tempPath' : 'tempPath',
       'entryPath' : 'entryPath',
       'externalBeforePath' : 'externalBeforePath',
@@ -237,8 +237,8 @@ function commandTranspile( e )
     propertiesMap : e.propertiesMap,
     namesMap :
     {
-      'inputPath' : 'inputPath',
-      'outputPath' : 'outputPath',
+      'inPath' : 'inPath',
+      'outPath' : 'outPath',
       'tempPath' : 'tempPath',
       'entryPath' : 'entryPath',
       'externalBeforePath' : 'externalBeforePath',
@@ -256,15 +256,15 @@ function commandTranspile( e )
     },
   });
 
-  if( !_.mapIs( multiple.inputPath ) )
-  multiple.inputPath = { filePath : multiple.inputPath }
-  multiple.inputPath.prefixPath = multiple.inputPath.prefixPath || path.current();
-  multiple.inputPath.basePath = multiple.inputPath.basePath || path.current();
+  if( !_.mapIs( multiple.inPath ) )
+  multiple.inPath = { filePath : multiple.inPath }
+  multiple.inPath.prefixPath = multiple.inPath.prefixPath || path.current();
+  multiple.inPath.basePath = multiple.inPath.basePath || path.current();
 
-  if( !_.mapIs( multiple.outputPath ) )
-  multiple.outputPath = { filePath : multiple.outputPath }
-  multiple.outputPath.prefixPath = multiple.outputPath.prefixPath || path.current();
-  multiple.outputPath.basePath = multiple.outputPath.basePath || path.current();
+  if( !_.mapIs( multiple.outPath ) )
+  multiple.outPath = { filePath : multiple.outPath }
+  multiple.outPath.prefixPath = multiple.outPath.prefixPath || path.current();
+  multiple.outPath.basePath = multiple.outPath.basePath || path.current();
 
   multiple.verbosity = sys.verbosity;
 

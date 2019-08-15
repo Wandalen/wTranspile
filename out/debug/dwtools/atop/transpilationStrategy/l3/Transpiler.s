@@ -69,8 +69,8 @@ function perform( stage )
   let Fields =
   {
 
-    inputPath : null,
-    outputPath : null,
+    inPath : null,
+    outPath : null,
     tempPath : null,
     // mapFilePath : null,
 
@@ -126,12 +126,12 @@ function perform( stage )
     if( multiple.writingTempFiles )
     single.tempWrite
     ({
-      filePath : path.joinNames( path.fullName( single.outputPath ), '-after-', String( stage.index ), '-', self.constructor.shortName ),
+      filePath : path.joinNames( path.fullName( single.outPath ), '-after-', String( stage.index ), '-', self.constructor.shortName ),
       data : stage.data,
     });
 
     // if( multiple.verbosity >= 2 )
-    // logger.log( ' # Transpiled ' + single.outputPath + ' with strategy ' + self.constructor.shortName, 'in', _.timeSpent( time ) );
+    // logger.log( ' # Transpiled ' + single.outPath + ' with strategy ' + self.constructor.shortName, 'in', _.timeSpent( time ) );
 
     _.assert( stage.formed === 2 );
     return true;

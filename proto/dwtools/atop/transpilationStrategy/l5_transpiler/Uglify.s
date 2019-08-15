@@ -45,11 +45,11 @@ function _formAct( stage )
   // debugger;
   if( set.sourceMap === undefined )
   {
-    _.assert( _.strIs( single.outputPath ) );
+    _.assert( _.strIs( single.outPath ) );
     _.assert( _.strIs( single.sourceMapPath ) );
     set.sourceMap = Object.create( null );
     set.sourceMap.filename = single.sourceMapPath;
-    // set.sourceMap.filename = path.join( single.outputPath + '.map' );
+    // set.sourceMap.filename = path.join( single.outPath + '.map' );
     // stage.mapFilePath = set.sourceMap.filename; // xxx
   }
 

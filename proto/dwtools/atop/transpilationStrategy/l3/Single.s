@@ -52,10 +52,10 @@ function form()
   single.errors = [];
 
   if( !single.name )
-  single.name = path.name({ path : single.outputPath, full : true })
+  single.name = path.name({ path : single.outPath, full : true })
 
   if( !single.sourceMapPath )
-  single.sourceMapPath = single.outputPath + '.map';
+  single.sourceMapPath = single.outPath + '.map';
 
   single.input = sys.Stage
   ({
@@ -129,25 +129,25 @@ function perform()
   .thenKeep( function( arg )
   {
 
-    let outputPath = single.outputPath;
+    let outPath = single.outPath;
 
-    if( multiple.fileProvider.isDir( outputPath ) )
+    if( multiple.fileProvider.isDir( outPath ) )
     if( multiple.writingTerminalUnderDirectory )
     {
       _.assert( !!single.concatenator );
       _.assert( _.strIs( single.concatenator.ext[ 0 ] ) );
-      outputPath = single.outputPath = path.join( outputPath, single.name + '.' + single.concatenator.ext[ 0 ] );
+      outPath = single.outPath = path.join( outPath, single.name + '.' + single.concatenator.ext[ 0 ] );
     }
 
-    if( multiple.fileProvider.isDir( outputPath ) )
+    if( multiple.fileProvider.isDir( outPath ) )
     {
       debugger;
-      throw _.err( outputPath, 'is directory, not safe to purge it!' );
+      throw _.err( outPath, 'is directory, not safe to purge it!' );
     }
 
     multiple.fileProvider.fileWrite
     ({
-      filePath : outputPath,
+      filePath : outPath,
       data  : single.output.data,
       makingDirectory : 1,
       purging : 1,
@@ -188,7 +188,7 @@ function perform()
     if( !single.errors.length )
     {
       if( multiple.verbosity >= 3 )
-      logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outputPath, 'path' ) + ' in', _.timeSpent( time ) );
+      logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outPath, 'path' ) + ' in', _.timeSpent( time ) );
       if( multiple.verbosity >= 4 )
       logger.log( ' # ' + single.sizeReportLast );
     }
@@ -196,7 +196,7 @@ function perform()
     {
       debugger;
       if( multiple.verbosity >= 1 )
-      logger.log( ' ! Failed to transpile ' + single.outputPath );
+      logger.log( ' ! Failed to transpile ' + single.outPath );
     }
 
     return single;
@@ -270,7 +270,7 @@ function sizeReport( o )
   if( o.input )
   inputSize = o.input.length;
   else
-  inputSize = fileProvider.filesSize( multiple.inputPath );
+  inputSize = fileProvider.filesSize( multiple.inPath );
 
   function _format( size ){ return ( size / 1024 ).toFixed( 2 ); };
   let format = _.strMetricFormatBytes || _format;
@@ -365,9 +365,9 @@ function concatenatorFor()
   return concatenator;
 
   let prevPath;
-  for( let inputPath in single.dataMap )
+  for( let inPath in single.dataMap )
   {
-    let ext = path.ext( inputPath );
+    let ext = path.ext( inPath );
     let concatenator2 = sys.extToConcatenatorMap[ ext ];
     _.assert( !!concatenator2, () => 'No concatenator for extension ' + _.strQuote( ext ) );
     _.assert
@@ -375,10 +375,10 @@ function concatenatorFor()
       concatenator === null || concatenator === concatenator2,
       () => 'Found more than single concatenator\n' +
             concatenator.nickName + ' for ' + prevPath + '\n' +
-            concatenator2.nickName + ' for ' + inputPath + '\n'
+            concatenator2.nickName + ' for ' + inPath + '\n'
     );
     concatenator = concatenator2;
-    prevPath = inputPath;
+    prevPath = inPath;
   }
 
   _.assert( concatenator instanceof sys.Concatenator.Abstract, 'Found none concatenator' );
@@ -437,7 +437,7 @@ let Composes =
 {
 
   name : null,
-  outputPath : null,
+  outPath : null,
   sourceMapPath : null,
 
 }
@@ -504,8 +504,8 @@ let Forbids =
   beautifing : 'beautifing',
   writingTempFiles : 'writingTempFiles',
   sizeReporting : 'sizeReporting',
-  inputPath : 'inputPath',
-  outputPath : 'outputPath',
+  inPath : 'inPath',
+  outPath : 'outPath',
   tempPath : 'temp.tmp',
   mapFilePath : 'mapFilePath',
   dstPath : 'dstPath',
