@@ -764,7 +764,7 @@ function combinedShell( test )
   let outPath = 'out/Main.s';
   let entryPath = 'main/File1.s';
   let outMainPath = _.path.join( routinePath, './out/Main.s' );
-  let externalBeforePath = 'External.s';
+  let externalBeforePath = 'AppBasic.s';
   let ready = new _.Consequence().take( null );
 
   let shell = _.sheller
@@ -797,7 +797,7 @@ function combinedShell( test )
   })
 
   shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  /* node ../../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:AppBasic.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
@@ -806,13 +806,13 @@ function combinedShell( test )
     test.identical( _.strCount( got.output, /# Transpiled 2 file\(s\) to .*out\/Main\.s.* in/ ), 1 );
 
     var files = self.find( routinePath );
-    test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s', './out', './out/Main.s' ] );
+    test.identical( files, [ '.', './AppBasic.s', './main', './main/File1.s', './main/File2.s', './out', './out/Main.s' ] );
 
     var read = _.fileProvider.fileRead( outMainPath );
     test.identical( _.strCount( read, `console.log( 'main/File1.s' );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
-    test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../External.s' );` ), 1 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../AppBasic.s' );` ), 1 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryDirPath_, './main/File1.s' );` ), 1 );
     test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
@@ -826,7 +826,7 @@ function combinedShell( test )
   {
     test.identical( got.exitCode, 0 );
 
-    test.identical( _.strCount( got.output, `External.s` ), 1 );
+    test.identical( _.strCount( got.output, `AppBasic.s` ), 1 );
     test.identical( _.strCount( got.output, `main/File1.s` ), 1 );
     test.identical( _.strCount( got.output, `external 13` ), 1 );
 
@@ -848,7 +848,7 @@ function combinedShell( test )
   */
 
   shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  /* node ../../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:AppBasic.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
@@ -857,13 +857,13 @@ function combinedShell( test )
     test.identical( _.strCount( got.output, /# Transpiled/ ), 0 );
 
     var files = self.find( routinePath );
-    test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s', './out', './out/Main.s' ] );
+    test.identical( files, [ '.', './AppBasic.s', './main', './main/File1.s', './main/File2.s', './out', './out/Main.s' ] );
 
     var read = _.fileProvider.fileRead( outMainPath );
     test.identical( _.strCount( read, `console.log( 'main/File1.s' );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
-    test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../External.s' );` ), 1 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../AppBasic.s' );` ), 1 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryDirPath_, './main/File1.s' );` ), 1 );
     test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
@@ -877,7 +877,7 @@ function combinedShell( test )
   {
     test.identical( got.exitCode, 0 );
 
-    test.identical( _.strCount( got.output, `External.s` ), 1 );
+    test.identical( _.strCount( got.output, `AppBasic.s` ), 1 );
     test.identical( _.strCount( got.output, `main/File1.s` ), 1 );
     test.identical( _.strCount( got.output, `external 13` ), 1 );
 
@@ -903,7 +903,7 @@ function combinedShell( test )
   // })
   //
   // shell({ currentPath : routinePath + '/..', args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  // /* node ../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  // /* node ../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:AppBasic.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
   //
   // .then( ( got ) =>
   // {
@@ -912,7 +912,7 @@ function combinedShell( test )
   //   test.identical( _.strCount( got.output, /Nothing found. Stem file .*main.* does not exist!/ ), 1 );
   //
   //   var files = self.find( routinePath );
-  //   test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s' ] );
+  //   test.identical( files, [ '.', './AppBasic.s', './main', './main/File1.s', './main/File2.s' ] );
   //
   //   return null;
   // })
@@ -941,7 +941,7 @@ function combinedProgramatic( test )
   let inPath = _.path.join( routinePath, 'main/**' );
   let outPath = _.path.join( routinePath, 'out/Main.s' );
   let entryPath = 'main/File1.s';
-  let externalBeforePath = 'External.s';
+  let externalBeforePath = 'AppBasic.s';
   let ready = new _.Consequence().take( null );
   let shell = _.sheller
   ({
@@ -999,7 +999,7 @@ function combinedProgramatic( test )
   {
 
     var files = self.find( routinePath );
-    test.identical( files, [ '.', './External.s', './main', './main/File1.s', './main/File2.s', './out', './out/Main.s' ] );
+    test.identical( files, [ '.', './AppBasic.s', './main', './main/File1.s', './main/File2.s', './out', './out/Main.s' ] );
 
     return null;
   })
