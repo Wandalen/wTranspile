@@ -93,8 +93,8 @@ function form()
   multiple.inPath.pairWithDst( multiple.outPath );
   multiple.inPath.pairRefineLight();
 
-  multiple.outPath.form();
-  multiple.inPath.form();
+  multiple.outPath._formPaths();
+  multiple.inPath._formPaths();
 
   if( multiple.entryPath )
   {
@@ -276,8 +276,8 @@ function singleEach( onEach )
   let path = fileProvider.path;
 
   _.assert( arguments.length === 1 );
-  _.assert( multiple.inPath.formed === 5 );
-  _.assert( multiple.outPath.formed === 5 );
+  _.assert( multiple.inPath.formed === 3 );
+  _.assert( multiple.outPath.formed === 3 );
 
   /* */
 
@@ -288,9 +288,9 @@ function singleEach( onEach )
     let groups = fileProvider.filesFindGroups
     ({
       src : multiple.inPath,
-      dst : multiple.outPath, // yyy
+      dst : multiple.outPath,
       throwing : 1,
-      recursive : 2,
+      // recursive : 2,
       outputFormat : 'absolute',
     });
     // debugger;
@@ -333,7 +333,7 @@ function singleEach( onEach )
         for( let srcPath in dataMap )
         {
 
-          let basePath = multiple.inPath.basePathForBasePath( srcPath );
+          let basePath = multiple.inPath.basePathForFilePath( srcPath );
           let relativePath = path.relative( basePath, srcPath );
           let outPath = path.join( dstPath, relativePath );
           let dataMap2 = Object.create( null );
