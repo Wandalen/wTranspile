@@ -83,7 +83,7 @@ function errorHandle( err )
   err = _.errLogOnce( '--\n' + code + '\n--\n', err );
 
   // if( self.terminatingOnError ) // xxx
-  // _.appExitWithBeep( -1 );
+  // _.process.exitWithBeep( -1 );
 
   if( !stage.error )
   stage.error = err;

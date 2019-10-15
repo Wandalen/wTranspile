@@ -24,14 +24,14 @@ function onSuiteBegin()
 {
   let self = this;
 
-  self.tempDir = _.path.dirTempOpen( _.path.join( __dirname, '../..'  ), 'TransiplationStrategy' );
+  self.tempDir = _.path.pathDirTempOpen( _.path.join( __dirname, '../..'  ), 'TransiplationStrategy' );
   self.assetDirPath = _.path.join( __dirname, '_asset' );
 
   self.find = _.fileProvider.filesFinder
   ({
-    includingTerminals : 1,
-    includingDirs : 1,
-    includingTransient : 1,
+    withTerminals : 1,
+    withDirs : 1,
+    withTransient/*maybe withStem*/ : 1,
     allowingMissed : 1,
     outputFormat : 'relative',
   });
@@ -706,7 +706,7 @@ function shell( test )
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let ready = new _.Consequence().take( null );
-  let shell = _.sheller
+  let shell = _.process.starter
   ({
     execPath : 'node ' + execPath,
     currentPath : routinePath,
@@ -764,7 +764,7 @@ function combinedShell( test )
   let externalBeforePath = 'External.s';
   let ready = new _.Consequence().take( null );
 
-  let shell = _.sheller
+  let shell = _.process.starter
   ({
     execPath : 'node ' + execPath,
     currentPath : routinePath,
@@ -773,7 +773,7 @@ function combinedShell( test )
     ready : ready,
   });
 
-  let shell2 = _.sheller
+  let shell2 = _.process.starter
   ({
     currentPath : routinePath,
     outputCollecting : 1,
@@ -940,7 +940,7 @@ function combinedProgramatic( test )
   let entryPath = 'main/File1.s';
   let externalBeforePath = 'External.s';
   let ready = new _.Consequence().take( null );
-  let shell = _.sheller
+  let shell = _.process.starter
   ({
     execPath : 'node ' + execPath,
     currentPath : routinePath,
@@ -1020,7 +1020,7 @@ combinedProgramatic.timeOut = 150000;
 var Self =
 {
 
-  name : 'Tools/top/TranspilationStrategy',
+  name : 'Tools.top.TranspilationStrategy',
   silencing : 1,
   routineTimeOut : 60000,
   onSuiteBegin : onSuiteBegin,

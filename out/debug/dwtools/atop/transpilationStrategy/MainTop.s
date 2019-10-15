@@ -77,7 +77,7 @@ function exec()
 
   let logger = sys.logger;
   let fileProvider = sys.fileProvider;
-  let appArgs = _.appArgs();
+  let appArgs = _.process.args();
   let ca = sys.commandsMake();
 
   return ca.appArgsPerform({ appArgs : appArgs });
@@ -90,7 +90,7 @@ function commandsMake()
   let sys = this;
   let logger = sys.logger;
   let fileProvider = sys.fileProvider;
-  let appArgs = _.appArgs();
+  let appArgs = _.process.args();
 
   _.assert( _.instanceIs( sys ) );
   _.assert( arguments.length === 0 );
@@ -178,7 +178,7 @@ function commandTranspile( e )
 
   // sys.storageLoad(); // xxx
 
-  _.appArgsReadTo
+  _.process.argsReadTo
   ({
     dst : sys,
     only : 0,
@@ -191,7 +191,7 @@ function commandTranspile( e )
     },
   });
 
-  _.appArgsReadTo
+  _.process.argsReadTo
   ({
     dst : sys,
     only : 0,
@@ -203,7 +203,7 @@ function commandTranspile( e )
     },
   });
 
-  _.appArgsReadTo
+  _.process.argsReadTo
   ({
     dst : multiple,
     only : 0,
@@ -230,7 +230,7 @@ function commandTranspile( e )
     },
   });
 
-  _.appArgsReadTo
+  _.process.argsReadTo
   ({
     dst : multiple,
     only : 1,
@@ -275,7 +275,7 @@ function commandTranspile( e )
   {
     if( err )
     {
-      _.appExitCode( -1 );
+      _.process.exitCode( -1 );
       _.errLogOnce( err );
     }
     multiple.finit();
