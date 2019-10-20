@@ -12,7 +12,7 @@
   "files": [
     "proto/dwtools/atop/transpilationStrategy",
     "proto/dwtools/Tools.s",
-    "production"
+    "out"
   ],
   "scripts": {
     "test": "wtest .run proto/**",

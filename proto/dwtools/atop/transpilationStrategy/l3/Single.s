@@ -374,8 +374,8 @@ function concatenatorFor()
     (
       concatenator === null || concatenator === concatenator2,
       () => 'Found more than single concatenator\n' +
-            concatenator.nickName + ' for ' + prevPath + '\n' +
-            concatenator2.nickName + ' for ' + inPath + '\n'
+            concatenator.qualifiedName + ' for ' + prevPath + '\n' +
+            concatenator2.qualifiedName + ' for ' + inPath + '\n'
     );
     concatenator = concatenator2;
     prevPath = inPath;

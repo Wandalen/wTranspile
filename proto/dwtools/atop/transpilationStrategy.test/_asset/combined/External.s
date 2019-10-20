@@ -1,2 +1,2 @@
 external = 13;
-console.log( 'AppBasic.s' );
+console.log( 'External.s' );

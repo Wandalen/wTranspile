@@ -52,7 +52,7 @@ function _performAct( single )
 
     filesMap = _.map( filesMap, ( fileData, filePath ) =>
     {
-      return starter.fileWrapSimple
+      return starter.sourceWrapSimple
       ({
         filePath,
         fileData,
@@ -66,7 +66,7 @@ function _performAct( single )
   else
   {
 
-    result = starter.filesWrap
+    result = starter.sourcesJoin
     ({
       outPath : single.outPath,
       entryPath : entryPath,
@@ -86,11 +86,11 @@ function _performAct( single )
 
 //
 
-function fileWrapSimple( o )
+function sourceWrapSimple( o )
 {
   let self = this;
 
-  _.routineOptions( fileWrapSimple, arguments );
+  _.routineOptions( sourceWrapSimple, arguments );
 
   let fileName = _.strVarNameFor( _.path.fullName( o.filePath ) );
 
@@ -106,7 +106,7 @@ function fileWrapSimple( o )
   return result;
 }
 
-fileWrapSimple.defaults =
+sourceWrapSimple.defaults =
 {
   basePath : null,
   filePath : null,
@@ -143,7 +143,7 @@ let Proto =
 
   _performAct,
 
-  fileWrapSimple,
+  sourceWrapSimple,
 
   /* */
 
