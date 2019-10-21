@@ -28,16 +28,16 @@
   }, 
   "dependencies" : 
   {
-    "wTools" : "", 
-    "wCopyable" : "", 
-    "wpathbasic" : "", 
-    "wverbal" : "", 
-    "wFiles" : "", 
-    "wstarter" : "", 
-    "wcommandsaggregator" : "", 
-    "wcommandsconfig" : "", 
-    "wstatestorage" : "", 
-    "wstatesession" : "", 
+    "wTools" : "beta", 
+    "wCopyable" : "beta", 
+    "wpathbasic" : "beta", 
+    "wverbal" : "beta", 
+    "wFiles" : "beta", 
+    "wstarter" : "beta", 
+    "wcommandsaggregator" : "beta", 
+    "wcommandsconfig" : "beta", 
+    "wstatestorage" : "beta", 
+    "wstatesession" : "beta", 
     "google-closure-compiler-js" : "=20180610.0.0", 
     "prepack" : "=0.2.54", 
     "uglify-es" : "=3.3.9", 
@@ -54,7 +54,7 @@
     "babel-plugin-transform-runtime" : "=6.23.0", 
     "babel-plugin-transform-class-properties" : "=6.24.1"
   }, 
-  "devDependencies" : { "wTesting" : "" }, 
+  "devDependencies" : { "wTesting" : "beta" }, 
   "keywords" : 
   [
     "wTools", 
