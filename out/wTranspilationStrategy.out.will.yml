@@ -6,12 +6,13 @@ consistency:
     hash: e660cbcbc270922b9a3ac2bc4a6d911d
     size: 2444
   ../.im.will.yml: &ref_1
-    hash: 17d1f0d02060e2d7eed3e7e3a9d5c408
-    size: 7083
+    hash: b02882eeb47ac745690cb77fe64514c5
+    size: 7157
 module:
   wTranspilationStrategy.out:
     about:
       name: wTranspilationStrategy
+      org: noorg
       description: >-
         Aggregator of strategies to transpile JS code. It provides unified
         programmatic and CL interfaces to transpile/optimize/minimize/beautify
@@ -78,9 +79,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/wTranspilationStrategy.git'
       origins:
@@ -90,15 +88,15 @@ module:
       bugtracker:
         path: 'https:///github.com/Wandalen/wTranspilationStrategy/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       out:
-        criterion:
-          predefined: 0
         path: .
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - ../package-lock.json
+          - ../package.json
+          - ../node_modules
       proto:
         path: ../proto
       export:
@@ -163,11 +161,13 @@ module:
         path: '{path::out.*=}/source/Index.s'
       exported.dir.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
         path: ../proto
       exported.files.proto.export:
         criterion:
+          generated: 1
           content: proto
           export: 1
         path:
@@ -498,6 +498,7 @@ module:
           prefixPath: ../proto
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
       exported.files.proto.export:
@@ -510,6 +511,7 @@ module:
         recursive: 0
         mandatory: 1
         criterion:
+          generated: 1
           content: proto
           export: 1
     step:
@@ -956,6 +958,7 @@ module:
   ../:
     about:
       name: wTranspilationStrategy
+      org: noorg
       description: >-
         Aggregator of strategies to transpile JS code. It provides unified
         programmatic and CL interfaces to transpile/optimize/minimize/beautify
@@ -1001,9 +1004,6 @@ module:
       download:
         criterion:
           predefined: 1
-      remote:
-        criterion:
-          predefined: 1
       repository:
         path: 'git+https:///github.com/Wandalen/wTranspilationStrategy.git'
       origins:
@@ -1013,21 +1013,21 @@ module:
       bugtracker:
         path: 'https:///github.com/Wandalen/wTranspilationStrategy/issues'
       in:
-        criterion:
-          predefined: 0
         path: .
       out:
-        criterion:
-          predefined: 0
         path: out
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - package-lock.json
+          - package.json
+          - node_modules
       proto:
-        path: ./proto
+        path: proto
       export:
         path: '{path::proto}/**'
       doc:
-        path: ./doc
+        path: doc
       out.raw.debug:
         criterion:
           debug: debug
@@ -1741,5 +1741,5 @@ module:
         hash: e660cbcbc270922b9a3ac2bc4a6d911d
         size: 2444
       ../.im.will.yml:
-        hash: 17d1f0d02060e2d7eed3e7e3a9d5c408
-        size: 7083
+        hash: b02882eeb47ac745690cb77fe64514c5
+        size: 7157

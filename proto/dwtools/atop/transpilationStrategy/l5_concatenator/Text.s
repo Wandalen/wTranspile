@@ -4,7 +4,7 @@
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = _.TranspilationStrategy.Concatenator.Abstract;
 let Self = function wTsConcatenatorText( o )
 {

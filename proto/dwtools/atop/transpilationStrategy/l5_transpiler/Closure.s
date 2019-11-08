@@ -6,7 +6,7 @@ let Closure = require( 'google-closure-compiler-js' );
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = _.TranspilationStrategy.Transpiler.Abstract;
 let Self = function wTsTranspilerClosure( o )
 {

@@ -4,7 +4,7 @@
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = null;
 let Self = function wTsTranspilerAbstract( o )
 {

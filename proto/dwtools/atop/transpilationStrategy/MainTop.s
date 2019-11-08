@@ -12,7 +12,7 @@ if( typeof module !== 'undefined' )
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = _.TranspilationStrategy;
 let Self = function wTranspilationStrategyCli( o )
 {

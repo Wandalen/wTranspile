@@ -6,7 +6,7 @@ let Zlib;
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = null;
 let Self = function wTsMultiple( o )
 {
@@ -53,8 +53,8 @@ function form()
   _.assert( _.numberInRange( multiple.minification, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.minification-}' );
   _.assert( _.numberInRange( multiple.diagnosing, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.diagnosing-}' );
   _.assert( _.boolLike( multiple.beautifing ), 'Expects bool-like {-multiple.beautifing-}' );
-  _.sure( _.arrayHas( [ 'ManyToOne', 'OneToOne' ], multiple.splittingStrategy ) );
-  _.sure( _.arrayHas( [ 'preserve', 'rebuild' ], multiple.upToDate ), () => 'Unknown value of upToDate ' + _.strQuote( multiple.upToDate ) );
+  _.sure( _.longHas( [ 'ManyToOne', 'OneToOne' ], multiple.splittingStrategy ) );
+  _.sure( _.longHas( [ 'preserve', 'rebuild' ], multiple.upToDate ), () => 'Unknown value of upToDate ' + _.strQuote( multiple.upToDate ) );
 
   /* parent */
 

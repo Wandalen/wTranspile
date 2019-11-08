@@ -7,7 +7,7 @@ let Babel = require( 'babel-core' );
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = _.TranspilationStrategy.Transpiler.Abstract;
 let Self = function wTsTranspilerBabel( o )
 {

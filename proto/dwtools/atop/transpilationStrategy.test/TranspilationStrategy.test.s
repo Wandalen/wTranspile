@@ -214,7 +214,7 @@ function singleDst( test )
 {
   let self = this;
   let routinePath = _.path.join( self.tempDir, test.name );
-  let originalDirPath = _.path.join( __dirname, '../transpilationStrategy' );
+  let originalAssetPath = _.path.join( __dirname, '../transpilationStrategy' );
 
   test.case = 'single destination';
 
@@ -226,8 +226,8 @@ function singleDst( test )
     {
       filePath :
       {
-        [ originalDirPath + '/**' ] : '',
-        [ originalDirPath + '/Exec*' ] : 0,
+        [ originalAssetPath + '/**' ] : '',
+        [ originalAssetPath + '/Exec*' ] : 0,
       }
     },
     outPath : outPath,
@@ -699,7 +699,7 @@ function transpileManyToOne( test )
 function shell( test )
 {
   let self = this;
-  let originalDirPath = _.path.join( __dirname, '../transpilationStrategy' );
+  let originalAssetPath = _.path.join( __dirname, '../transpilationStrategy' );
   let routinePath = _.path.join( self.tempDir, test.name );
   let inPath = _.path.normalize( __dirname ) + '/**';
   let outPath = _.path.join( routinePath, 'out.js' );
@@ -723,7 +723,7 @@ function shell( test )
 
     _.fileProvider.filesDelete( routinePath );
     _.fileProvider.dirMake( routinePath );
-    // _.fileProvider.filesReflect({ reflectMap : { [ originalDirPath ] : routinePath } });
+    // _.fileProvider.filesReflect({ reflectMap : { [ originalAssetPath ] : routinePath } });
 
     return null;
   })
@@ -753,7 +753,7 @@ function shell( test )
 function combinedShell( test )
 {
   let self = this;
-  let originalDirPath = _.path.join( self.assetDirPath, 'combined' );
+  let originalAssetPath = _.path.join( self.assetDirPath, 'combined' );
   let routinePath = _.path.join( self.tempDir, test.name );
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
@@ -789,7 +789,7 @@ function combinedShell( test )
     test.case = '.transpile';
     _.fileProvider.filesDelete( routinePath );
     _.fileProvider.dirMake( routinePath );
-    _.fileProvider.filesReflect({ reflectMap : { [ originalDirPath ] : routinePath } });
+    _.fileProvider.filesReflect({ reflectMap : { [ originalAssetPath ] : routinePath } });
     return null;
   })
 
@@ -895,7 +895,7 @@ function combinedShell( test )
   //   test.case = 'throwing';
   //   _.fileProvider.filesDelete( routinePath );
   //   _.fileProvider.dirMake( routinePath );
-  //   _.fileProvider.filesReflect({ reflectMap : { [ originalDirPath ] : routinePath } });
+  //   _.fileProvider.filesReflect({ reflectMap : { [ originalAssetPath ] : routinePath } });
   //   return null;
   // })
   //
@@ -931,7 +931,7 @@ combinedShell.timeOut = 150000;
 function combinedProgramatic( test )
 {
   let self = this;
-  let originalDirPath = _.path.join( self.assetDirPath, 'combined' );
+  let originalAssetPath = _.path.join( self.assetDirPath, 'combined' );
   let routinePath = _.path.join( self.tempDir, test.name );
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
@@ -957,7 +957,7 @@ function combinedProgramatic( test )
 
     _.fileProvider.filesDelete( routinePath );
     _.fileProvider.dirMake( routinePath );
-    _.fileProvider.filesReflect({ reflectMap : { [ originalDirPath ] : routinePath } });
+    _.fileProvider.filesReflect({ reflectMap : { [ originalAssetPath ] : routinePath } });
 
     let ts = new _.TranspilationStrategy({}).form();
     let multiple = ts.multiple
