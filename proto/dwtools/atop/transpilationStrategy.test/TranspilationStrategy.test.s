@@ -53,7 +53,7 @@ function onSuiteBegin()
 function onSuiteEnd()
 {
   let self = this;
-  _.assert( _.strHas( self.tempDir, '/tmp.tmp' ) )
+  _.assert( _.strHas( self.tempDir, '/TransiplationStrategy' ) )
   _.fileProvider.filesDelete( self.tempDir );
 }
 
@@ -842,6 +842,7 @@ function combinedShell( test )
 
   /*
     qqq xxx : why does it thow error???
+    aaa : because test removes routinePath directory few lines above, routinePath is used in shell as currentPath
   */
 
   shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
@@ -1028,6 +1029,7 @@ var Self =
 
   context :
   {
+    assetDirPath : null,
     tempDir : null,
     find : null,
     findIn : null,
