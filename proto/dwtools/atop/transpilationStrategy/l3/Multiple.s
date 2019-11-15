@@ -6,11 +6,11 @@ let Zlib;
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = null;
 let Self = function wTsMultiple( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Multiple';
@@ -53,8 +53,8 @@ function form()
   _.assert( _.numberInRange( multiple.minification, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.minification-}' );
   _.assert( _.numberInRange( multiple.diagnosing, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.diagnosing-}' );
   _.assert( _.boolLike( multiple.beautifing ), 'Expects bool-like {-multiple.beautifing-}' );
-  _.sure( _.arrayHas( [ 'ManyToOne', 'OneToOne' ], multiple.splittingStrategy ) );
-  _.sure( _.arrayHas( [ 'preserve', 'rebuild' ], multiple.upToDate ), () => 'Unknown value of upToDate ' + _.strQuote( multiple.upToDate ) );
+  _.sure( _.longHas( [ 'ManyToOne', 'OneToOne' ], multiple.splittingStrategy ) );
+  _.sure( _.longHas( [ 'preserve', 'rebuild' ], multiple.upToDate ), () => 'Unknown value of upToDate ' + _.strQuote( multiple.upToDate ) );
 
   /* parent */
 
@@ -85,58 +85,82 @@ function form()
 
   /* path temp */
 
-  multiple.outputPath = fileProvider.recordFilter( multiple.outputPath );
-  multiple.inputPath = fileProvider.recordFilter( multiple.inputPath );
+  multiple.outPath = fileProvider.recordFilter( multiple.outPath );
+  multiple.inPath = fileProvider.recordFilter( multiple.inPath );
 
-  multiple.outputPath.prefixPath = multiple.outputPath.prefixPath || path.current();
-  multiple.inputPath.prefixPath = multiple.inputPath.prefixPath || path.current();
-  multiple.inputPath.pairWithDst( multiple.outputPath );
-  multiple.inputPath.pairRefineLight();
+  multiple.outPath.prefixPath = multiple.outPath.prefixPath || path.current();
+  multiple.inPath.prefixPath = multiple.inPath.prefixPath || path.current();
+  multiple.inPath.pairWithDst( multiple.outPath );
+  multiple.inPath.pairRefineLight();
 
-  multiple.outputPath.form();
-  multiple.inputPath.form();
+  multiple.outPath._formPaths();
+  multiple.inPath._formPaths();
 
-  multiple.entryPath = fileProvider.recordFilter( multiple.entryPath );
-  if( !multiple.entryPath.basePath )
-  multiple.entryPath.basePath = multiple.inputPath.basePaths[ 0 ];
-  multiple.entryPath = fileProvider.filesFind
-  ({
-    filter : multiple.entryPath,
-    outputFormat : 'absolute',
-    mandatory : 0,
-    distinct : 1,
-    allowingMissed : 1,
-  });
+  if( multiple.entryPath )
+  {
+    multiple.entryPath = fileProvider.recordFilter( multiple.entryPath );
+    if( !multiple.entryPath.basePath )
+    multiple.entryPath.basePath = multiple.inPath.basePaths[ 0 ];
+    multiple.entryPath = fileProvider.filesFind
+    ({
+      filter : multiple.entryPath,
+      outputFormat : 'absolute',
+      mode : 'distinct',
+    });
+
+    // qqq xxx : cover the condition
+    _.sure
+    (
+      multiple.entryPath.length === 0 || multiple.splittingStrategy === 'ManyToOne',
+      () => 'Splitting strategy should be "ManyToOne" if entryPath defined'
+    );
+
+  }
 
   if( multiple.externalBeforePath )
   {
     multiple.externalBeforePath = fileProvider.recordFilter( multiple.externalBeforePath );
     if( !multiple.externalBeforePath.basePath )
-    multiple.externalBeforePath.basePath = multiple.inputPath.basePaths[ 0 ];
+    multiple.externalBeforePath.basePath = multiple.inPath.basePaths[ 0 ];
     multiple.externalBeforePath = fileProvider.filesFind
     ({
       filter : multiple.externalBeforePath,
       outputFormat : 'absolute',
-      distinct : 1,
+      mode : 'distinct',
     });
+
+    // qqq xxx : cover the condition
+    _.sure
+    (
+      multiple.externalBeforePath.length === 0 || multiple.splittingStrategy === 'ManyToOne',
+      () => 'Splitting strategy should be "ManyToOne" if externalBeforePath defined'
+    );
+
   }
 
   if( multiple.externalAfterPath )
   {
     multiple.externalAfterPath = fileProvider.recordFilter( multiple.externalAfterPath );
     if( !multiple.externalAfterPath.basePath )
-    multiple.externalAfterPath.basePath = multiple.inputPath.basePaths[ 0 ];
-    multiple.externalAfterPath.distinct = 1;
+    multiple.externalAfterPath.basePath = multiple.inPath.basePaths[ 0 ];
     multiple.externalAfterPath = fileProvider.filesFind
     ({
       filter : multiple.externalAfterPath,
       outputFormat : 'absolute',
-      distinct : 1,
+      mode : 'distinct',
     });
+
+    // qqq xxx : cover the condition
+    _.sure
+    (
+      multiple.externalAfterPath.length === 0 || multiple.splittingStrategy === 'ManyToOne',
+      () => 'Splitting strategy should be "ManyToOne" if externalAfterPath defined'
+    );
+
   }
 
   // multiple.entryPath = multiple.entryPath ? _.arrayAs( multiple.entryPath ) : [];
-  // multiple.entryPath = path.s.join( multiple.inputPath.basePaths[ 0 ], multiple.entryPath );
+  // multiple.entryPath = path.s.join( multiple.inPath.basePaths[ 0 ], multiple.entryPath );
 
   multiple.tempPath = path.resolve( multiple.tempPath );
 
@@ -175,7 +199,7 @@ function form()
   _.assert( multiple.fileProvider instanceof _.FileProvider.Abstract );
   _.assert( _.routineIs( multiple.onBegin ) );
   _.assert( _.routineIs( multiple.onEnd ) );
-  _.assert( _.arrayIs( multiple.entryPath ) );
+  _.assert( multiple.entryPath === null || _.arrayIs( multiple.entryPath ) );
 
   return multiple;
 }
@@ -219,19 +243,22 @@ function perform()
   {
     return _.routinesCall( multiple, multiple.onEnd, [ multiple ] );
   })
-  .then( function( arg )
-  {
-    return _.routinesCall( multiple, multiple.onEnd, [ multiple ] );
-  })
   .finally( function( err, arg )
   {
     if( err )
     {
       _.arrayAppendOnce( multiple.errors, err );
-      throw _.errLogOnce( err );
+      throw _.err( err );
     }
-    if( multiple.verbosity >= 1 && multiple.totalReporting )
-    logger.log( ' # Transpilation took', _.timeSpent( time ) );
+
+    let reporting = false;
+    if( multiple.totalReporting === null )
+    reporting = multiple.verbosity === 1 || multiple.verbosity === 2 || multiple.verbosity > 5;
+    else if( multiple.totalReporting )
+    reporting = multiple.verbosity >= 1
+
+    if( reporting )
+    logger.log( ` # Transpiled ${multiple.srcCounter} source files to ${multiple.dstCounter} in ${_.timeSpent( time )}` );
     return null;
   });
 
@@ -249,8 +276,8 @@ function singleEach( onEach )
   let path = fileProvider.path;
 
   _.assert( arguments.length === 1 );
-  _.assert( multiple.inputPath.formed === 5 );
-  _.assert( multiple.outputPath.formed === 5 );
+  _.assert( multiple.inPath.formed === 3 );
+  _.assert( multiple.outPath.formed === 3 );
 
   /* */
 
@@ -260,9 +287,10 @@ function singleEach( onEach )
     // debugger;
     let groups = fileProvider.filesFindGroups
     ({
-      src : multiple.inputPath,
+      src : multiple.inPath,
+      dst : multiple.outPath,
       throwing : 1,
-      recursive : 2,
+      // recursive : 2,
       outputFormat : 'absolute',
     });
     // debugger;
@@ -290,7 +318,7 @@ function singleEach( onEach )
         let single = sys.Single
         ({
           dataMap : dataMap,
-          outputPath : dstPath,
+          outPath : dstPath,
           multiple : multiple,
           sys : sys,
         });
@@ -305,16 +333,16 @@ function singleEach( onEach )
         for( let srcPath in dataMap )
         {
 
-          let basePath = multiple.inputPath.basePathFor( srcPath );
+          let basePath = multiple.inPath.basePathForFilePath( srcPath );
           let relativePath = path.relative( basePath, srcPath );
-          let outputPath = path.join( dstPath, relativePath );
+          let outPath = path.join( dstPath, relativePath );
           let dataMap2 = Object.create( null );
           dataMap2[ srcPath ] = dataMap[ srcPath ];
 
           let single = sys.Single
           ({
             dataMap : dataMap2,
-            outputPath : outputPath,
+            outPath : outPath,
             multiple : multiple,
             sys : sys,
           });
@@ -364,8 +392,8 @@ let Composes =
 
   /* */
 
-  inputPath : null,
-  outputPath : null,
+  inPath : null,
+  outPath : null,
   entryPath : null,
   externalBeforePath : null,
   externalAfterPath : null,
@@ -373,7 +401,7 @@ let Composes =
 
   /* */
 
-  totalReporting : 1,
+  totalReporting : null,
   verbosity : 4,
   onBegin : null,
   onEnd : null,

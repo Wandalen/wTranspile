@@ -1,4 +1,4 @@
-( function IncludeBase_s_( ) {
+( function _IncludeBase_s_( ) {
 
 'use strict';
 
@@ -8,9 +8,10 @@ if( typeof module !== 'undefined' )
   let _ = require( '../../Tools.s' );
 
   _.include( 'wCopyable' );
-  _.include( 'wPathFundamentals' );
+  _.include( 'wPathTools' );
   _.include( 'wVerbal' );
   _.include( 'wFiles' );
+  _.include( 'wStarter' );
 
 }
 

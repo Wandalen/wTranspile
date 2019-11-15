@@ -6,11 +6,11 @@ let Uglify = require( 'uglify-es' );
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = _.TranspilationStrategy.Transpiler.Abstract;
 let Self = function wTsTranspilerUglify( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Uglify';
@@ -45,11 +45,11 @@ function _formAct( stage )
   // debugger;
   if( set.sourceMap === undefined )
   {
-    _.assert( _.strIs( single.outputPath ) );
+    _.assert( _.strIs( single.outPath ) );
     _.assert( _.strIs( single.sourceMapPath ) );
     set.sourceMap = Object.create( null );
     set.sourceMap.filename = single.sourceMapPath;
-    // set.sourceMap.filename = path.join( single.outputPath + '.map' );
+    // set.sourceMap.filename = path.join( single.outPath + '.map' );
     // stage.mapFilePath = set.sourceMap.filename; // xxx
   }
 
@@ -208,8 +208,6 @@ global_defs   : {}     // global definitions
   }
 
   _.mapSupplement( output, defOutput );
-
-  debugger;
 
   stage.formed = 1;
   return stage;

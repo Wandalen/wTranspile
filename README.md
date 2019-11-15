@@ -58,3 +58,8 @@ ts .transpile inputPath:sample/Sample2.js outputPath:temp.tmp/Sample2.js debug:1
 
 
 
+
+
+
+
+

@@ -6,11 +6,11 @@ let Zlib;
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = null;
 let Self = function wTsConcatenatorAbstract( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Abstract';
@@ -56,7 +56,7 @@ function form()
 
   self.ext.forEach( ( ext ) =>
   {
-    _.assert( sys.extToConcatenatorMap[ ext ] === undefined );
+    _.assert( sys.extToConcatenatorMap[ ext ] === undefined, () => 'Concatenator associated with extension ' + _.strQuote( ext ) + ' was already registered' );
     sys.extToConcatenatorMap[ ext ] = self;
   });
 
@@ -83,7 +83,7 @@ function perform( single )
 
   let result = self._performAct( single );
 
-  _.assert( _.strIs( result ) );
+  _.assert( _.strIs( result ), () => 'Concatenator should return string, but got ' + _.strType( result ) );
 
   return result;
 }

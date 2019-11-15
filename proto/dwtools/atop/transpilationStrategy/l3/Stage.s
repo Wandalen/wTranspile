@@ -6,11 +6,11 @@ let Zlib;
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = null;
 let Self = function wTsStage( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Stage';
@@ -83,7 +83,7 @@ function errorHandle( err )
   err = _.errLogOnce( '--\n' + code + '\n--\n', err );
 
   // if( self.terminatingOnError ) // xxx
-  // _.appExitWithBeep( -1 );
+  // _.process.exitWithBeep( -1 );
 
   if( !stage.error )
   stage.error = err;
@@ -171,8 +171,8 @@ let Forbids =
   beautifing : 'beautifing',
   writingTempFiles : 'writingTempFiles',
   sizeReporting : 'sizeReporting',
-  inputPath : 'inputPath',
-  outputPath : 'outputPath',
+  inPath : 'inPath',
+  outPath : 'outPath',
   tempPath : 'temp.tmp',
   mapFilePath : 'mapFilePath',
   verbosity : 'verbosity',

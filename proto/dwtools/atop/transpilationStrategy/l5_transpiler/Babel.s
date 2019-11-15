@@ -7,11 +7,11 @@ let Babel = require( 'babel-core' );
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = _.TranspilationStrategy.Transpiler.Abstract;
 let Self = function wTsTranspilerBabel( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'Babel';

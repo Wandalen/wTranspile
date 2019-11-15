@@ -28,6 +28,16 @@
   }, 
   "dependencies" : 
   {
+    "wTools" : "", 
+    "wCopyable" : "", 
+    "wpathbasic" : "", 
+    "wverbal" : "", 
+    "wFiles" : "", 
+    "wstarter" : "", 
+    "wcommandsaggregator" : "", 
+    "wcommandsconfig" : "", 
+    "wstatestorage" : "", 
+    "wstatesession" : "", 
     "google-closure-compiler-js" : "=20180610.0.0", 
     "prepack" : "=0.2.54", 
     "uglify-es" : "=3.3.9", 
@@ -42,19 +52,9 @@
     "babel-preset-es2015-without-strict" : "=0.0.4", 
     "babel-preset-node6-without-strict" : "=0.0.1", 
     "babel-plugin-transform-runtime" : "=6.23.0", 
-    "babel-plugin-transform-class-properties" : "=6.24.1", 
-    "wTools" : "alpha", 
-    "wCopyable" : "alpha", 
-    "wpathbasic" : "alpha", 
-    "wverbal" : "alpha", 
-    "wFiles" : "alpha", 
-    "wstarter" : "alpha", 
-    "wcommandsaggregator" : "alpha", 
-    "wcommandsconfig" : "alpha", 
-    "wstatestorage" : "alpha", 
-    "wstatesession" : "alpha"
+    "babel-plugin-transform-class-properties" : "=6.24.1"
   }, 
-  "devDependencies" : { "wTesting" : "alpha" }, 
+  "devDependencies" : { "wTesting" : "" }, 
   "keywords" : 
   [
     "wTools", 

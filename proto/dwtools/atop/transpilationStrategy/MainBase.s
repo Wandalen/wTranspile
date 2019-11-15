@@ -16,11 +16,11 @@ if( typeof module !== 'undefined' )
 
 //
 
-let _ = wTools;
+let _ = _global_.wTools;
 let Parent = null;
 let Self = function wTranspilationStrategy( o )
 {
-  return _.instanceConstructor( Self, this, arguments );
+  return _.workpiece.construct( Self, this, arguments );
 }
 
 Self.shortName = 'TranspilationStrategy';
@@ -47,7 +47,7 @@ function init( o )
   if( !sys.logger )
   sys.logger = new _.Logger({ output : _global_.logger });
 
-  _.instanceInit( sys );
+  _.workpiece.initFields( sys );
   Object.preventExtensions( sys );
 
   if( o )

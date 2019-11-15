@@ -6,22 +6,20 @@ if( typeof module !== 'undefined' )
 {
 
   require( './MainBase.s' );
+  require( './IncludeTop.s' );
 
 }
 
-let _ = wTools;
-
-_.include( 'wCommandsAggregator' );
-_.include( 'wCommandsConfig' );
-_.include( 'wStateStorage' );
-_.include( 'wStateSession' );
-
 //
 
-let Parent = null;
-let Self = _.TranspilationStrategy;
+let _ = _global_.wTools;
+let Parent = _.TranspilationStrategy;
+let Self = function wTranspilationStrategyCli( o )
+{
+  return _.workpiece.construct( Self, this, arguments );
+}
 
-_.assert( _.routineIs( _.TranspilationStrategy ) );
+Self.shortName = 'TranspilationStrategyCli';
 
 // --
 //
@@ -30,8 +28,8 @@ _.assert( _.routineIs( _.TranspilationStrategy ) );
 let ConfigProperties =
 {
 
-  inputPath : 'Path to terminal file or dirrectory with files to transpile.',
-  outputPath : 'Path to terminal file to store.',
+  inPath : 'Path to terminal file or dirrectory with files to transpile.',
+  outPath : 'Path to terminal file to store.',
   tempPath : 'Path to temporary directory to store intermediate results. Default : temp.tmp.',
   entryPath : 'Path to entry files. Files to launch among input files.',
   externalBeforePath : 'Path to external files. Files beyond input files to launch before entry files.',
@@ -79,7 +77,7 @@ function exec()
 
   let logger = sys.logger;
   let fileProvider = sys.fileProvider;
-  let appArgs = _.appArgs();
+  let appArgs = _.process.args();
   let ca = sys.commandsMake();
 
   return ca.appArgsPerform({ appArgs : appArgs });
@@ -92,7 +90,7 @@ function commandsMake()
   let sys = this;
   let logger = sys.logger;
   let fileProvider = sys.fileProvider;
-  let appArgs = _.appArgs();
+  let appArgs = _.process.args();
 
   _.assert( _.instanceIs( sys ) );
   _.assert( arguments.length === 0 );
@@ -101,7 +99,7 @@ function commandsMake()
   {
     'help' :              { e : _.routineJoin( sys, sys.commandHelp ),                h : 'Get help' },
     'strategies list' :   { e : _.routineJoin( sys, sys.commandTranspilersList ),      h : 'List available strategies of transpilation' },
-    'transpile' :         { e : _.routineJoin( sys, sys.commandTranspile ),                h : 'Transpile inputPath file and store result at outputPath' },
+    'transpile' :         { e : _.routineJoin( sys, sys.commandTranspile ),                h : 'Transpile inPath file and store result at outPath' },
   }
 
   let ca = _.CommandsAggregator
@@ -167,35 +165,20 @@ function commandTranspile( e )
   let path = fileProvider.path;
   let logger = sys.logger;
 
-  e.propertiesMap.outputPath = e.propertiesMap.outputPath || path.current();
-
-  // debugger;
-  // logger.log( 'e.propertiesMap', e.propertiesMap );
+  e.propertiesMap.outPath = e.propertiesMap.outPath || path.current();
 
   _.sureMapHasOnly( e.propertiesMap, commandTranspile.commandProperties );
-  _.sureBriefly( _.strIs( e.propertiesMap.inputPath ), 'Expects path to file to transpile {-inputPath-}' );
-  _.sureBriefly( _.strIs( e.propertiesMap.outputPath ), 'Expects path to file to save transpiled {-outputPath-}' );
+  _.sureBriefly( _.strIs( e.propertiesMap.inPath ), 'Expects path to file to transpile {-inPath-}' );
+  _.sureBriefly( _.strIs( e.propertiesMap.outPath ), 'Expects path to file to save transpiled {-outPath-}' );
 
-  // if( sys.verbosity >= 3 )
-  // logger.log( ' # Transpiling', e.propertiesMap.outputPath, '<-', e.propertiesMap.inputPath );
-  // logger.up();
-
-  // debugger;
   let multiple = sys.Multiple
   ({
     sys : sys,
-    // inputPath : e.propertiesMap.inputPath,
-    // inputPath : { filePath : e.propertiesMap.inputPath, basePath : path.join( e.propertiesMap.inputPath, '.' ) },
-    // inputPath : e.propertiesMap.inputPath,
-    // outputPath : e.propertiesMap.outputPath,
   });
 
-  // delete e.propertiesMap.inputPath;
-  // delete e.propertiesMap.outputPath;
+  // sys.storageLoad(); // xxx
 
-  sys.storageLoad();
-
-  _.appArgsReadTo
+  _.process.argsReadTo
   ({
     dst : sys,
     only : 0,
@@ -208,7 +191,7 @@ function commandTranspile( e )
     },
   });
 
-  _.appArgsReadTo
+  _.process.argsReadTo
   ({
     dst : sys,
     only : 0,
@@ -220,7 +203,7 @@ function commandTranspile( e )
     },
   });
 
-  _.appArgsReadTo
+  _.process.argsReadTo
   ({
     dst : multiple,
     only : 0,
@@ -228,8 +211,8 @@ function commandTranspile( e )
     propertiesMap : sys.storage,
     namesMap :
     {
-      'inputPath' : 'inputPath',
-      'outputPath' : 'outputPath',
+      'inPath' : 'inPath',
+      'outPath' : 'outPath',
       'tempPath' : 'tempPath',
       'entryPath' : 'entryPath',
       'externalBeforePath' : 'externalBeforePath',
@@ -247,15 +230,15 @@ function commandTranspile( e )
     },
   });
 
-  _.appArgsReadTo
+  _.process.argsReadTo
   ({
     dst : multiple,
     only : 1,
     propertiesMap : e.propertiesMap,
     namesMap :
     {
-      'inputPath' : 'inputPath',
-      'outputPath' : 'outputPath',
+      'inPath' : 'inPath',
+      'outPath' : 'outPath',
       'tempPath' : 'tempPath',
       'entryPath' : 'entryPath',
       'externalBeforePath' : 'externalBeforePath',
@@ -273,15 +256,15 @@ function commandTranspile( e )
     },
   });
 
-  if( !_.mapIs( multiple.inputPath ) )
-  multiple.inputPath = { filePath : multiple.inputPath }
-  multiple.inputPath.prefixPath = multiple.inputPath.prefixPath || path.current();
-  multiple.inputPath.basePath = multiple.inputPath.basePath || path.current();
+  if( !_.mapIs( multiple.inPath ) )
+  multiple.inPath = { filePath : multiple.inPath }
+  multiple.inPath.prefixPath = multiple.inPath.prefixPath || path.current();
+  multiple.inPath.basePath = multiple.inPath.basePath || path.current();
 
-  if( !_.mapIs( multiple.outputPath ) )
-  multiple.outputPath = { filePath : multiple.outputPath }
-  multiple.outputPath.prefixPath = multiple.outputPath.prefixPath || path.current();
-  multiple.outputPath.basePath = multiple.outputPath.basePath || path.current();
+  if( !_.mapIs( multiple.outPath ) )
+  multiple.outPath = { filePath : multiple.outPath }
+  multiple.outPath.prefixPath = multiple.outPath.prefixPath || path.current();
+  multiple.outPath.basePath = multiple.outPath.basePath || path.current();
 
   multiple.verbosity = sys.verbosity;
 
@@ -292,7 +275,7 @@ function commandTranspile( e )
   {
     if( err )
     {
-      _.appExitCode( -1 );
+      _.process.exitCode( -1 );
       _.errLogOnce( err );
     }
     multiple.finit();
@@ -350,8 +333,8 @@ let Restricts =
 
 let Statics =
 {
-  Exec : Exec,
-  ConfigProperties : ConfigProperties,
+  Exec,
+  ConfigProperties,
 }
 
 let Forbids =
@@ -389,18 +372,22 @@ let Extend =
 
 }
 
-//
+_.classDeclare
+({
+  cls : Self,
+  parent : Parent,
+  extend : Extend,
+});
 
-_.classExtend( Self, Extend );
-_.StateStorage.mixin( Self );
-_.StateSession.mixin( Self );
+// _.StateStorage.mixin( Self );
+// _.StateSession.mixin( Self );
 _.CommandsConfig.mixin( Self );
 
 //
 
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
-_global_[ Self.name ] = wTools[ Self.shortName ] = Self;
+wTools[ Self.shortName ] = Self;
 
 if( !module.parent )
 Self.Exec();
