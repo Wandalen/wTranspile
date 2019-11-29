@@ -220,7 +220,7 @@ function perform()
   let multiple = this;
   let logger = multiple.logger;
   let result = _.Consequence().take( null );
-  let time = _.timeNow();
+  let time = _.time.now();
 
   result
   .then( function( arg )
@@ -258,7 +258,7 @@ function perform()
     reporting = multiple.verbosity >= 1
 
     if( reporting )
-    logger.log( ` # Transpiled ${multiple.srcCounter} source files to ${multiple.dstCounter} in ${_.timeSpent( time )}` );
+    logger.log( ` # Transpiled ${multiple.srcCounter} source files to ${multiple.dstCounter} in ${_.time.spent( time )}` );
     return null;
   });
 

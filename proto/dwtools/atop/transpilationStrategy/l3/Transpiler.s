@@ -45,7 +45,7 @@ function perform( stage )
   let fileProvider = multiple.fileProvider;
   let path = fileProvider.path;
   let logger = multiple.logger;
-  let time = _.timeNow();
+  let time = _.time.now();
   let result;
 
   /* verify */
@@ -131,7 +131,7 @@ function perform( stage )
     });
 
     // if( multiple.verbosity >= 2 )
-    // logger.log( ' # Transpiled ' + single.outPath + ' with strategy ' + self.constructor.shortName, 'in', _.timeSpent( time ) );
+    // logger.log( ' # Transpiled ' + single.outPath + ' with strategy ' + self.constructor.shortName, 'in', _.time.spent( time ) );
 
     _.assert( stage.formed === 2 );
     return true;

@@ -88,7 +88,7 @@ function perform()
   let fileProvider = multiple.fileProvider;
   let path = fileProvider.path;
   let con = new _.Consequence().take( null );
-  let time = _.timeNow();
+  let time = _.time.now();
   let logger = multiple.logger;
 
   _.assert( multiple instanceof sys.Multiple );
@@ -188,7 +188,7 @@ function perform()
     if( !single.errors.length )
     {
       if( multiple.verbosity >= 3 )
-      logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outPath, 'path' ) + ' in', _.timeSpent( time ) );
+      logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outPath, 'path' ) + ' in', _.time.spent( time ) );
       if( multiple.verbosity >= 4 )
       logger.log( ' # ' + single.sizeReportLast );
     }
@@ -264,7 +264,7 @@ function sizeReport( o )
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( !multiple.sizeReporting || multiple.verbosity < 4 )
-  return _.timeOut( 1 );
+  return _.time.out( 1 );
 
   let inputSize = 0;
   if( o.input )
