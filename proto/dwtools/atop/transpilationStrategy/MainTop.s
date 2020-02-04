@@ -73,7 +73,7 @@ function exec()
   sys.form();
 
   _.assert( _.instanceIs( sys ) );
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
 
   let logger = sys.logger;
   let fileProvider = sys.fileProvider;
@@ -93,7 +93,7 @@ function commandsMake()
   let appArgs = _.process.args();
 
   _.assert( _.instanceIs( sys ) );
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
 
   let commands =
   {

@@ -30,7 +30,7 @@ function _formAct()
   let session = self.session;
 
   _.assert( session.inputFilesPaths.length >= 1 );
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
 
   /* */
 

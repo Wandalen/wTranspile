@@ -48,7 +48,7 @@ function form()
 
   /* verification */
 
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
   _.assert( _.numberInRange( multiple.optimization, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.optimization-}' );
   _.assert( _.numberInRange( multiple.minification, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.minification-}' );
   _.assert( _.numberInRange( multiple.diagnosing, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.diagnosing-}' );
@@ -61,7 +61,7 @@ function form()
   _.assert( multiple.formed === 0 );
   _.assert( _.objectIs( multiple.sys ) );
   _.assert( multiple.errors === null );
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
 
   multiple.errors = [];
   multiple.onBegin = _.routinesCompose( multiple.onBegin );

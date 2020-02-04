@@ -61,7 +61,7 @@ function unform()
 {
   let sys = this;
 
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
   _.assert( !!sys.formed );
 
   /* begin */
@@ -80,7 +80,7 @@ function form()
 
   sys.formAssociates();
 
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
   _.assert( !sys.formed );
 
   /* begin */
@@ -98,7 +98,7 @@ function formAssociates()
   let sys = this;
   let logger = sys.logger;
 
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
   _.assert( !sys.formed );
 
   if( !sys.logger )

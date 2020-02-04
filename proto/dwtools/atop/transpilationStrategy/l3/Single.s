@@ -94,7 +94,7 @@ function perform()
   _.assert( multiple instanceof sys.Multiple );
   _.assert( single.input instanceof sys.Stage );
   _.assert( single.output === null );
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
 
   multiple.dstCounter += 1;
   multiple.srcCounter += _.mapKeys( single.dataMap ).length;
@@ -359,7 +359,7 @@ function concatenatorFor()
   let path = fileProvider.path;
   let concatenator = null;
 
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
 
   if( !_.mapKeys( single.dataMap ).length )
   return concatenator;
@@ -396,7 +396,7 @@ function concatenate()
   let fileProvider = multiple.fileProvider;
   let path = fileProvider.path;
 
-  _.assert( arguments.length === 0 );
+  _.assert( arguments.length === 0, 'Expects no arguments' );
 
   if( !single.concatenator )
   single.concatenator = single.concatenatorFor();
