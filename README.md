@@ -13,7 +13,7 @@ Aggregator of strategies to transpile JS code. It provides unified programmatic 
 ## Try out
 ```
 npm install
-node sample/Sample.s
+node sample/Sample.js
 ```
 
 ## Try out
