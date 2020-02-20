@@ -49,9 +49,13 @@ function form()
   /* verification */
 
   _.assert( arguments.length === 0, 'Expects no arguments' );
-  _.assert( _.numberInRange( multiple.optimization, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.optimization-}' );
-  _.assert( _.numberInRange( multiple.minification, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.minification-}' );
-  _.assert( _.numberInRange( multiple.diagnosing, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.diagnosing-}' );
+  // _.assert( _.numberInRange( multiple.optimization, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.optimization-}' );
+  // _.assert( _.numberInRange( multiple.minification, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.minification-}' );
+  // _.assert( _.numberInRange( multiple.diagnosing, [ 0, 9 ] ), 'Expects integer in range [ 0, 9 ] {-multiple.diagnosing-}' );
+  _.assert( 0 <= multiple.optimization && multiple.optimization <= 9, 'Expects integer in range [ 0, 9 ] {-multiple.optimization-}' );
+  _.assert( 0 <= multiple.minification && multiple.minification <= 9, 'Expects integer in range [ 0, 9 ] {-multiple.minification-}' );
+  _.assert( 0 <= multiple.diagnosing && multiple.diagnosing <= 9, 'Expects integer in range [ 0, 9 ] {-multiple.diagnosing-}' );
+
   _.assert( _.boolLike( multiple.beautifing ), 'Expects bool-like {-multiple.beautifing-}' );
   _.sure( _.longHas( [ 'ManyToOne', 'OneToOne' ], multiple.splittingStrategy ) );
   _.sure( _.longHas( [ 'preserve', 'rebuild' ], multiple.upToDate ), () => 'Unknown value of upToDate ' + _.strQuote( multiple.upToDate ) );
