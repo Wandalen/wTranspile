@@ -2,10 +2,13 @@ format: outwillfile-2.0
 root:
   - wTranspilationStrategy.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wTranspilationStrategy.out.will.yml: &ref_0
+    hash: cbfdf03bb68478d5873db647f74fe141
+    size: 48767
+  ../.ex.will.yml: &ref_1
     hash: e660cbcbc270922b9a3ac2bc4a6d911d
     size: 2444
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: b02882eeb47ac745690cb77fe64514c5
     size: 7157
 module:
@@ -22,11 +25,11 @@ module:
         open source transpilation tools in single package.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - wTools
         - Transpilation
         - transpilation strategies
@@ -42,14 +45,14 @@ module:
         - ecmascript
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@willbe.so>
       npm.name: wtranspilationstrategy
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
         ts: node proto/dwtools/atop/transpilationStrategy/MainTop.s
-      npm.bin: &ref_6
+      npm.bin:
         ts: proto/dwtools/atop/transpilationStrategy/Exec
     path:
       module.willfiles:
@@ -865,6 +868,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          reflector: 'reflector::exported.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          reflector: 'reflector::exported.files.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -953,8 +974,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wTranspilationStrategy.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wTranspilationStrategy
@@ -968,14 +990,35 @@ module:
         open source transpilation tools in single package.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 8.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - wTools
+        - Transpilation
+        - transpilation strategies
+        - uglify
+        - uglify-es
+        - uglify-js
+        - beautify
+        - minify
+        - minimize
+        - optimize
+        - minifier
+        - javascript
+        - ecmascript
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@willbe.so>
       npm.name: wtranspilationstrategy
-      npm.scripts: *ref_5
-      npm.bin: *ref_6
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
+        ts: node proto/dwtools/atop/transpilationStrategy/MainTop.s
+      npm.bin:
+        ts: proto/dwtools/atop/transpilationStrategy/Exec
     path:
       module.willfiles:
         criterion:
@@ -1743,3 +1786,6 @@ module:
       ../.im.will.yml:
         hash: b02882eeb47ac745690cb77fe64514c5
         size: 7157
+      wTranspilationStrategy.out.will.yml:
+        hash: cbfdf03bb68478d5873db647f74fe141
+        size: 48767
