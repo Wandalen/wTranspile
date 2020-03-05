@@ -1786,6 +1786,4 @@ module:
       ../.im.will.yml:
         hash: b02882eeb47ac745690cb77fe64514c5
         size: 7157
-      wTranspilationStrategy.out.will.yml:
-        hash: cbfdf03bb68478d5873db647f74fe141
-        size: 48767
+      wTranspilationStrategy.out.will.yml: *ref_0
