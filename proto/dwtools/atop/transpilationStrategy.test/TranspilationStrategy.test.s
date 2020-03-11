@@ -24,8 +24,8 @@ function onSuiteBegin()
 {
   let self = this;
 
-  self.tempDir = _.path.pathDirTempOpen( _.path.join( __dirname, '../..'  ), 'TransiplationStrategy' );
-  self.assetDirPath = _.path.join( __dirname, '_asset' );
+  self.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '../..'  ), 'TransiplationStrategy' );
+  self.assetsOriginalSuitePath = _.path.join( __dirname, '_asset' );
 
   self.find = _.fileProvider.filesFinder
   ({
@@ -53,8 +53,8 @@ function onSuiteBegin()
 function onSuiteEnd()
 {
   let self = this;
-  _.assert( _.strHas( self.tempDir, '/TransiplationStrategy' ) )
-  _.fileProvider.filesDelete( self.tempDir );
+  _.assert( _.strHas( self.suiteTempPath, '/TransiplationStrategy' ) )
+  _.fileProvider.filesDelete( self.suiteTempPath );
 }
 
 
@@ -65,7 +65,7 @@ function onSuiteEnd()
 function singleFileInputTerminal( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
   let con = new _.Consequence().take( null );
 
   /* - */
@@ -148,7 +148,7 @@ function singleFileInputTerminal( test )
 function singleFileInputDir( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
 
   /* - */
 
@@ -183,7 +183,7 @@ function singleFileInputDir( test )
 function singleFileInputDirThrowing( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
 
   /* - */
 
@@ -213,7 +213,7 @@ function singleFileInputDirThrowing( test )
 function singleDst( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
   let originalAssetPath = _.path.join( __dirname, '../transpilationStrategy' );
 
   test.case = 'single destination';
@@ -255,7 +255,7 @@ function singleDst( test )
 function severalDst( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
 
   test.case = 'trivial';
 
@@ -301,7 +301,7 @@ function severalDst( test )
 function complexMask( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
 
   test.case = 'trivial';
 
@@ -348,7 +348,7 @@ function complexMask( test )
 function oneToOne( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
 
   test.case = 'trivial';
 
@@ -412,7 +412,7 @@ function oneToOne( test )
 function nothingFoundOneToOne( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
 
   /* */
 
@@ -464,7 +464,7 @@ function nothingFoundOneToOne( test )
 function nothingFoundManyToOne( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
 
   /* */
 
@@ -520,7 +520,7 @@ function nothingFoundManyToOne( test )
 function transpileManyToOne( test )
 {
   let self = this;
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
   let con = new _.Consequence().take( null );
 
   /* */
@@ -700,7 +700,7 @@ function shell( test )
 {
   let self = this;
   let originalAssetPath = _.path.join( __dirname, '../transpilationStrategy' );
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
   let inPath = _.path.normalize( __dirname ) + '/**';
   let outPath = _.path.join( routinePath, 'out.js' );
   let execRelativePath = '../transpilationStrategy/Exec';
@@ -753,8 +753,8 @@ function shell( test )
 function combinedShell( test )
 {
   let self = this;
-  let originalAssetPath = _.path.join( self.assetDirPath, 'combined' );
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let originalAssetPath = _.path.join( self.assetsOriginalSuitePath, 'combined' );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let inPath = 'main/**';
@@ -932,8 +932,8 @@ combinedShell.timeOut = 150000;
 function combinedProgramatic( test )
 {
   let self = this;
-  let originalAssetPath = _.path.join( self.assetDirPath, 'combined' );
-  let routinePath = _.path.join( self.tempDir, test.name );
+  let originalAssetPath = _.path.join( self.assetsOriginalSuitePath, 'combined' );
+  let routinePath = _.path.join( self.suiteTempPath, test.name );
   let execRelativePath = '../transpilationStrategy/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let inPath = _.path.join( routinePath, 'main/**' );
@@ -1029,8 +1029,8 @@ var Self =
 
   context :
   {
-    assetDirPath : null,
-    tempDir : null,
+    assetsOriginalSuitePath : null,
+    suiteTempPath : null,
     find : null,
     findIn : null,
   },
