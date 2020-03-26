@@ -92,7 +92,7 @@ function errorHandle( err )
 }
 
 // --
-// relationships
+// relations
 // --
 
 let Composes =

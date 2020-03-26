@@ -168,7 +168,7 @@ function proceedThen( stage )
 }
 
 // --
-// relationships
+// relations
 // --
 
 let Composes =

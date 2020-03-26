@@ -53,7 +53,7 @@ function _performAct()
 }
 
 // --
-// relationships
+// relations
 // --
 
 let Composes =

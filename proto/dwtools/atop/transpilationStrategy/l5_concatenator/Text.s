@@ -45,7 +45,7 @@ function _performAct( single )
 }
 
 // --
-// relationships
+// relations
 // --
 
 let Composes =

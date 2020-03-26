@@ -371,7 +371,7 @@ function singleEach( onEach )
 }
 
 // --
-// relationships
+// relations
 // --
 
 let Composes =

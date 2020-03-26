@@ -114,7 +114,7 @@ sourceWrapSimple.defaults =
 }
 
 // --
-// relationships
+// relations
 // --
 
 let Composes =

@@ -430,7 +430,7 @@ function concatenate()
 // }
 
 // --
-// relationships
+// relations
 // --
 
 let Composes =

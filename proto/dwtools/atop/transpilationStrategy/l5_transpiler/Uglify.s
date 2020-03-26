@@ -242,7 +242,7 @@ function _performAct( stage )
 }
 
 // --
-// relationships
+// relations
 // --
 
 let Composes =

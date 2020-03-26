@@ -89,7 +89,7 @@ function perform( single )
 }
 
 // --
-// relationships
+// relations
 // --
 
 let Composes =
