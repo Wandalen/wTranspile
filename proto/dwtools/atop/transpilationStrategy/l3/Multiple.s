@@ -436,7 +436,7 @@ let Forbids =
 
 let Accessors =
 {
-  transpilingStrategy : { setter : _.accessor.setter.arrayCollection({ name : 'transpilingStrategy' }) },
+  transpilingStrategy : { set : _.accessor.setter.arrayCollection({ name : 'transpilingStrategy' }) },
 }
 
 // --
