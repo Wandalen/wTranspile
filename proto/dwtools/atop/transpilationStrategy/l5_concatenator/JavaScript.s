@@ -21,7 +21,8 @@ function init()
 {
   let self = Parent.prototype.init.apply( this, arguments );
 
-  self.starter = new _.StarterMakerLight();
+  // self.starter = new _.StarterMakerLight();
+  self.starter = new _.starter.Maker();
 
   return self;
 }
