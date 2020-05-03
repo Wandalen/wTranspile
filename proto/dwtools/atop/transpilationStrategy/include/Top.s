@@ -1,19 +1,19 @@
-( function IncludeTop_s_( ) {
+( function _Top_s_( ) {
 
 'use strict';
 
 if( typeof module !== 'undefined' )
 {
-
-  require( './IncludeMid.s' );
-
-  let _ = _global_.wTools;
+  let _ = require( './Mid.s' );
 
   _.include( 'wCommandsAggregator' );
   _.include( 'wCommandsConfig' );
   _.include( 'wStateStorage' );
   _.include( 'wStateSession' );
 
+  require( '../l8/Cui.s' );
+
+  module[ 'exports' ] = _global_.wTools;
 }
 
 })();

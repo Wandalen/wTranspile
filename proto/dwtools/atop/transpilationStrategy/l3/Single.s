@@ -44,7 +44,7 @@ function form()
   let fileProvider = multiple.fileProvider;
   let path = fileProvider.path;
 
-  _.assert( multiple instanceof sys.Multiple );
+  _.assert( multiple instanceof _.trs.Multiple );
   _.assert( single.input === null );
   _.assert( single.output === null );
   _.assert( single.formed === 0 );
@@ -57,7 +57,7 @@ function form()
   if( !single.sourceMapPath )
   single.sourceMapPath = single.outPath + '.map';
 
-  single.input = sys.Stage
+  single.input = _.trs.Stage
   ({
     single : single,
     multiple : multiple,
@@ -91,8 +91,8 @@ function perform()
   let time = _.time.now();
   let logger = multiple.logger;
 
-  _.assert( multiple instanceof sys.Multiple );
-  _.assert( single.input instanceof sys.Stage );
+  _.assert( multiple instanceof _.trs.Multiple );
+  _.assert( single.input instanceof _.trs.Stage );
   _.assert( single.output === null );
   _.assert( arguments.length === 0, 'Expects no arguments' );
 
@@ -381,7 +381,7 @@ function concatenatorFor()
     prevPath = inPath;
   }
 
-  _.assert( concatenator instanceof sys.Concatenator.Abstract, 'Found none concatenator' );
+  _.assert( concatenator instanceof _.trs.concatenator.Abstract, 'Found none concatenator' );
 
   return concatenator;
 }
@@ -566,11 +566,13 @@ _.Copyable.mixin( Self );
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.staticDeclare
-({
-  prototype : _.TranspilationStrategy.prototype,
-  name : Self.shortName,
-  value : Self,
-});
+_.trs[ Self.shortName ] = Self;
+
+// _.staticDeclare
+// ({
+//   prototype : _.trs.System.prototype,
+//   name : Self.shortName,
+//   value : Self,
+// });
 
 })();

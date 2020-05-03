@@ -5,7 +5,7 @@
 //
 
 let _ = _global_.wTools;
-let Parent = _.TranspilationStrategy.Concatenator.Abstract;
+let Parent = _.trs.concatenator.Abstract;
 let Self = function wTsConcatenatorJavaScript( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -20,9 +20,7 @@ Self.shortName = 'JavaScript';
 function init()
 {
   let self = Parent.prototype.init.apply( this, arguments );
-
-  self.starter = new _.StarterMakerLight();
-
+  self.starter = new _.starter.Maker();
   return self;
 }
 
@@ -43,7 +41,7 @@ function _performAct( single )
 
   _.assert( _.mapIs( filesMap ) );
   _.assert( arguments.length === 1 );
-  _.assert( single instanceof sys.Single );
+  _.assert( single instanceof _.trs.Single );
 
   /* wrap */
 
@@ -167,6 +165,6 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Concatenator[ Self.shortName ] = Self;
+_.trs.concatenator[ Self.shortName ] = Self;
 
 })();

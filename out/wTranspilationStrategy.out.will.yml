@@ -51,9 +51,9 @@ module:
       npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
-        ts: node proto/dwtools/atop/transpilationStrategy/MainTop.s
+        ts: node proto/dwtools/atop/transpilationStrategy/entry/Include.s
       npm.bin:
-        ts: proto/dwtools/atop/transpilationStrategy/Exec
+        ts: proto/dwtools/atop/transpilationStrategy/entry/Exec
     path:
       module.willfiles:
         criterion:
@@ -181,14 +181,14 @@ module:
           - ../proto/dwtools/amid
           - ../proto/dwtools/atop
           - ../proto/dwtools/atop/transpilationStrategy
-          - ../proto/dwtools/atop/transpilationStrategy/Exec
-          - ../proto/dwtools/atop/transpilationStrategy/ExecDebug
-          - ../proto/dwtools/atop/transpilationStrategy/ExecUnrestricted
+          - ../proto/dwtools/atop/transpilationStrategy/entry/Exec
+          - ../proto/dwtools/atop/transpilationStrategy/entry/ExecDebug
+          - ../proto/dwtools/atop/transpilationStrategy/entry/ExecUnrestricted
           - ../proto/dwtools/atop/transpilationStrategy/IncludeBase.s
           - ../proto/dwtools/atop/transpilationStrategy/IncludeMid.s
           - ../proto/dwtools/atop/transpilationStrategy/IncludeTop.s
           - ../proto/dwtools/atop/transpilationStrategy/MainBase.s
-          - ../proto/dwtools/atop/transpilationStrategy/MainTop.s
+          - ../proto/dwtools/atop/transpilationStrategy/entry/Include.s
           - ../proto/dwtools/atop/transpilationStrategy/l3
           - ../proto/dwtools/atop/transpilationStrategy/l3/Concatenator.s
           - ../proto/dwtools/atop/transpilationStrategy/l3/Multiple.s
@@ -994,9 +994,9 @@ module:
       npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
-        ts: node proto/dwtools/atop/transpilationStrategy/MainTop.s
+        ts: node proto/dwtools/atop/transpilationStrategy/entry/Include.s
       npm.bin:
-        ts: proto/dwtools/atop/transpilationStrategy/Exec
+        ts: proto/dwtools/atop/transpilationStrategy/entry/Exec
     path:
       module.willfiles:
         criterion:

@@ -8,14 +8,14 @@
   "main" : "proto/dwtools/atop/transpilationStrategy/MainBase.s",
   "bin" :
   {
-    "ts" : "proto/dwtools/atop/transpilationStrategy/Exec"
+    "ts" : "proto/dwtools/atop/transpilationStrategy/entry/Exec"
   },
   "files" : [ "proto/dwtools/atop/transpilationStrategy", "proto/dwtools/Tools.s", "out" ],
   "scripts" :
   {
     "test" : "wtest .run proto/**",
     "docgen" : "wdocgen proto",
-    "ts" : "node proto/dwtools/atop/transpilationStrategy/MainTop.s"
+    "ts" : "node proto/dwtools/atop/transpilationStrategy/entry/Include.s"
   },
   "repository" :
   {

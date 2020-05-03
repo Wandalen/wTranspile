@@ -9,12 +9,14 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wTesting' );
 
-  require( '../transpilationStrategy/MainBase.s' );
+  require( '../transpilationStrategy/entry/Include.s' );
 
 }
 
 var _global = _global_;
 var _ = _global_.wTools;
+
+/* qqq : normalize. use assetFor here please */
 
 // --
 // context
@@ -76,7 +78,7 @@ function singleFileInputTerminal( test )
     test.description = 'single input terminal';
 
     let outPath = _.path.join( routinePath, 'Output.js' );
-    let ts = new _.TranspilationStrategy().form();
+    let ts = new _.trs.System().form();
     let multiple = ts.multiple
     ({
       inPath : __filename,
@@ -111,7 +113,7 @@ function singleFileInputTerminal( test )
     test.description = 'repeat, should do nothing';
 
     let outPath = _.path.join( routinePath, 'Output.js' );
-    let ts = new _.TranspilationStrategy().form();
+    let ts = new _.trs.System().form();
     let multiple = ts.multiple
     ({
       inPath : __filename,
@@ -155,7 +157,7 @@ function singleFileInputDir( test )
   test.case = 'single input dir with glob';
 
   let outPath = _.path.join( routinePath, 'Output.js' );
-  let ts = new _.TranspilationStrategy().form();
+  let ts = new _.trs.System().form();
   let multiple = ts.multiple
   ({
     inPath : __dirname + '/**',
@@ -190,7 +192,7 @@ function singleFileInputDirThrowing( test )
   test.case = 'single input dir without glob';
 
   let outPath = _.path.join( routinePath, 'Output.js' );
-  let ts = new _.TranspilationStrategy().form();
+  let ts = new _.trs.System().form();
   let multiple = ts.multiple
   ({
     inPath : __dirname + '',
@@ -219,15 +221,14 @@ function singleDst( test )
   test.case = 'single destination';
 
   let outPath = _.path.join( routinePath, 'Output.js' );
-  let ts = new _.TranspilationStrategy().form();
+  let ts = new _.trs.System().form();
   let multiple = ts.multiple
   ({
     inPath :
     {
       filePath :
       {
-        [ originalAssetPath + '/**' ] : '',
-        [ originalAssetPath + '/Exec*' ] : 0,
+        [ originalAssetPath + '/**/*.(s|js)' ] : '',
       }
     },
     outPath : outPath,
@@ -239,7 +240,7 @@ function singleDst( test )
     if( err )
     throw _.err( err );
 
-    test.is( _.fileProvider.fileExists( outPath ) ); debugger;
+    test.is( _.fileProvider.fileExists( outPath ) );
     test.is( _.fileProvider.fileSize( outPath ) > 5000 );
     let expected = [ '.', './Output.js' ];
     let found = self.find( routinePath );
@@ -269,7 +270,7 @@ function severalDst( test )
 
   var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
   var inPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
-  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
     inPath : inPath,
@@ -315,7 +316,7 @@ function complexMask( test )
   var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
   var inPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
-  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
     inPath : inPath,
@@ -372,7 +373,7 @@ function oneToOne( test )
   var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
 
   var inPath = { filePath : { '/' : null, '**.js' : true } }
-  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
     inPath : inPath,
@@ -436,7 +437,7 @@ function nothingFoundOneToOne( test )
 
   var inPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
   var outPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
-  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
     inPath : inPath,
@@ -488,7 +489,7 @@ function nothingFoundManyToOne( test )
 
   var inPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
   var outPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
-  var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
   var multiple = ts.multiple
   ({
     inPath : inPath,
@@ -565,7 +566,7 @@ function transpileManyToOne( test )
       filePath : { '**.test*' : false, '**.test/**' : false, '.' : '.' },
       prefixPath : '/dst/Main.s',
     }
-    var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+    var ts = new _.trs.System({ fileProvider : fileProvider }).form();
     var multiple = ts.multiple
     ({
       inPath : inPath,
@@ -648,7 +649,7 @@ function transpileManyToOne( test )
       filePath : { '**.test*' : true, '.' : '.' },
       prefixPath : '/dst/Tests.s',
     }
-    var ts = new _.TranspilationStrategy({ fileProvider : fileProvider }).form();
+    var ts = new _.trs.System({ fileProvider : fileProvider }).form();
     var multiple = ts.multiple
     ({
       inPath : inPath,
@@ -703,7 +704,7 @@ function shell( test )
   let routinePath = _.path.join( self.suiteTempPath, test.name );
   let inPath = _.path.normalize( __dirname ) + '/**';
   let outPath = _.path.join( routinePath, 'out.js' );
-  let execRelativePath = '../transpilationStrategy/Exec';
+  let execRelativePath = '../transpilationStrategy/entry/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let ready = new _.Consequence().take( null );
   let shell = _.process.starter
@@ -755,7 +756,7 @@ function combinedShell( test )
   let self = this;
   let originalAssetPath = _.path.join( self.assetsOriginalSuitePath, 'combined' );
   let routinePath = _.path.join( self.suiteTempPath, test.name );
-  let execRelativePath = '../transpilationStrategy/Exec';
+  let execRelativePath = '../transpilationStrategy/entry/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let inPath = 'main/**';
   let outPath = 'out/Main.s';
@@ -794,7 +795,7 @@ function combinedShell( test )
   })
 
   shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  /* node ../../../transpilationStrategy/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
@@ -810,7 +811,7 @@ function combinedShell( test )
     test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
     test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../External.s' );` ), 1 );
-    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryDirPath_, './main/File1.s' );` ), 1 );
+    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryDirPath_, './main/File1.s' );` ), 1 ); /* qqq : update data, please */
     test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
@@ -846,7 +847,7 @@ function combinedShell( test )
   */
 
   shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  /* node ../../../transpilationStrategy/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
@@ -901,7 +902,7 @@ function combinedShell( test )
   // })
   //
   // shell({ currentPath : routinePath + '/..', args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  // /* node ../../transpilationStrategy/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  // /* node ../../transpilationStrategy/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
   //
   // .then( ( got ) =>
   // {
@@ -934,7 +935,7 @@ function combinedProgramatic( test )
   let self = this;
   let originalAssetPath = _.path.join( self.assetsOriginalSuitePath, 'combined' );
   let routinePath = _.path.join( self.suiteTempPath, test.name );
-  let execRelativePath = '../transpilationStrategy/Exec';
+  let execRelativePath = '../transpilationStrategy/entry/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let inPath = _.path.join( routinePath, 'main/**' );
   let outPath = _.path.join( routinePath, 'out/Main.s' );
@@ -960,7 +961,7 @@ function combinedProgramatic( test )
     _.fileProvider.dirMake( routinePath );
     _.fileProvider.filesReflect({ reflectMap : { [ originalAssetPath ] : routinePath } });
 
-    let ts = new _.TranspilationStrategy({}).form();
+    let ts = new _.trs.System({}).form();
     let multiple = ts.multiple
     ({
 
@@ -1048,7 +1049,7 @@ var Self =
     nothingFoundOneToOne,
     nothingFoundManyToOne,
     transpileManyToOne,
-    shell,
+    shell, /* qqq : problem because js file to transpile is beyond base path. copy js file to tmp path to avoid that */
 
     combinedShell,
     combinedProgramatic,

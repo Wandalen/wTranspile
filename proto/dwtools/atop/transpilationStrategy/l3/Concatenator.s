@@ -56,7 +56,7 @@ function form()
 
   self.ext.forEach( ( ext ) =>
   {
-    _.assert( sys.extToConcatenatorMap[ ext ] === undefined, () => 'Concatenator associated with extension ' + _.strQuote( ext ) + ' was already registered' );
+    _.assert( sys.extToConcatenatorMap[ ext ] === undefined, () => 'concatenator associated with extension ' + _.strQuote( ext ) + ' was already registered' );
     sys.extToConcatenatorMap[ ext ] = self;
   });
 
@@ -83,7 +83,7 @@ function perform( single )
 
   let result = self._performAct( single );
 
-  _.assert( _.strIs( result ), () => 'Concatenator should return string, but got ' + _.strType( result ) );
+  _.assert( _.strIs( result ), () => 'concatenator should return string, but got ' + _.strType( result ) );
 
   return result;
 }
@@ -162,6 +162,6 @@ _.Copyable.mixin( Self );
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Concatenator[ Self.shortName ] = Self;
+_.trs.concatenator[ Self.shortName ] = Self;
 
 })();

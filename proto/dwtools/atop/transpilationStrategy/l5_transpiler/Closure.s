@@ -7,7 +7,7 @@ let Closure = require( 'google-closure-compiler-js' );
 //
 
 let _ = _global_.wTools;
-let Parent = _.TranspilationStrategy.Transpiler.Abstract;
+let Parent = _.trs.transpiler.Abstract;
 let Self = function wTsTranspilerClosure( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -120,6 +120,6 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Transpiler[ Self.shortName ] = Self;
+_.trs.transpiler[ Self.shortName ] = Self;
 
 })();
