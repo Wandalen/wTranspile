@@ -2,13 +2,10 @@ format: outwillfile-2.0
 root:
   - wTranspilationStrategy.out
 consistency:
-  wTranspilationStrategy.out.will.yml: &ref_0
-    hash: cbfdf03bb68478d5873db647f74fe141
-    size: 48767
-  ../.ex.will.yml: &ref_1
-    hash: e660cbcbc270922b9a3ac2bc4a6d911d
-    size: 2444
-  ../.im.will.yml: &ref_2
+  ../.ex.will.yml: &ref_0
+    hash: 5c92245be21e9d26822e94c14f6c7c3c
+    size: 2453
+  ../.im.will.yml: &ref_1
     hash: b02882eeb47ac745690cb77fe64514c5
     size: 7157
 module:
@@ -25,11 +22,11 @@ module:
         open source transpilation tools in single package.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - Transpilation
         - transpilation strategies
@@ -45,15 +42,15 @@ module:
         - ecmascript
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@willbe.so>
       npm.name: wtranspilationstrategy
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
-        ts: node proto/dwtools/atop/transpilationStrategy/entry/Include.s
-      npm.bin:
-        ts: proto/dwtools/atop/transpilationStrategy/entry/Exec
+        trs: node proto/dwtools/atop/transpilationStrategy/entry/Exec
+      npm.bin: &ref_6
+        trs: proto/dwtools/atop/transpilationStrategy/entry/Exec
     path:
       module.willfiles:
         criterion:
@@ -180,15 +177,56 @@ module:
           - ../proto/dwtools/abase
           - ../proto/dwtools/amid
           - ../proto/dwtools/atop
+          - ../proto/dwtools/atop/-transpilationStrategy
+          - ../proto/dwtools/atop/-transpilationStrategy/Exec
+          - ../proto/dwtools/atop/-transpilationStrategy/ExecDebug
+          - ../proto/dwtools/atop/-transpilationStrategy/ExecUnrestricted
+          - ../proto/dwtools/atop/-transpilationStrategy/IncludeBase.s
+          - ../proto/dwtools/atop/-transpilationStrategy/IncludeMid.s
+          - ../proto/dwtools/atop/-transpilationStrategy/IncludeTop.s
+          - ../proto/dwtools/atop/-transpilationStrategy/MainBase.s
+          - ../proto/dwtools/atop/-transpilationStrategy/MainTop.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l3
+          - ../proto/dwtools/atop/-transpilationStrategy/l3/Concatenator.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l3/Multiple.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l3/Single.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l3/Stage.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l3/Transpiler.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l5_concatenator
+          - >-
+            ../proto/dwtools/atop/-transpilationStrategy/l5_concatenator/JavaScript.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l5_concatenator/Text.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler
+          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Babel.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Closure.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Nop.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Prepack.s
+          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Uglify.s
+          - ../proto/dwtools/atop/-transpilationStrategy.test
+          - >-
+            ../proto/dwtools/atop/-transpilationStrategy.test/TranspilationStrategy.test.s
+          - ../proto/dwtools/atop/-transpilationStrategy.test/_asset
+          - ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined
+          - >-
+            ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined/External.s
+          - >-
+            ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined/main
+          - >-
+            ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined/main/File1.s
+          - >-
+            ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined/main/File2.s
           - ../proto/dwtools/atop/transpilationStrategy
+          - ../proto/dwtools/atop/transpilationStrategy/entry
           - ../proto/dwtools/atop/transpilationStrategy/entry/Exec
           - ../proto/dwtools/atop/transpilationStrategy/entry/ExecDebug
           - ../proto/dwtools/atop/transpilationStrategy/entry/ExecUnrestricted
-          - ../proto/dwtools/atop/transpilationStrategy/IncludeBase.s
-          - ../proto/dwtools/atop/transpilationStrategy/IncludeMid.s
-          - ../proto/dwtools/atop/transpilationStrategy/IncludeTop.s
-          - ../proto/dwtools/atop/transpilationStrategy/MainBase.s
           - ../proto/dwtools/atop/transpilationStrategy/entry/Include.s
+          - ../proto/dwtools/atop/transpilationStrategy/include
+          - ../proto/dwtools/atop/transpilationStrategy/include/Base.s
+          - ../proto/dwtools/atop/transpilationStrategy/include/Mid.s
+          - ../proto/dwtools/atop/transpilationStrategy/include/Top.s
+          - ../proto/dwtools/atop/transpilationStrategy/l1
+          - ../proto/dwtools/atop/transpilationStrategy/l1/Namespace.s
           - ../proto/dwtools/atop/transpilationStrategy/l3
           - ../proto/dwtools/atop/transpilationStrategy/l3/Concatenator.s
           - ../proto/dwtools/atop/transpilationStrategy/l3/Multiple.s
@@ -205,6 +243,10 @@ module:
           - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Nop.s
           - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Prepack.s
           - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Uglify.s
+          - ../proto/dwtools/atop/transpilationStrategy/l7
+          - ../proto/dwtools/atop/transpilationStrategy/l7/System.s
+          - ../proto/dwtools/atop/transpilationStrategy/l8
+          - ../proto/dwtools/atop/transpilationStrategy/l8/Cui.s
           - ../proto/dwtools/atop/transpilationStrategy.test
           - >-
             ../proto/dwtools/atop/transpilationStrategy.test/TranspilationStrategy.test.s
@@ -846,24 +888,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          reflector: 'reflector::exported.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          reflector: 'reflector::exported.files.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -952,9 +976,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wTranspilationStrategy.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wTranspilationStrategy
@@ -968,35 +991,14 @@ module:
         open source transpilation tools in single package.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 8.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - Transpilation
-        - transpilation strategies
-        - uglify
-        - uglify-es
-        - uglify-js
-        - beautify
-        - minify
-        - minimize
-        - optimize
-        - minifier
-        - javascript
-        - ecmascript
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@willbe.so>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@willbe.so>
+      contributors: *ref_4
       npm.name: wtranspilationstrategy
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
-        ts: node proto/dwtools/atop/transpilationStrategy/entry/Include.s
-      npm.bin:
-        ts: proto/dwtools/atop/transpilationStrategy/entry/Exec
+      npm.scripts: *ref_5
+      npm.bin: *ref_6
     path:
       module.willfiles:
         criterion:
@@ -1759,9 +1761,8 @@ module:
           - 'build::npm'
     consistency:
       ../.ex.will.yml:
-        hash: e660cbcbc270922b9a3ac2bc4a6d911d
-        size: 2444
+        hash: 5c92245be21e9d26822e94c14f6c7c3c
+        size: 2453
       ../.im.will.yml:
         hash: b02882eeb47ac745690cb77fe64514c5
         size: 7157
-      wTranspilationStrategy.out.will.yml: *ref_0
