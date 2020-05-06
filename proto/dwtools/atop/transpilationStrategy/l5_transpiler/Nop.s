@@ -5,7 +5,7 @@
 //
 
 let _ = _global_.wTools;
-let Parent = _.TranspilationStrategy.Transpiler.Abstract;
+let Parent = _.trs.transpiler.Abstract;
 let Self = function wTsTranspilerNop( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -25,7 +25,7 @@ function _formAct( stage )
   let multiple = stage.multiple;
 
   _.assert( arguments.length === 1 );
-  _.assert( stage instanceof sys.Stage );
+  _.assert( stage instanceof _.trs.Stage );
   _.assert( stage.formed === 0 );
 
   stage.formed = 1;
@@ -42,7 +42,7 @@ function _performAct( stage )
   let multiple = stage.multiple;
 
   _.assert( arguments.length === 1 );
-  _.assert( stage instanceof sys.Stage );
+  _.assert( stage instanceof _.trs.Stage );
   _.assert( stage.formed === 1 );
 
   stage.rawData = stage.input.data;
@@ -105,6 +105,6 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Transpiler[ Self.shortName ] = Self;
+_.trs.transpiler[ Self.shortName ] = Self;
 
 })();

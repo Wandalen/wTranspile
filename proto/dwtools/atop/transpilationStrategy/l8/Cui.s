@@ -2,24 +2,26 @@
 
 'use strict';
 
-if( typeof module !== 'undefined' )
-{
-
-  require( './MainBase.s' );
-  require( './IncludeTop.s' );
-
-}
+// if( typeof module !== 'undefined' )
+// {
+//
+//   require( './MainBase.s' );
+//   require( './IncludeTop.s' );
+//
+// }
 
 //
 
+/* qqq : normalize file. adjust definition of commands. ask */
+
 let _ = _global_.wTools;
-let Parent = _.TranspilationStrategy;
-let Self = function wTranspilationStrategyCli( o )
+let Parent = _.trs.System; /* qqq : remove inheritance. ask */
+let Self = function wTranspilationStrategyCui( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }
 
-Self.shortName = 'TranspilationStrategyCli';
+Self.shortName = 'Cui';
 
 // --
 //
@@ -109,6 +111,8 @@ function commandsMake()
     commandPrefix : 'node ',
   })
 
+  // debugger;
+
   sys._commandsConfigAdd( ca );
 
   ca.form();
@@ -146,9 +150,9 @@ function commandTranspilersList( e )
   debugger;
   logger.log( 'Available strategies' );
   logger.up();
-  for( let s in sys.Transpiler )
+  for( let s in _.trs.transpiler )
   {
-    let strategy = sys.Transpiler[ s ];
+    let strategy = _.trs.transpiler[ s ];
     logger.log( s, '-', strategy.name );
   }
   logger.down();
@@ -171,7 +175,7 @@ function commandTranspile( e )
   _.sureBriefly( _.strIs( e.propertiesMap.inPath ), 'Expects path to file to transpile {-inPath-}' );
   _.sureBriefly( _.strIs( e.propertiesMap.outPath ), 'Expects path to file to save transpiled {-outPath-}' );
 
-  let multiple = sys.Multiple
+  let multiple = _.trs.Multiple
   ({
     sys : sys,
   });
@@ -387,7 +391,8 @@ _.CommandsConfig.mixin( Self );
 
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
-wTools[ Self.shortName ] = Self;
+// wTools[ Self.shortName ] = Self;
+wTools.trs[ Self.shortName ] = Self;
 
 if( !module.parent )
 Self.Exec();

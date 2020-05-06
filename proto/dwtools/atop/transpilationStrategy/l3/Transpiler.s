@@ -25,7 +25,7 @@ function form( stage )
   _.assert( !self.single );
   _.assert( !self.multiple );
   _.assert( arguments.length === 1 );
-  _.assert( stage instanceof sys.Stage );
+  _.assert( stage instanceof _.trs.Stage );
   _.assert( stage.formed === 0 );
 
   let result = self._formAct( stage );
@@ -280,6 +280,6 @@ _.Copyable.mixin( Self );
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Transpiler[ Self.shortName ] = Self;
+_.trs.transpiler[ Self.shortName ] = Self;
 
 })();

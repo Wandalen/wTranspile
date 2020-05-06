@@ -8,7 +8,7 @@ let Babel = require( 'babel-core' );
 //
 
 let _ = _global_.wTools;
-let Parent = _.TranspilationStrategy.Transpiler.Abstract;
+let Parent = _.trs.transpiler.Abstract;
 let Self = function wTsTranspilerBabel( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -156,6 +156,6 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Transpiler[ Self.shortName ] = Self;
+_.trs.transpiler[ Self.shortName ] = Self;
 
 })();

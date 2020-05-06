@@ -186,15 +186,15 @@ function form()
     let strategy = multiple.transpilingStrategy[ s ];
     if( _.strIs( strategy ) )
     {
-      _.sure( !!_.TranspilationStrategy.Transpiler[ strategy ], 'Transpiler not found', strategy )
-      strategy = _.TranspilationStrategy.Transpiler[ strategy ];
+      _.sure( !!_.trs.transpiler[ strategy ], 'transpiler not found', strategy )
+      strategy = _.trs.transpiler[ strategy ];
     }
 
     if( _.routineIs( strategy ) )
     strategy = strategy({});
 
     multiple.transpilingStrategy[ s ] = strategy;
-    _.assert( strategy instanceof _.TranspilationStrategy.Transpiler.Abstract );
+    _.assert( strategy instanceof _.trs.transpiler.Abstract );
   }
 
   /* validation */
@@ -319,7 +319,7 @@ function singleEach( onEach )
       if( multiple.splittingStrategy === 'ManyToOne' )
       {
 
-        let single = sys.Single
+        let single = _.trs.Single
         ({
           dataMap : dataMap,
           outPath : dstPath,
@@ -343,7 +343,7 @@ function singleEach( onEach )
           let dataMap2 = Object.create( null );
           dataMap2[ srcPath ] = dataMap[ srcPath ];
 
-          let single = sys.Single
+          let single = _.trs.Single
           ({
             dataMap : dataMap2,
             outPath : outPath,
@@ -480,11 +480,13 @@ _.Verbal.mixin( Self );
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.staticDeclare
-({
-  prototype : _.TranspilationStrategy.prototype,
-  name : Self.shortName,
-  value : Self,
-});
+_.trs[ Self.shortName ] = Self;
+
+// _.staticDeclare
+// ({
+//   prototype : _.trs.System.prototype,
+//   name : Self.shortName,
+//   value : Self,
+// });
 
 })();

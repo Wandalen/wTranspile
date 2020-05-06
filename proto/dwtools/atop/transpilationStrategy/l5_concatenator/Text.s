@@ -5,7 +5,7 @@
 //
 
 let _ = _global_.wTools;
-let Parent = _.TranspilationStrategy.Concatenator.Abstract;
+let Parent = _.trs.concatenator.Abstract;
 let Self = function wTsConcatenatorText( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -35,7 +35,7 @@ function _performAct( single )
 
   _.assert( _.mapIs( files ) );
   _.assert( arguments.length === 1 );
-  _.assert( single instanceof sys.Single );
+  _.assert( single instanceof _.trs.Single );
 
   /* */
 
@@ -95,6 +95,6 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Concatenator[ Self.shortName ] = Self;
+_.trs.concatenator[ Self.shortName ] = Self;
 
 })();

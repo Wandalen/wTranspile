@@ -7,7 +7,7 @@ let Uglify = require( 'uglify-es' );
 //
 
 let _ = _global_.wTools;
-let Parent = _.TranspilationStrategy.Transpiler.Abstract;
+let Parent = _.trs.transpiler.Abstract;
 let Self = function wTsTranspilerUglify( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -35,7 +35,7 @@ function _formAct( stage )
   // let stage = self.stage;
 
   _.assert( arguments.length === 1 );
-  _.assert( stage instanceof sys.Stage );
+  _.assert( stage instanceof _.trs.Stage );
   _.assert( stage.formed === 0 );
 
   if( !stage.settings )
@@ -225,7 +225,7 @@ function _performAct( stage )
   let path = fileProvider.path;
 
   _.assert( arguments.length === 1 );
-  _.assert( stage instanceof sys.Stage );
+  _.assert( stage instanceof _.trs.Stage );
   _.assert( stage.formed === 1 );
 
   stage.rawData = Uglify.minify( stage.input.data, stage.settings );
@@ -295,8 +295,8 @@ _.classDeclare
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.TranspilationStrategy.Transpiler[ Self.shortName ] = Self;
-if( !_.TranspilationStrategy.Transpiler.Default )
-_.TranspilationStrategy.Transpiler.Default = Self;
+_.trs.transpiler[ Self.shortName ] = Self;
+if( !_.trs.transpiler.Default )
+_.trs.transpiler.Default = Self;
 
 })();

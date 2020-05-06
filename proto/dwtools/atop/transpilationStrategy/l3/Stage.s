@@ -224,11 +224,13 @@ _.Copyable.mixin( Self );
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
 
-_.staticDeclare
-({
-  prototype : _.TranspilationStrategy.prototype,
-  name : Self.shortName,
-  value : Self,
-});
+_.trs[ Self.shortName ] = Self;
+
+// _.staticDeclare
+// ({
+//   prototype : _.trs.System.prototype,
+//   name : Self.shortName,
+//   value : Self,
+// });
 
 })();

@@ -2,28 +2,23 @@
 
 'use strict';
 
-/**
- * Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.
-  @module Tools/mid/TranspilationStrategy
-*/
-
-if( typeof module !== 'undefined' )
-{
-
-  require( './IncludeBase.s' );
-
-}
+// if( typeof module !== 'undefined' )
+// {
+//
+//   require( './IncludeBase.s' );
+//
+// }
 
 //
 
 let _ = _global_.wTools;
 let Parent = null;
-let Self = function wTranspilationStrategy( o )
+let Self = function wTranspilationStrategySystem( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }
 
-Self.shortName = 'TranspilationStrategy';
+Self.shortName = 'System';
 
 // --
 // inter
@@ -110,11 +105,11 @@ function formAssociates()
   sys.concatenators = [];
   sys.extToConcatenatorMap = Object.create( null );
 
-  for( let c in sys.Concatenator )
+  for( let c in _.trs.concatenator )
   {
     if( c === 'Abstract' )
     continue;
-    new sys.Concatenator[ c ]({ sys : sys }).form();
+    new _.trs.concatenator[ c ]({ sys : sys }).form();
   }
 
   return sys;
@@ -131,7 +126,7 @@ function multiple( o )
 
   o.sys = sys;
 
-  return sys.Multiple( o );
+  return _.trs.Multiple( o );
 }
 
 // --
@@ -164,13 +159,17 @@ let Restricts =
 
 let Statics =
 {
-  Transpiler : Object.create( null ),
-  Concatenator : Object.create( null ),
+  // transpiler : Object.create( null ),
+  // concatenator : Object.create( null ),
   // ExtToConcatenatorMap : Object.create( null ), xxx
 }
 
 let Forbids =
 {
+  Transpiler : 'Transpiler',
+  Concatenator : 'Concatenator',
+  transpiler : 'transpiler',
+  concatenator : 'concatenator',
 }
 
 // --
@@ -217,9 +216,9 @@ _.Verbal.mixin( Self );
 
 if( typeof module !== 'undefined' && module !== null )
 module[ 'exports' ] = Self;
-_global_[ Self.name ] = wTools[ Self.shortName ] = Self;
+wTools.trs[ Self.shortName ] = Self;
 
-if( typeof module !== 'undefined' )
-require( './IncludeMid.s' );
+// if( typeof module !== 'undefined' )
+// require( './IncludeMid.s' );
 
 })();
