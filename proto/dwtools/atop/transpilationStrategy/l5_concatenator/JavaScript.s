@@ -73,6 +73,7 @@ function _performAct( single )
       externalAfterPath : externalAfterPath,
       filesMap : filesMap,
       removingShellPrologue : self.removingShellPrologue,
+      withServer : 0,
     });
 
   }
