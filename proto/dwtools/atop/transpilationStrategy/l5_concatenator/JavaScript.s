@@ -20,7 +20,6 @@ Self.shortName = 'JavaScript';
 function init()
 {
   let self = Parent.prototype.init.apply( this, arguments );
-
   self.starter = new _.starter.Maker();
   return self;
 }
@@ -74,6 +73,7 @@ function _performAct( single )
       externalAfterPath : externalAfterPath,
       filesMap : filesMap,
       removingShellPrologue : self.removingShellPrologue,
+      withServer : 0,
     });
 
   }
