@@ -292,7 +292,7 @@ _.classDeclare
 
 //
 
-if( typeof module !== 'undefined' && module !== null )
+if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
 _.trs.transpiler[ Self.shortName ] = Self;

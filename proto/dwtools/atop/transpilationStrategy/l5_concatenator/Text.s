@@ -92,7 +92,7 @@ _.classDeclare
 
 //
 
-if( typeof module !== 'undefined' && module !== null )
+if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
 _.trs.concatenator[ Self.shortName ] = Self;
