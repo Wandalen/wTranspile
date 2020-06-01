@@ -13,7 +13,7 @@
   "files" : [ "proto/dwtools/atop/transpilationStrategy", "proto/dwtools/Tools.s", "out" ],
   "scripts" :
   {
-    "test" : "wtest .run proto/**",
+    "test" : "wtest .run 'proto/**'",
     "docgen" : "wdocgen proto",
     "trs" : "node proto/dwtools/atop/transpilationStrategy/entry/Exec"
   },
