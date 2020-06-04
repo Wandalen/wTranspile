@@ -13,7 +13,7 @@
 
 let _ = _global_.wTools;
 let Parent = null;
-let Self = function wTranspilationStrategySystem( o )
+let Self = function wTranspileSystem( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

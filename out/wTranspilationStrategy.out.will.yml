@@ -1,8 +1,8 @@
 format: outwillfile-2.0
 root:
-  - wTranspilationStrategy.out
+  - wTranspile.out
 consistency:
-  wTranspilationStrategy.out.will.yml: &ref_0
+  wTranspile.out.will.yml: &ref_0
     hash: 4f121b46145540590e3055b5701a37b7
     size: 50943
   ../.ex.will.yml: &ref_1
@@ -12,9 +12,9 @@ consistency:
     hash: b02882eeb47ac745690cb77fe64514c5
     size: 7157
 module:
-  wTranspilationStrategy.out:
+  wTranspile.out:
     about:
-      name: wTranspilationStrategy
+      name: wTranspile
       org: noorg
       description: >-
         Aggregator of strategies to transpile JS code. It provides unified
@@ -47,7 +47,7 @@ module:
       author: Kostiantyn Wandalen <wanalen@01.school>
       contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
-      npm.name: wtranspilationstrategy
+      npm.name: wtranspile
       npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
@@ -58,11 +58,11 @@ module:
       module.willfiles:
         criterion:
           predefined: 1
-        path: wTranspilationStrategy.out.will.yml
+        path: wTranspile.out.will.yml
       module.common:
         criterion:
           predefined: 1
-        path: wTranspilationStrategy.out
+        path: wTranspile.out
       module.original.willfiles:
         criterion:
           predefined: 1
@@ -83,13 +83,13 @@ module:
         criterion:
           predefined: 1
       repository:
-        path: 'git+https:///github.com/Wandalen/wTranspilationStrategy.git'
+        path: 'git+https:///github.com/Wandalen/wTranspile.git'
       origins:
         path:
-          - 'git+https:///github.com/Wandalen/wTranspilationStrategy.git'
-          - 'npm:///wtranspilationstrategy'
+          - 'git+https:///github.com/Wandalen/wTranspile.git'
+          - 'npm:///wtranspile'
       bugtracker:
-        path: 'https:///github.com/Wandalen/wTranspilationStrategy/issues'
+        path: 'https:///github.com/Wandalen/wTranspile/issues'
       in:
         path: .
       out:
@@ -364,7 +364,7 @@ module:
         path: 'npm:///babel-plugin-transform-class-properties#6.24.1'
         autoExporting: 0
         enabled: 0
-      wtranspilationstrategy:
+      wtranspile:
         path: 'hd://..'
         autoExporting: 0
         enabled: 0
@@ -1019,12 +1019,12 @@ module:
           content: proto
           export: 1
     consistency:
-      wTranspilationStrategy.out.will.yml: *ref_0
+      wTranspile.out.will.yml: *ref_0
       ../.ex.will.yml: *ref_1
       ../.im.will.yml: *ref_2
   ../:
     about:
-      name: wTranspilationStrategy
+      name: wTranspile
       org: noorg
       description: >-
         Aggregator of strategies to transpile JS code. It provides unified
@@ -1057,7 +1057,7 @@ module:
       author: Kostiantyn Wandalen <wanalen@01.school>
       contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
-      npm.name: wtranspilationstrategy
+      npm.name: wtranspile
       npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
@@ -1080,7 +1080,7 @@ module:
       module.peer.willfiles:
         criterion:
           predefined: 1
-        path: out/wTranspilationStrategy.out.will.yml
+        path: out/wTranspile.out.will.yml
       module.peer.in:
         criterion:
           predefined: 1
@@ -1093,13 +1093,13 @@ module:
         criterion:
           predefined: 1
       repository:
-        path: 'git+https:///github.com/Wandalen/wTranspilationStrategy.git'
+        path: 'git+https:///github.com/Wandalen/wTranspile.git'
       origins:
         path:
-          - 'git+https:///github.com/Wandalen/wTranspilationStrategy.git'
-          - 'npm:///wtranspilationstrategy'
+          - 'git+https:///github.com/Wandalen/wTranspile.git'
+          - 'npm:///wtranspile'
       bugtracker:
-        path: 'https:///github.com/Wandalen/wTranspilationStrategy/issues'
+        path: 'https:///github.com/Wandalen/wTranspile/issues'
       in:
         path: .
       out:
@@ -1273,7 +1273,7 @@ module:
         path: 'npm:///babel-plugin-transform-class-properties#6.24.1'
         autoExporting: 0
         enabled: 0
-      wtranspilationstrategy:
+      wtranspile:
         path: 'hd://.'
         autoExporting: 0
         enabled: 0
@@ -1849,4 +1849,4 @@ module:
       ../.im.will.yml:
         hash: b02882eeb47ac745690cb77fe64514c5
         size: 7157
-      wTranspilationStrategy.out.will.yml: *ref_0
+      wTranspile.out.will.yml: *ref_0

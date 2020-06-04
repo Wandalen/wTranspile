@@ -1,7 +1,7 @@
 
 about :
 
-  name : 'wTranspilationStrategy'
+  name : 'wTranspile'
   description : 'Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.'
   version : '0.4.0'
   enabled : 1
@@ -27,7 +27,7 @@ about :
   author : 'Kostiantyn Wandalen <wanalen@01.school>'
   contributors :
   - 'Kostiantyn Wandalen <wanalen@01.school>'
-  npm.name : 'wtranspilationstrategy'
+  npm.name : 'wtranspile'
   npm.scripts :
     test : 'wtest .run proto/**'
     docgen : 'wdocgen .build proto'
@@ -37,11 +37,11 @@ about :
 
 path :
 
-  repository : git+https:///github.com/Wandalen/wTranspilationStrategy.git
+  repository : git+https:///github.com/Wandalen/wTranspile.git
   origins :
-   - git+https:///github.com/Wandalen/wTranspilationStrategy.git
-   - npm:///wtranspilationstrategy
-  bugtracker : https:///github.com/Wandalen/wTranspilationStrategy/issues
+   - git+https:///github.com/Wandalen/wTranspile.git
+   - npm:///wtranspile
+  bugtracker : https:///github.com/Wandalen/wTranspile/issues
 
 step :
 

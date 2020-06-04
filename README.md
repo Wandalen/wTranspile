@@ -1,5 +1,5 @@
 
-# wTranspilationStrategy [![Status](https://github.com/Wandalen/wTranspilationStrategy/workflows/Test/badge.svg)](https://github.com/Wandalen/wTranspilationStrategy/actions?query=workflow%3ATest)
+# wTranspile [![Status](https://github.com/Wandalen/wTranspile/workflows/Test/badge.svg)](https://github.com/Wandalen/wTranspile/actions?query=workflow%3ATest)
 
 Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.
 
@@ -18,7 +18,7 @@ node sample/Sample.js
 
 ## Try out
 ```
-npm -g install wtranspilationstrategy
+npm -g install wtranspile
 ts .
 ts .config.define debug:0 minification:0 optimization:9
 ts .config.read
@@ -26,7 +26,7 @@ ts .config.read
 
 ## Try out
 ```
-npm -g install wtranspilationstrategy
+npm -g install wtranspile
 ts .config.define debug:0 minification:7 optimization:9
 ts .config.define strategies:[ Babel, Uglify, Babel ]
 ts .transpile inputPath:sample/Sample.js outputPath:temp.tmp/Sample.js

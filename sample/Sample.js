@@ -1,6 +1,6 @@
 
 let _ = require( 'wTools' );
-let Ts = require( 'wtranspilationstrategy' );
+let Ts = require( 'wtranspile' );
 let ts = new Ts().form();
 
 let session = ts.session

@@ -76,7 +76,7 @@ submodule :
   babel-plugin-transform-class-properties :
     path : npm:///babel-plugin-transform-class-properties#6.24.1
     enabled : 0 # submodule
-  wtranspilationstrategy :
+  wtranspile :
     path : hd://.
     enabled : 0 # submodule
     criterion :

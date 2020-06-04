@@ -16,7 +16,7 @@
 
 let _ = _global_.wTools;
 let Parent = _.trs.System; /* qqq : remove inheritance. ask */
-let Self = function wTranspilationStrategyCui( o )
+let Self = function wTranspileCui( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }
