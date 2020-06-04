@@ -3,11 +3,11 @@ root:
   - wTranspile.out
 consistency:
   ../.ex.will.yml: &ref_0
-    hash: 4a8caa829dca5604e7c477442a8d08dc
-    size: 2381
+    hash: 509e7445ff1e2418954565745787496a
+    size: 2357
   ../.im.will.yml: &ref_1
-    hash: 58aa6475987d9595847327de2c16f294
-    size: 7151
+    hash: 37359048c1d116e969f980b0390c803a
+    size: 7127
 module:
   wTranspile.out:
     about:
@@ -196,8 +196,7 @@ module:
           - ../proto/dwtools/atop/transpile/l3/Stage.s
           - ../proto/dwtools/atop/transpile/l3/Transpiler.s
           - ../proto/dwtools/atop/transpile/l5_concatenator
-          - >-
-            ../proto/dwtools/atop/transpile/l5_concatenator/JavaScript.s
+          - ../proto/dwtools/atop/transpile/l5_concatenator/JavaScript.s
           - ../proto/dwtools/atop/transpile/l5_concatenator/Text.s
           - ../proto/dwtools/atop/transpile/l5_transpiler
           - ../proto/dwtools/atop/transpile/l5_transpiler/Babel.s
@@ -210,18 +209,13 @@ module:
           - ../proto/dwtools/atop/transpile/l8
           - ../proto/dwtools/atop/transpile/l8/Cui.s
           - ../proto/dwtools/atop/transpile.test
-          - >-
-            ../proto/dwtools/atop/transpile.test/TranspilationStrategy.test.s
+          - ../proto/dwtools/atop/transpile.test/TranspilationStrategy.test.s
           - ../proto/dwtools/atop/transpile.test/_asset
           - ../proto/dwtools/atop/transpile.test/_asset/combined
-          - >-
-            ../proto/dwtools/atop/transpile.test/_asset/combined/External.s
-          - >-
-            ../proto/dwtools/atop/transpile.test/_asset/combined/main
-          - >-
-            ../proto/dwtools/atop/transpile.test/_asset/combined/main/File1.s
-          - >-
-            ../proto/dwtools/atop/transpile.test/_asset/combined/main/File2.s
+          - ../proto/dwtools/atop/transpile.test/_asset/combined/External.s
+          - ../proto/dwtools/atop/transpile.test/_asset/combined/main
+          - ../proto/dwtools/atop/transpile.test/_asset/combined/main/File1.s
+          - ../proto/dwtools/atop/transpile.test/_asset/combined/main/File2.s
     submodule:
       wTools:
         path: 'npm:///wTools'
@@ -1755,8 +1749,8 @@ module:
           - 'build::npm'
     consistency:
       ../.ex.will.yml:
-        hash: 4a8caa829dca5604e7c477442a8d08dc
-        size: 2381
+        hash: 509e7445ff1e2418954565745787496a
+        size: 2357
       ../.im.will.yml:
-        hash: 58aa6475987d9595847327de2c16f294
-        size: 7151
+        hash: 37359048c1d116e969f980b0390c803a
+        size: 7127
