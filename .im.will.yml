@@ -32,10 +32,10 @@ submodule :
     path : npm:///wstatesession
     enabled : 0 # submodule
   google-closure-compiler-js :
-    path : npm:///google-closure-compiler-js#20180610.0.0
+    path : npm:///google-closure-compiler-js#20200517.0.0
     enabled : 0 # submodule
-  prepack :
-    path : npm:///prepack#0.2.54
+  # prepack :
+  #   path : npm:///prepack#0.2.54
     enabled : 0 # submodule
   uglify-es :
     path : npm:///uglify-es#3.3.9
