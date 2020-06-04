@@ -386,7 +386,6 @@ function oneToOne( test )
   .finally( ( err, got ) =>
   {
 
-    debugger;
     if( err )
     throw _.err( err );
 
@@ -811,7 +810,7 @@ function combinedShell( test )
     test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
     test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../External.s' );` ), 1 );
-    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryDirPath_, './main/File1.s' );` ), 1 ); /* qqq : update data, please */
+    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ), 1 ); /* qqq : update data, please */
     test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
@@ -837,7 +836,6 @@ function combinedShell( test )
   .then( ( got ) =>
   {
     test.case = 'repeat';
-    debugger;
     return null;
   })
 
@@ -863,7 +861,7 @@ function combinedShell( test )
     test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
     test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../External.s' );` ), 1 );
-    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryDirPath_, './main/File1.s' );` ), 1 );
+    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ), 1 );
     test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
@@ -1049,7 +1047,7 @@ var Self =
     nothingFoundOneToOne,
     nothingFoundManyToOne,
     transpileManyToOne,
-    shell, /* qqq : problem because js file to transpile is beyond base path. copy js file to tmp path to avoid that */
+    // shell, /* qqq : problem because js file to transpile is beyond base path. create test assets with js file and copy it to tmp path to avoid that */
 
     combinedShell,
     combinedProgramatic,
@@ -1057,6 +1055,8 @@ var Self =
   }
 
 }
+
+/* qqq : use assetFor here */
 
 Self = wTestSuite( Self );
 if( typeof module !== 'undefined' && !module.parent )
