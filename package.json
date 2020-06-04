@@ -1,58 +1,61 @@
 {
-  "name" : "wtranspile",
-  "version" : "0.3.159",
-  "enabled" : 1,
-  "description" : "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
-  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
-  "license" : "MIT",
-  "main" : "proto/dwtools/atop/transpile/entry/Include.s",
-  "bin" : { "trs" : "proto/dwtools/atop/transpile/entry/Exec" },
-  "files" : [ "proto/dwtools/atop/transpile", "proto/dwtools/Tools.s", "out" ],
-  "scripts" :
-  {
-    "test" : "wtest .run 'proto/**'",
-    "docgen" : "wdocgen proto",
-    "trs" : "node proto/dwtools/atop/transpile/entry/Exec"
+  "name": "wtranspile",
+  "version": "0.3.159",
+  "enabled": 1,
+  "description": "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
+  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "license": "MIT",
+  "main": "proto/dwtools/atop/transpile/entry/Include.s",
+  "bin": {
+    "trs": "proto/dwtools/atop/transpile/entry/Exec"
   },
-  "repository" :
-  {
-    "type" : "git",
-    "url" : "https://github.com/Wandalen/wTranspile.git"
+  "files": [
+    "proto/dwtools/atop/transpile",
+    "proto/dwtools/Tools.s",
+    "out"
+  ],
+  "scripts": {
+    "test": "wtest .run 'proto/**'",
+    "docgen": "wdocgen proto",
+    "trs": "node proto/dwtools/atop/transpile/entry/Exec"
   },
-  "bugs" :
-  {
-    "url" : "https://github.com/Wandalen/wTranspile/issues"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wTranspile.git"
   },
-  "dependencies" :
-  {
-    "google-closure-compiler-js" : "=20200517.0.0",
-    "uglify-es" : "=3.3.9",
-    "babylon" : "=6.18.0",
-    "babel-core" : "=6.26.3",
-    "babel-polyfill" : "=6.26.0",
-    "babel-preset-stage-0" : "=6.24.1",
-    "babel-preset-stage-1" : "=6.24.1",
-    "babel-preset-stage-2" : "=6.24.1",
-    "babel-preset-stage-3" : "=6.24.1",
-    "babel-preset-es2015" : "=6.24.1",
-    "babel-preset-es2015-without-strict" : "=0.0.4",
-    "babel-preset-node6-without-strict" : "=0.0.1",
-    "babel-plugin-transform-runtime" : "=6.23.0",
-    "babel-plugin-transform-class-properties" : "=6.24.1",
-    "wTools" : "alpha",
-    "wCopyable" : "alpha",
-    "wpathbasic" : "alpha",
-    "wverbal" : "alpha",
-    "wFiles" : "alpha",
-    "wstarter" : "alpha",
-    "wcommandsaggregator" : "alpha",
-    "wcommandsconfig" : "alpha",
-    "wstatestorage" : "alpha",
-    "wstatesession" : "alpha"
+  "bugs": {
+    "url": "https://github.com/Wandalen/wTranspile/issues"
   },
-  "devDependencies" : { "wTesting" : "alpha" },
-  "keywords" :
-  [
+  "dependencies": {
+    "google-closure-compiler-js": "=20200517.0.0",
+    "uglify-es": "=3.3.9",
+    "babylon": "=6.18.0",
+    "babel-core": "=6.26.3",
+    "babel-polyfill": "=6.26.0",
+    "babel-preset-stage-0": "=6.24.1",
+    "babel-preset-stage-1": "=6.24.1",
+    "babel-preset-stage-2": "=6.24.1",
+    "babel-preset-stage-3": "=6.24.1",
+    "babel-preset-es2015": "=6.24.1",
+    "babel-preset-es2015-without-strict": "=0.0.4",
+    "babel-preset-node6-without-strict": "=0.0.1",
+    "babel-plugin-transform-runtime": "=6.23.0",
+    "babel-plugin-transform-class-properties": "=6.24.1",
+    "wTools": "alpha",
+    "wCopyable": "alpha",
+    "wpathbasic": "alpha",
+    "wverbal": "alpha",
+    "wFiles": "alpha",
+    "wstarter": "alpha",
+    "wcommandsaggregator": "alpha",
+    "wcommandsconfig": "alpha",
+    "wstatestorage": "alpha",
+    "wstatesession": "alpha"
+  },
+  "devDependencies": {
+    "wTesting": "alpha"
+  },
+  "keywords": [
     "wTools",
     "Transpilation",
     "transpilation strategies",
