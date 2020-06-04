@@ -2,10 +2,13 @@ format: outwillfile-2.0
 root:
   - wTranspile.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wTranspile.out.will.yml: &ref_0
+    hash: 6d14e661f1c1446b0c3b441c79d5db9e
+    size: 47995
+  ../.ex.will.yml: &ref_1
     hash: 509e7445ff1e2418954565745787496a
     size: 2357
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: 37359048c1d116e969f980b0390c803a
     size: 7127
 module:
@@ -22,11 +25,11 @@ module:
         open source transpilation tools in single package.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - wTools
         - Transpilation
         - transpilation strategies
@@ -42,14 +45,14 @@ module:
         - ecmascript
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wtranspile
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
         trs: node proto/dwtools/atop/transpile/entry/Exec
-      npm.bin: &ref_6
+      npm.bin:
         trs: proto/dwtools/atop/transpile/entry/Exec
     path:
       module.willfiles:
@@ -862,6 +865,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          filePath: 'reflector::exported.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          filePath: 'reflector::exported.files.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -950,8 +971,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wTranspile.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wTranspile
@@ -965,14 +987,35 @@ module:
         open source transpilation tools in single package.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 8.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - wTools
+        - Transpilation
+        - transpilation strategies
+        - uglify
+        - uglify-es
+        - uglify-js
+        - beautify
+        - minify
+        - minimize
+        - optimize
+        - minifier
+        - javascript
+        - ecmascript
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wtranspile
-      npm.scripts: *ref_5
-      npm.bin: *ref_6
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
+        trs: node proto/dwtools/atop/transpile/entry/Exec
+      npm.bin:
+        trs: proto/dwtools/atop/transpile/entry/Exec
     path:
       module.willfiles:
         criterion:
@@ -1754,3 +1797,6 @@ module:
       ../.im.will.yml:
         hash: 37359048c1d116e969f980b0390c803a
         size: 7127
+      wTranspile.out.will.yml:
+        hash: 6d14e661f1c1446b0c3b441c79d5db9e
+        size: 47995
