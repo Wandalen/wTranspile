@@ -31,9 +31,9 @@ about :
   npm.scripts :
     test : 'wtest .run proto/**'
     docgen : 'wdocgen .build proto'
-    trs : "node proto/dwtools/atop/transpilationStrategy/entry/Exec"
+    trs : "node proto/dwtools/atop/transpile/entry/Exec"
   npm.bin :
-    trs : proto/dwtools/atop/transpilationStrategy/entry/Exec
+    trs : proto/dwtools/atop/transpile/entry/Exec
 
 path :
 

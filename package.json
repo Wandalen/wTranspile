@@ -5,17 +5,17 @@
   "description" : "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
   "author" : "Kostiantyn Wandalen <wanalen@01.school>",
   "license" : "MIT",
-  "main" : "proto/dwtools/atop/transpilationStrategy/entry/Include.s",
+  "main" : "proto/dwtools/atop/transpile/entry/Include.s",
   "bin" :
   {
-    "trs" : "proto/dwtools/atop/transpilationStrategy/entry/Exec"
+    "trs" : "proto/dwtools/atop/transpile/entry/Exec"
   },
-  "files" : [ "proto/dwtools/atop/transpilationStrategy", "proto/dwtools/Tools.s", "out" ],
+  "files" : [ "proto/dwtools/atop/transpile", "proto/dwtools/Tools.s", "out" ],
   "scripts" :
   {
     "test" : "wtest .run 'proto/**'",
     "docgen" : "wdocgen proto",
-    "trs" : "node proto/dwtools/atop/transpilationStrategy/entry/Exec"
+    "trs" : "node proto/dwtools/atop/transpile/entry/Exec"
   },
   "repository" :
   {

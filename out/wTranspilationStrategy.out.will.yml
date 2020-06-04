@@ -51,9 +51,9 @@ module:
       npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
-        trs: node proto/dwtools/atop/transpilationStrategy/entry/Exec
+        trs: node proto/dwtools/atop/transpile/entry/Exec
       npm.bin:
-        trs: proto/dwtools/atop/transpilationStrategy/entry/Exec
+        trs: proto/dwtools/atop/transpile/entry/Exec
     path:
       module.willfiles:
         criterion:
@@ -133,7 +133,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../proto/dwtools/atop/transpilationStrategy/MainBase.s
+        path: ../proto/dwtools/atop/transpile/MainBase.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -143,13 +143,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/atop/transpilationStrategy/MainBase.s'
+        path: '{path::out.*=1}/source/dwtools/atop/transpile/MainBase.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/atop/transpilationStrategy/MainBase.s'
+        path: '{path::out.*=1}/source/dwtools/atop/transpile/MainBase.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -180,89 +180,89 @@ module:
           - ../proto/dwtools/abase
           - ../proto/dwtools/amid
           - ../proto/dwtools/atop
-          - ../proto/dwtools/atop/-transpilationStrategy
-          - ../proto/dwtools/atop/-transpilationStrategy/Exec
-          - ../proto/dwtools/atop/-transpilationStrategy/ExecDebug
-          - ../proto/dwtools/atop/-transpilationStrategy/ExecUnrestricted
-          - ../proto/dwtools/atop/-transpilationStrategy/IncludeBase.s
-          - ../proto/dwtools/atop/-transpilationStrategy/IncludeMid.s
-          - ../proto/dwtools/atop/-transpilationStrategy/IncludeTop.s
-          - ../proto/dwtools/atop/-transpilationStrategy/MainBase.s
-          - ../proto/dwtools/atop/-transpilationStrategy/MainTop.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l3
-          - ../proto/dwtools/atop/-transpilationStrategy/l3/Concatenator.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l3/Multiple.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l3/Single.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l3/Stage.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l3/Transpiler.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l5_concatenator
+          - ../proto/dwtools/atop/-transpile
+          - ../proto/dwtools/atop/-transpile/Exec
+          - ../proto/dwtools/atop/-transpile/ExecDebug
+          - ../proto/dwtools/atop/-transpile/ExecUnrestricted
+          - ../proto/dwtools/atop/-transpile/IncludeBase.s
+          - ../proto/dwtools/atop/-transpile/IncludeMid.s
+          - ../proto/dwtools/atop/-transpile/IncludeTop.s
+          - ../proto/dwtools/atop/-transpile/MainBase.s
+          - ../proto/dwtools/atop/-transpile/MainTop.s
+          - ../proto/dwtools/atop/-transpile/l3
+          - ../proto/dwtools/atop/-transpile/l3/Concatenator.s
+          - ../proto/dwtools/atop/-transpile/l3/Multiple.s
+          - ../proto/dwtools/atop/-transpile/l3/Single.s
+          - ../proto/dwtools/atop/-transpile/l3/Stage.s
+          - ../proto/dwtools/atop/-transpile/l3/Transpiler.s
+          - ../proto/dwtools/atop/-transpile/l5_concatenator
           - >-
-            ../proto/dwtools/atop/-transpilationStrategy/l5_concatenator/JavaScript.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l5_concatenator/Text.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler
-          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Babel.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Closure.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Nop.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Prepack.s
-          - ../proto/dwtools/atop/-transpilationStrategy/l5_transpiler/Uglify.s
-          - ../proto/dwtools/atop/-transpilationStrategy.test
+            ../proto/dwtools/atop/-transpile/l5_concatenator/JavaScript.s
+          - ../proto/dwtools/atop/-transpile/l5_concatenator/Text.s
+          - ../proto/dwtools/atop/-transpile/l5_transpiler
+          - ../proto/dwtools/atop/-transpile/l5_transpiler/Babel.s
+          - ../proto/dwtools/atop/-transpile/l5_transpiler/Closure.s
+          - ../proto/dwtools/atop/-transpile/l5_transpiler/Nop.s
+          - ../proto/dwtools/atop/-transpile/l5_transpiler/Prepack.s
+          - ../proto/dwtools/atop/-transpile/l5_transpiler/Uglify.s
+          - ../proto/dwtools/atop/-transpile.test
           - >-
-            ../proto/dwtools/atop/-transpilationStrategy.test/TranspilationStrategy.test.s
-          - ../proto/dwtools/atop/-transpilationStrategy.test/_asset
-          - ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined
+            ../proto/dwtools/atop/-transpile.test/TranspilationStrategy.test.s
+          - ../proto/dwtools/atop/-transpile.test/_asset
+          - ../proto/dwtools/atop/-transpile.test/_asset/combined
           - >-
-            ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined/External.s
+            ../proto/dwtools/atop/-transpile.test/_asset/combined/External.s
           - >-
-            ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined/main
+            ../proto/dwtools/atop/-transpile.test/_asset/combined/main
           - >-
-            ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined/main/File1.s
+            ../proto/dwtools/atop/-transpile.test/_asset/combined/main/File1.s
           - >-
-            ../proto/dwtools/atop/-transpilationStrategy.test/_asset/combined/main/File2.s
-          - ../proto/dwtools/atop/transpilationStrategy
-          - ../proto/dwtools/atop/transpilationStrategy/entry
-          - ../proto/dwtools/atop/transpilationStrategy/entry/Exec
-          - ../proto/dwtools/atop/transpilationStrategy/entry/ExecDebug
-          - ../proto/dwtools/atop/transpilationStrategy/entry/ExecUnrestricted
-          - ../proto/dwtools/atop/transpilationStrategy/entry/Include.s
-          - ../proto/dwtools/atop/transpilationStrategy/include
-          - ../proto/dwtools/atop/transpilationStrategy/include/Base.s
-          - ../proto/dwtools/atop/transpilationStrategy/include/Mid.s
-          - ../proto/dwtools/atop/transpilationStrategy/include/Top.s
-          - ../proto/dwtools/atop/transpilationStrategy/l1
-          - ../proto/dwtools/atop/transpilationStrategy/l1/Namespace.s
-          - ../proto/dwtools/atop/transpilationStrategy/l3
-          - ../proto/dwtools/atop/transpilationStrategy/l3/Concatenator.s
-          - ../proto/dwtools/atop/transpilationStrategy/l3/Multiple.s
-          - ../proto/dwtools/atop/transpilationStrategy/l3/Single.s
-          - ../proto/dwtools/atop/transpilationStrategy/l3/Stage.s
-          - ../proto/dwtools/atop/transpilationStrategy/l3/Transpiler.s
-          - ../proto/dwtools/atop/transpilationStrategy/l5_concatenator
+            ../proto/dwtools/atop/-transpile.test/_asset/combined/main/File2.s
+          - ../proto/dwtools/atop/transpile
+          - ../proto/dwtools/atop/transpile/entry
+          - ../proto/dwtools/atop/transpile/entry/Exec
+          - ../proto/dwtools/atop/transpile/entry/ExecDebug
+          - ../proto/dwtools/atop/transpile/entry/ExecUnrestricted
+          - ../proto/dwtools/atop/transpile/entry/Include.s
+          - ../proto/dwtools/atop/transpile/include
+          - ../proto/dwtools/atop/transpile/include/Base.s
+          - ../proto/dwtools/atop/transpile/include/Mid.s
+          - ../proto/dwtools/atop/transpile/include/Top.s
+          - ../proto/dwtools/atop/transpile/l1
+          - ../proto/dwtools/atop/transpile/l1/Namespace.s
+          - ../proto/dwtools/atop/transpile/l3
+          - ../proto/dwtools/atop/transpile/l3/Concatenator.s
+          - ../proto/dwtools/atop/transpile/l3/Multiple.s
+          - ../proto/dwtools/atop/transpile/l3/Single.s
+          - ../proto/dwtools/atop/transpile/l3/Stage.s
+          - ../proto/dwtools/atop/transpile/l3/Transpiler.s
+          - ../proto/dwtools/atop/transpile/l5_concatenator
           - >-
-            ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/JavaScript.s
-          - ../proto/dwtools/atop/transpilationStrategy/l5_concatenator/Text.s
-          - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler
-          - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Babel.s
-          - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Closure.s
-          - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Nop.s
-          - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Prepack.s
-          - ../proto/dwtools/atop/transpilationStrategy/l5_transpiler/Uglify.s
-          - ../proto/dwtools/atop/transpilationStrategy/l7
-          - ../proto/dwtools/atop/transpilationStrategy/l7/System.s
-          - ../proto/dwtools/atop/transpilationStrategy/l8
-          - ../proto/dwtools/atop/transpilationStrategy/l8/Cui.s
-          - ../proto/dwtools/atop/transpilationStrategy.test
+            ../proto/dwtools/atop/transpile/l5_concatenator/JavaScript.s
+          - ../proto/dwtools/atop/transpile/l5_concatenator/Text.s
+          - ../proto/dwtools/atop/transpile/l5_transpiler
+          - ../proto/dwtools/atop/transpile/l5_transpiler/Babel.s
+          - ../proto/dwtools/atop/transpile/l5_transpiler/Closure.s
+          - ../proto/dwtools/atop/transpile/l5_transpiler/Nop.s
+          - ../proto/dwtools/atop/transpile/l5_transpiler/Prepack.s
+          - ../proto/dwtools/atop/transpile/l5_transpiler/Uglify.s
+          - ../proto/dwtools/atop/transpile/l7
+          - ../proto/dwtools/atop/transpile/l7/System.s
+          - ../proto/dwtools/atop/transpile/l8
+          - ../proto/dwtools/atop/transpile/l8/Cui.s
+          - ../proto/dwtools/atop/transpile.test
           - >-
-            ../proto/dwtools/atop/transpilationStrategy.test/TranspilationStrategy.test.s
-          - ../proto/dwtools/atop/transpilationStrategy.test/_asset
-          - ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined
+            ../proto/dwtools/atop/transpile.test/TranspilationStrategy.test.s
+          - ../proto/dwtools/atop/transpile.test/_asset
+          - ../proto/dwtools/atop/transpile.test/_asset/combined
           - >-
-            ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined/External.s
+            ../proto/dwtools/atop/transpile.test/_asset/combined/External.s
           - >-
-            ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined/main
+            ../proto/dwtools/atop/transpile.test/_asset/combined/main
           - >-
-            ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined/main/File1.s
+            ../proto/dwtools/atop/transpile.test/_asset/combined/main/File1.s
           - >-
-            ../proto/dwtools/atop/transpilationStrategy.test/_asset/combined/main/File2.s
+            ../proto/dwtools/atop/transpile.test/_asset/combined/main/File2.s
     submodule:
       wTools:
         path: 'npm:///wTools'
@@ -1061,9 +1061,9 @@ module:
       npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
-        trs: node proto/dwtools/atop/transpilationStrategy/entry/Exec
+        trs: node proto/dwtools/atop/transpile/entry/Exec
       npm.bin:
-        trs: proto/dwtools/atop/transpilationStrategy/entry/Exec
+        trs: proto/dwtools/atop/transpile/entry/Exec
     path:
       module.willfiles:
         criterion:
@@ -1143,7 +1143,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: proto/dwtools/atop/transpilationStrategy/MainBase.s
+        path: proto/dwtools/atop/transpile/MainBase.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -1153,13 +1153,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/atop/transpilationStrategy/MainBase.s'
+        path: '{path::out.*=1}/source/dwtools/atop/transpile/MainBase.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/atop/transpilationStrategy/MainBase.s'
+        path: '{path::out.*=1}/source/dwtools/atop/transpile/MainBase.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug

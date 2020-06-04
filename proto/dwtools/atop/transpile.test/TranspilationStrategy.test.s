@@ -9,7 +9,7 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wTesting' );
 
-  require( '../transpilationStrategy/entry/Include.s' );
+  require( '../transpile/entry/Include.s' );
 
 }
 
@@ -216,7 +216,7 @@ function singleDst( test )
 {
   let self = this;
   let routinePath = _.path.join( self.suiteTempPath, test.name );
-  let originalAssetPath = _.path.join( __dirname, '../transpilationStrategy' );
+  let originalAssetPath = _.path.join( __dirname, '../transpile' );
 
   test.case = 'single destination';
 
@@ -699,11 +699,11 @@ function transpileManyToOne( test )
 function shell( test )
 {
   let self = this;
-  let originalAssetPath = _.path.join( __dirname, '../transpilationStrategy' );
+  let originalAssetPath = _.path.join( __dirname, '../transpile' );
   let routinePath = _.path.join( self.suiteTempPath, test.name );
   let inPath = _.path.normalize( __dirname ) + '/**';
   let outPath = _.path.join( routinePath, 'out.js' );
-  let execRelativePath = '../transpilationStrategy/entry/Exec';
+  let execRelativePath = '../transpile/entry/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let ready = new _.Consequence().take( null );
   let shell = _.process.starter
@@ -755,7 +755,7 @@ function combinedShell( test )
   let self = this;
   let originalAssetPath = _.path.join( self.assetsOriginalPath, 'combined' );
   let routinePath = _.path.join( self.suiteTempPath, test.name );
-  let execRelativePath = '../transpilationStrategy/entry/Exec';
+  let execRelativePath = '../transpile/entry/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let inPath = 'main/**';
   let outPath = 'out/Main.s';
@@ -794,7 +794,7 @@ function combinedShell( test )
   })
 
   shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../../transpilationStrategy/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  /* node ../../../transpile/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
@@ -845,7 +845,7 @@ function combinedShell( test )
   */
 
   shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  /* node ../../../transpilationStrategy/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  /* node ../../../transpile/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
   {
@@ -900,7 +900,7 @@ function combinedShell( test )
   // })
   //
   // shell({ currentPath : routinePath + '/..', args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
-  // /* node ../../transpilationStrategy/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
+  // /* node ../../transpile/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
   //
   // .then( ( got ) =>
   // {
@@ -933,7 +933,7 @@ function combinedProgramatic( test )
   let self = this;
   let originalAssetPath = _.path.join( self.assetsOriginalPath, 'combined' );
   let routinePath = _.path.join( self.suiteTempPath, test.name );
-  let execRelativePath = '../transpilationStrategy/entry/Exec';
+  let execRelativePath = '../transpile/entry/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
   let inPath = _.path.join( routinePath, 'main/**' );
   let outPath = _.path.join( routinePath, 'out/Main.s' );
