@@ -36,7 +36,7 @@ submodule :
     enabled : 0 # submodule
   # prepack :
   #   path : npm:///prepack#0.2.54
-    enabled : 0 # submodule
+  #   enabled : 0 # submodule
   uglify-es :
     path : npm:///uglify-es#3.3.9
     enabled : 0 # submodule
