@@ -27,7 +27,7 @@ function onSuiteBegin()
   let self = this;
 
   self.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '../..'  ), 'TransiplationStrategy' );
-  self.assetsOriginalSuitePath = _.path.join( __dirname, '_asset' );
+  self.assetsOriginalPath = _.path.join( __dirname, '_asset' );
 
   self.find = _.fileProvider.filesFinder
   ({
@@ -754,7 +754,7 @@ function shell( test )
 function combinedShell( test )
 {
   let self = this;
-  let originalAssetPath = _.path.join( self.assetsOriginalSuitePath, 'combined' );
+  let originalAssetPath = _.path.join( self.assetsOriginalPath, 'combined' );
   let routinePath = _.path.join( self.suiteTempPath, test.name );
   let execRelativePath = '../transpilationStrategy/entry/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
@@ -933,7 +933,7 @@ combinedShell.timeOut = 150000;
 function combinedProgramatic( test )
 {
   let self = this;
-  let originalAssetPath = _.path.join( self.assetsOriginalSuitePath, 'combined' );
+  let originalAssetPath = _.path.join( self.assetsOriginalPath, 'combined' );
   let routinePath = _.path.join( self.suiteTempPath, test.name );
   let execRelativePath = '../transpilationStrategy/entry/Exec';
   let execPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), execRelativePath ) );
@@ -1030,7 +1030,7 @@ var Self =
 
   context :
   {
-    assetsOriginalSuitePath : null,
+    assetsOriginalPath : null,
     suiteTempPath : null,
     find : null,
     findIn : null,
