@@ -8,7 +8,8 @@ let Uglify = require( 'uglify-es' );
 
 let _ = _global_.wTools;
 let Parent = _.trs.transpiler.Abstract;
-let Self = function wTsTranspilerUglify( o )
+let Self = wTsTranspilerUglify;
+function wTsTranspilerUglify( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

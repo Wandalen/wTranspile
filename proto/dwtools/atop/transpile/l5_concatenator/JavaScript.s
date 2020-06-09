@@ -6,7 +6,8 @@
 
 let _ = _global_.wTools;
 let Parent = _.trs.concatenator.Abstract;
-let Self = function wTsConcatenatorJavaScript( o )
+let Self = wTsConcatenatorJavaScript;
+function wTsConcatenatorJavaScript( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

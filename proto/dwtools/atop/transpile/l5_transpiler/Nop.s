@@ -6,7 +6,8 @@
 
 let _ = _global_.wTools;
 let Parent = _.trs.transpiler.Abstract;
-let Self = function wTsTranspilerNop( o )
+let Self = wTsTranspilerNop;
+function wTsTranspilerNop( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

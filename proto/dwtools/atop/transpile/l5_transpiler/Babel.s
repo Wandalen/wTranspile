@@ -9,7 +9,8 @@ let Babel = require( 'babel-core' );
 
 let _ = _global_.wTools;
 let Parent = _.trs.transpiler.Abstract;
-let Self = function wTsTranspilerBabel( o )
+let Self = wTsTranspilerBabel;
+function wTsTranspilerBabel( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

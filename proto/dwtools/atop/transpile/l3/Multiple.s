@@ -8,7 +8,8 @@ let Zlib;
 
 let _ = _global_.wTools;
 let Parent = null;
-let Self = function wTsMultiple( o )
+let Self = wTsMultiple;
+function wTsMultiple( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

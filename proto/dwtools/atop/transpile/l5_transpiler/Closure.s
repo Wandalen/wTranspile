@@ -8,7 +8,8 @@ let Closure = require( 'google-closure-compiler-js' );
 
 let _ = _global_.wTools;
 let Parent = _.trs.transpiler.Abstract;
-let Self = function wTsTranspilerClosure( o )
+let Self = wTsTranspilerClosure;
+function wTsTranspilerClosure( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

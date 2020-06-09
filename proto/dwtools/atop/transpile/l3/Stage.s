@@ -8,7 +8,8 @@ let Zlib;
 
 let _ = _global_.wTools;
 let Parent = null;
-let Self = function wTsStage( o )
+let Self = wTsStage;
+function wTsStage( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }

@@ -8,7 +8,8 @@ let Prepack = require( 'prepack' );
 
 let _ = _global_.wTools;
 let Parent = _.trs.transpiler.Abstract;
-let Self = function wTsTranspilerPrepack( o )
+let Self = wTsTranspilerPrepack;
+function wTsTranspilerPrepack( o )
 {
   return _.workpiece.construct( Self, this, arguments );
 }
