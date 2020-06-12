@@ -10,7 +10,7 @@
   "files" : [ "proto/dwtools/atop/transpile", "proto/dwtools/Tools.s", "out" ],
   "scripts" :
   {
-    "test" : "wtest .run 'proto/**'",
+    "test" : "wtest .run 'proto/**' rapidity:-3",
     "docgen" : "wdocgen proto",
     "trs" : "node proto/dwtools/atop/transpile/entry/Exec"
   },
