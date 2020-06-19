@@ -81,14 +81,14 @@ function exec()
   let logger = sys.logger;
   let fileProvider = sys.fileProvider;
   let appArgs = _.process.args();
-  let ca = sys.commandsMake();
+  let ca = sys._commandsMake();
 
   return ca.appArgsPerform({ appArgs : appArgs });
 }
 
 //
 
-function commandsMake()
+function _commandsMake()
 {
   let sys = this;
   let logger = sys.logger;
@@ -358,7 +358,7 @@ let Extend =
   Exec,
   exec,
 
-  commandsMake,
+  _commandsMake,
   commandHelp,
   commandTranspilersList,
   commandTranspile,
