@@ -1740,6 +1740,4 @@ module:
       ../.im.will.yml:
         hash: 37359048c1d116e969f980b0390c803a
         size: 7127
-      wTranspile.out.will.yml:
-        hash: cbe17aff4edf9dfc9de1c0aaf2b03efc
-        size: 46286
+      wTranspile.out.will.yml: *ref_0
