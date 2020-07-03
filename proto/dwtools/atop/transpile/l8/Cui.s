@@ -132,9 +132,9 @@ function commandHelp( e )
 
   ca._commandHelp( e );
 
-  if( !e.subject )
+  if( !e.commandName )
   debugger;
-  // if( !e.subject )
+  // if( !e.commandName )
   // logger.log( 'Use ' + logger.colorFormat( '"sys .help"', 'code' ) + ' to get help' );
 
   return sys;
