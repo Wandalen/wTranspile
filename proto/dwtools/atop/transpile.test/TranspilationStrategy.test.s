@@ -26,7 +26,7 @@ function onSuiteBegin()
 {
   let self = this;
 
-  self.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '../..'  ), 'TransiplationStrategy' );
+  self.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..'  ), 'TransiplationStrategy' );
   self.assetsOriginalPath = _.path.join( __dirname, '_asset' );
 
   self.find = _.fileProvider.filesFinder
