@@ -1,5 +1,5 @@
 
-# module::Transpile  [![Status](https://github.com/Wandalen/wTranspile/workflows/Test/badge.svg)](https://github.com/Wandalen/wTranspile/actions?query=workflow%3ATest) [![experimental](https://img.shields.io/badge/stability-experimental-orange.svg)](https://github.com/emersion/stability-badges#experimental)
+# module::Transpile  [![Status](https://github.com/Wandalen/wTranspile/workflows/Publish/badge.svg)](https://github.com/Wandalen/wTranspile/actions?query=workflow%3APublish) [![experimental](https://img.shields.io/badge/stability-experimental-orange.svg)](https://github.com/emersion/stability-badges#experimental)
 
 Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.
 
