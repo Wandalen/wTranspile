@@ -2,16 +2,6 @@
 
 'use strict';
 
-// if( typeof module !== 'undefined' )
-// {
-//
-//   require( './MainBase.s' );
-//   require( './IncludeTop.s' );
-//
-// }
-
-//
-
 /* qqq : normalize file. adjust definition of commands. ask */
 
 let _ = _global_.wTools;
@@ -384,17 +374,13 @@ _.classDeclare
   extend : Extend,
 });
 
-// _.StateStorage.mixin( Self );
-// _.StateSession.mixin( Self );
 _.CommandsConfig.mixin( Self );
 
 //
 
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
-// wTools[ Self.shortName ] = Self;
 wTools.trs[ Self.shortName ] = Self;
-
 if( !module.parent )
 Self.Exec();
 
