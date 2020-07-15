@@ -13,7 +13,7 @@ Aggregator of strategies to transpile JS code. It provides unified programmatic 
 ## Try out
 ```
 npm install
-node sample/Sample.js
+node sample/Sample.s
 ```
 
 ## Try out
@@ -29,7 +29,7 @@ ts .config.read
 npm -g install wtranspile
 ts .config.define debug:0 minification:7 optimization:9
 ts .config.define strategies:[ Babel, Uglify, Babel ]
-ts .transpile inputPath:sample/Sample.js outputPath:temp.tmp/Sample.js
+ts .transpile inputPath:sample/Sample.s outputPath:temp.tmp/Sample.s
 ts .config.define verbosity:3
 ts .transpile inputPath:sample/Sample2.js outputPath:temp.tmp/Sample2.js debug:1
 ```

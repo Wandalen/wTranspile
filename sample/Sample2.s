@@ -6,7 +6,7 @@ let ts = new Ts().form();
 let session = ts.session
 ({
   inputPath : __filename,
-  outputPath : _.path.join( __dirname, '../temp.tmp/Sample.js' ),
+  outputPath : _.path.join( __dirname, '../temp.tmp/Sample.s' ),
   debug : 5,
   minification : 0,
   optimization : 0,
