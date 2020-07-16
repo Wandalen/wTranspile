@@ -13,8 +13,8 @@ if( typeof module !== 'undefined' )
 
 }
 
-var _global = _global_;
-var _ = _global_.wTools;
+let _global = _global_;
+let _ = _global_.wTools;
 
 /* qqq : normalize. use assetFor here please */
 
@@ -1017,7 +1017,7 @@ combinedProgramatic.timeOut = 150000;
 // define
 // --
 
-var Self =
+let Self =
 {
 
   name : 'Tools.top.TranspilationStrategy',
