@@ -77,7 +77,7 @@ function errorHandle( err )
     ({
       src : stage.input.data,
       line : line,
-      number : 1,
+      numbering : 1,
     });
   }
 
