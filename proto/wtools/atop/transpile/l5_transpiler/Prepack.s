@@ -20,37 +20,49 @@ Self.shortName = 'Prepack';
 //
 // --
 
-function _formAct()
+function _formAct( stage )
 {
   let self = this;
-  let session = self.session;
+  let sys = stage.sys;
+  let single = stage.single;
+  let multiple = stage.multiple;
 
-  if( !self.settings )
-  self.settings = {};
-  let set = self.settings;
+  _.assert( arguments.length === 1 );
+  _.assert( stage instanceof _.trs.Stage );
+  _.assert( stage.formed === 0 );
 
-  return set;
+  if( !stage.settings )
+  stage.settings = Object.create( null );
+  let set = stage.settings;
+
+  stage.formed = 1;
+
+  return stage;
 }
 
 //
 
-function _performAct()
+function _performAct( stage )
 {
   let self = this;
-  let session = self.session;
-  let result = null;
+  let sys = stage.sys;
+  let single = stage.single;
+  let multiple = stage.multiple;
 
   debugger;
-  result = Prepack.prepackSources( [{ fileContents : self.input.code }], self.settings );
+  stage.rawData = Prepack.prepackSources( [{ fileContents : stage.input.data }], stage.settings );
   debugger;
 
-  if( result.error )
-  throw _.err( result.error );
+  if( stage.rawData.error )
+  throw stage.errorHandle( stage.rawData.error );
 
-  _.assert( _.strIs( result.code ) );
-  _.mapExtend( self.output,result );
+  _.assert( _.strIs( stage.rawData.code ) );
 
-  return result;
+  stage.data = stage.rawData.code;
+
+  stage.formed = 2;
+
+  return stage;
 }
 
 // --
