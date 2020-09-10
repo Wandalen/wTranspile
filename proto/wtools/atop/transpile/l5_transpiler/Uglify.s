@@ -199,11 +199,11 @@ global_defs   : {}     // global definitions
   let output = set.output;
   let defOutput =
   {
-    beautify : !multiple.beautifing,
-    comments : !multiple.beautifing,
-    indent_level : !multiple.beautifing ? 2 : undefined,
-    keep_quoted_props : !multiple.beautifing ? true : false,
-    max_line_len : !multiple.beautifing ? 160 : 65535,
+    beautify : multiple.beautifing,
+    comments : multiple.beautifing,
+    indent_level : multiple.beautifing ? 2 : undefined,
+    keep_quoted_props : multiple.beautifing ? true : false,
+    max_line_len : multiple.beautifing ? 160 : 65535,
     source_map : null,
     // ecma : 6, /* problematic */
   }
