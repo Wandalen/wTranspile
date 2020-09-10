@@ -199,12 +199,7 @@ function singleFileInputDirThrowing( test )
     outPath : outPath,
   });
 
-  return multiple.form().perform()
-  .finally( ( err, got ) =>
-  {
-    test.is( !!err );
-    return true;
-  });
+  return test.shouldThrowErrorAsync( multiple.form().perform() );
 
   /* - */
 
