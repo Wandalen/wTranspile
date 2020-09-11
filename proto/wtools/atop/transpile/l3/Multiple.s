@@ -246,7 +246,7 @@ function perform()
   result
   .then( function( arg )
   {
-    return _.routinesCall( multiple, multiple.onEnd, [ multiple ] );
+    return _.routinesCall( multiple, multiple.onEnd, [ multiple, arg ] );
   })
   .finally( function( err, arg )
   {
