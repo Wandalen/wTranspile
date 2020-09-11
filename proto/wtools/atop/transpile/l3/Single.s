@@ -109,7 +109,6 @@ function perform()
   {
     let index = s;
     let strategy = multiple.transpilingStrategy[ s ];
-    let isFirst = index === 0;
     let isLast = index === multiple.transpilingStrategy.length - 1;
     con.thenKeep( function( input )
     {
@@ -117,7 +116,7 @@ function perform()
       ({
         strategy : strategy,
         isLast : isLast,
-        isFirst : isFirst
+        isFirst : false
       });
       if( output.isLast )
       single.output = output;
