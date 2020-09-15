@@ -3,7 +3,7 @@
 'use strict';
 
 let Babylon = require( 'babylon' );
-let Babel = require( 'babel-core' );
+let Babel = require( '@babel/core' );
 
 //
 
@@ -25,27 +25,29 @@ Self.shortName = 'Babel';
 doc : https://babeljs.io/docs/usage/api/#options
 */
 
-function _formAct()
+function _formAct( stage )
 {
   let self = this;
-  let session = self.session;
+  let sys = stage.sys;
+  let single = stage.single;
+  let multiple = stage.multiple;
 
-  _.assert( session.inputFilesPaths.length >= 1 );
-  _.assert( arguments.length === 0, 'Expects no arguments' );
+  _.assert( arguments.length === 1 );
+  _.assert( stage instanceof _.trs.Stage );
+  _.assert( stage.formed === 0 );
 
   /* */
 
-  if( !self.settings )
-  self.settings = {};
-  let set = self.settings;
-
+  if( !stage.settings )
+  stage.settings = Object.create( null );
+  let set = stage.settings;
   let plugins =
   [
     'transform-runtime',
   ]
 
   let presets = [ 'es2015-without-strict','stage-0','stage-1','stage-2','stage-3', ];
-  if( session.isServerSide )
+  if( multiple.isServerSide )//qqq Vova: check this field
   presets = [ 'node6-without-strict' ];
   presets = [];
 
@@ -55,14 +57,15 @@ function _formAct()
     allowReturnOutsideFunction : true,
   }
 
-  self.settings =
+  let defSettings =
   {
     sourceType : 'script',
-    filename : session.inputFilesPaths[ 0 ],
+    // filename : multiple.inputFilesPaths[ 0 ],
+    filename : single.name,
     ast : false,
-    compact : !!session.minification,
-    minified : !!session.minification,
-    comments : !session.minification || !!session.debug,
+    compact : !!multiple.minification,
+    minified : !!multiple.minification,
+    comments : !multiple.minification || !!multiple.debug,
     presets : presets,
     parserOpts : parserOpts,
     // loose : [ 'es6.modules' ],
@@ -71,37 +74,49 @@ function _formAct()
     // plugins : plugins,
   }
 
-  return set;
+  _.mapSupplement( set, defSettings );
+
+  stage.formed = 1;
+
+  return stage;
 }
 
 //
 
-function _performAct()
+function _performAct( stage )
 {
   let self = this;
-  let session = self.session;
+  let sys = stage.sys;
+  let single = stage.single;
+  let multiple = stage.multiple;
   let result = null;
+
+  _.assert( arguments.length === 1 );
+  _.assert( stage instanceof _.trs.Stage );
+  _.assert( stage.formed === 1 );
 
   try
   {
-    result = Babel.transform( self.input.code , self.settings );
+    stage.rawData = Babel.transform( stage.input.data, stage.settings );
   }
   catch( err )
   {
 
     debugger;
-    self.settings.sourceType = 'module';
+    stage.settings.sourceType = 'module';
     logger.log( 'failed, trying babel with { sourceType : "module" }' );
-    logger.log( 'settings\n',self.settings );
-    result = Babel.transform( self.input.code , self.settings );
+    logger.log( 'settings\n',stage.settings );
+    stage.rawData = Babel.transform( stage.input.data, stage.settings );
 
   }
 
-  _.assert( _.strIs( result.code ) );
+  _.assert( _.strIs( stage.rawData.code ), 'Output should be string' );
 
-  _.mapExtend( self.output,result );
+  stage.data = stage.rawData.code;
 
-  return result;
+  stage.formed = 2;
+
+  return stage;
 }
 
 // --

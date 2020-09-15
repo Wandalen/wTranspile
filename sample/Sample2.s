@@ -1,21 +1,26 @@
 
 let _ = require( 'wTools' );
-let Ts = require( 'wtranspile' );
-let ts = new Ts().form();
+require( 'wtranspile' );
+let ts = new _.trs.System().form();
 
-let session = ts.session
+let outPath = _.path.join( __dirname, '../temp.tmp/Sample2.s' );
+
+_.fileProvider.filesDelete( outPath )
+
+let multiple = ts.multiple
 ({
-  inputPath : __filename,
-  outputPath : _.path.join( __dirname, '../temp.tmp/Sample.s' ),
-  debug : 5,
+  inPath : __filename,
+  outPath : outPath,
+  diagnosing : 5,
   minification : 0,
   optimization : 0,
-  strategies : [ 'Babel', 'Uglify', 'Babel' ],
+  transpilingStrategy : [ 'Babel', 'Uglify', 'Babel' ],
 });
 
-session.form().proceed()
-.doThen( ( err ) =>
+return multiple.form().perform()
+.finally( ( err,got ) =>
 {
   if( err )
   _.errLogOnce( err );
+  return got;
 });

@@ -24,14 +24,20 @@ Self.shortName = 'Closure';
 doc : https://github.com/google/closure-compiler-js#flags
 */
 
-function _formAct()
+function _formAct( stage )
 {
   let self = this;
-  let session = self.session;
+  let sys = stage.sys;
+  let single = stage.single;
+  let multiple = stage.multiple;
 
-  if( !self.settings )
-  self.settings = {};
-  let set = self.settings;
+  _.assert( arguments.length === 1 );
+  _.assert( stage instanceof _.trs.Stage );
+  _.assert( stage.formed === 0 );
+
+  if( !stage.settings )
+  stage.settings = Object.create( null );
+  let set = stage.settings;
 
   set.languageIn = 'ECMASCRIPT6';
   // set.languageOut = 'ECMASCRIPT6';
@@ -43,29 +49,37 @@ function _formAct()
   // set.preserveTypeAnnotations = !!session.pretty;
   set.preserveTypeAnnotations = false;
 
-  return set;
+  stage.formed = 1;
+
+  return stage;
 }
 
 //
 
-function _performAct()
+function _performAct( stage )
 {
   let self = this;
-  let session = self.session;
-  let result = null;
+  let sys = stage.sys;
+  let single = stage.single;
+  let multiple = stage.multiple;
 
-  self.settings.jsCode = [{ src : self.input.code }];
-  result = Closure.compile( self.settings );
-  _.mapExtend( self.output,result );
+  _.assert( arguments.length === 1 );
+  _.assert( stage instanceof _.trs.Stage );
+  _.assert( stage.formed === 1 );
 
-  if( result.error )
-  throw _.err( result.error );
-  if( result.errors.length )
-  throw _.err( result.errors[ result.errors.length-1 ] );
+  stage.settings.jsCode = [{ src : stage.input.data }];
+  stage.rawData = Closure( stage.settings );
 
-  self.output.code = self.output.compiledCode;
+  if( stage.rawData.error )
+  throw stage.errorHandle( stage.rawData.error );
+  if( stage.rawData.errors.length )
+  throw stage.errorHandle( _.err( stage.rawData.errors[ stage.rawData.errors.length-1 ] ) );
 
-  return result;
+  stage.data = stage.rawData.compiledCode;
+
+  stage.formed = 2;
+
+  return stage;
 }
 
 // --

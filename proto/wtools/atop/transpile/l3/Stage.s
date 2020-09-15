@@ -50,6 +50,7 @@ function outputMake( o )
   stage.output.index += 1;
   stage.output.input = stage;
   stage.output.isFirst = false;
+  stage.output.settings = null;
 
   if( o )
   _.mapExtend( stage.output, o )
