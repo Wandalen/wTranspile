@@ -2,15 +2,12 @@ format: outwillfile-2.0
 root:
   - wTranspile.out
 consistency:
-  wTranspile.out.will.yml: &ref_0
-    hash: 75f1d7ed96c85b1a18a9d2a03a372579
-    size: 46420
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: 0bf54897f9cfd5ccab90388de99d8b4e
     size: 2356
-  ../.im.will.yml: &ref_2
-    hash: a7c7674abc163d672a1ef153a9b1c476
-    size: 7124
+  ../.im.will.yml: &ref_1
+    hash: df90e7ca2c39d439e2de7a6101bc5141
+    size: 7219
 module:
   wTranspile.out:
     about:
@@ -25,11 +22,11 @@ module:
         open source transpilation tools in single package.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - wTools
         - Transpilation
         - transpilation strategies
@@ -45,14 +42,14 @@ module:
         - ecmascript
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wtranspile
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
         trs: node proto/wtools/atop/transpile/entry/Exec
-      npm.bin:
+      npm.bin: &ref_6
         trs: proto/wtools/atop/transpile/entry/Exec
     path:
       module.willfiles:
@@ -274,27 +271,31 @@ module:
         autoExporting: 0
         enabled: 0
       babel-core:
-        path: 'npm:///babel-core#6.26.3'
+        path: 'npm:///@babel/core#7.11.6'
         autoExporting: 0
         enabled: 0
       babel-polyfill:
-        path: 'npm:///babel-polyfill#6.26.0'
+        path: 'npm:///@babel/polyfill#7.11.5'
         autoExporting: 0
         enabled: 0
       babel-preset-stage-0:
-        path: 'npm:///babel-preset-stage-0#6.24.1'
+        path: 'npm:///@babel/preset-stage-0#7.8.3'
         autoExporting: 0
         enabled: 0
       babel-preset-stage-1:
-        path: 'npm:///babel-preset-stage-1#6.24.1'
+        path: 'npm:///@babel/preset-stage-1#7.8.3'
         autoExporting: 0
         enabled: 0
       babel-preset-stage-2:
-        path: 'npm:///babel-preset-stage-2#6.24.1'
+        path: 'npm:///@babel/preset-stage-2#7.8.3'
         autoExporting: 0
         enabled: 0
       babel-preset-stage-3:
-        path: 'npm:///babel-preset-stage-3#6.24.1'
+        path: 'npm:///@babel/preset-stage-3#7.8.3'
+        autoExporting: 0
+        enabled: 0
+      babel-preset-env:
+        path: 'npm:///@babel/preset-env#7.11.5'
         autoExporting: 0
         enabled: 0
       babel-preset-es2015:
@@ -310,11 +311,11 @@ module:
         autoExporting: 0
         enabled: 0
       babel-plugin-transform-runtime:
-        path: 'npm:///babel-plugin-transform-runtime#6.23.0'
+        path: 'npm:///@babel/plugin-transform-runtime#7.11.5'
         autoExporting: 0
         enabled: 0
       babel-plugin-transform-class-properties:
-        path: 'npm:///babel-plugin-transform-class-properties#6.24.1'
+        path: 'npm:///@babel/plugin-proposal-class-properties#7.10.4'
         autoExporting: 0
         enabled: 0
       wtranspile:
@@ -836,24 +837,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: 'reflector::exported.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: 'reflector::exported.files.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -942,9 +925,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wTranspile.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wTranspile
@@ -958,35 +940,14 @@ module:
         open source transpilation tools in single package.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - wTools
-        - Transpilation
-        - transpilation strategies
-        - uglify
-        - uglify-es
-        - uglify-js
-        - beautify
-        - minify
-        - minimize
-        - optimize
-        - minifier
-        - javascript
-        - ecmascript
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
+      contributors: *ref_4
       npm.name: wtranspile
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
-        trs: node proto/wtools/atop/transpile/entry/Exec
-      npm.bin:
-        trs: proto/wtools/atop/transpile/entry/Exec
+      npm.scripts: *ref_5
+      npm.bin: *ref_6
     path:
       module.willfiles:
         criterion:
@@ -1149,27 +1110,31 @@ module:
         autoExporting: 0
         enabled: 0
       babel-core:
-        path: 'npm:///babel-core#6.26.3'
+        path: 'npm:///@babel/core#7.11.6'
         autoExporting: 0
         enabled: 0
       babel-polyfill:
-        path: 'npm:///babel-polyfill#6.26.0'
+        path: 'npm:///@babel/polyfill#7.11.5'
         autoExporting: 0
         enabled: 0
       babel-preset-stage-0:
-        path: 'npm:///babel-preset-stage-0#6.24.1'
+        path: 'npm:///@babel/preset-stage-0#7.8.3'
         autoExporting: 0
         enabled: 0
       babel-preset-stage-1:
-        path: 'npm:///babel-preset-stage-1#6.24.1'
+        path: 'npm:///@babel/preset-stage-1#7.8.3'
         autoExporting: 0
         enabled: 0
       babel-preset-stage-2:
-        path: 'npm:///babel-preset-stage-2#6.24.1'
+        path: 'npm:///@babel/preset-stage-2#7.8.3'
         autoExporting: 0
         enabled: 0
       babel-preset-stage-3:
-        path: 'npm:///babel-preset-stage-3#6.24.1'
+        path: 'npm:///@babel/preset-stage-3#7.8.3'
+        autoExporting: 0
+        enabled: 0
+      babel-preset-env:
+        path: 'npm:///@babel/preset-env#7.11.5'
         autoExporting: 0
         enabled: 0
       babel-preset-es2015:
@@ -1185,11 +1150,11 @@ module:
         autoExporting: 0
         enabled: 0
       babel-plugin-transform-runtime:
-        path: 'npm:///babel-plugin-transform-runtime#6.23.0'
+        path: 'npm:///@babel/plugin-transform-runtime#7.11.5'
         autoExporting: 0
         enabled: 0
       babel-plugin-transform-class-properties:
-        path: 'npm:///babel-plugin-transform-class-properties#6.24.1'
+        path: 'npm:///@babel/plugin-proposal-class-properties#7.10.4'
         autoExporting: 0
         enabled: 0
       wtranspile:
@@ -1739,6 +1704,5 @@ module:
         hash: 0bf54897f9cfd5ccab90388de99d8b4e
         size: 2356
       ../.im.will.yml:
-        hash: a7c7674abc163d672a1ef153a9b1c476
-        size: 7124
-      wTranspile.out.will.yml: *ref_0
+        hash: df90e7ca2c39d439e2de7a6101bc5141
+        size: 7219
