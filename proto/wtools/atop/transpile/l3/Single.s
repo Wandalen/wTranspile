@@ -116,7 +116,7 @@ function perform()
       ({
         strategy : strategy,
         isLast : isLast,
-        isFirst : false,
+        isFirst : false
       });
       if( output.isLast )
       single.output = output;
@@ -225,14 +225,14 @@ function strategyProceed( stage )
   .thenKeep( function( arg )
   {
     _.assert( stage.output === null )
-    return stage.strategy.proceed( stage );
+    return stage.strategy.proceedThen( stage );
   })
   .thenKeep( function( arg )
   {
     _.assert( _.strIs( stage.data ) );
     _.assert( stage.error === null );
     _.assert( stage.output === null );
-    return arg;
+    return stage;
   })
 
   return result;
