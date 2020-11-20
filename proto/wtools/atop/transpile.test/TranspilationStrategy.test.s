@@ -91,9 +91,9 @@ function singleFileInputTerminal( test )
       if( err )
       throw _.err( err );
 
-      test.is( _.fileProvider.fileExists( outPath ) );
+      test.true( _.fileProvider.fileExists( outPath ) );
       let expected = [ '.', './Output.js' ];
-      test.is( _.fileProvider.fileSize( outPath ) > 100 );
+      test.true( _.fileProvider.fileSize( outPath ) > 100 );
       let found = self.find( routinePath );
       test.identical( found, expected );
 
@@ -126,9 +126,9 @@ function singleFileInputTerminal( test )
       if( err )
       throw _.err( err );
 
-      test.is( _.fileProvider.fileExists( outPath ) );
+      test.true( _.fileProvider.fileExists( outPath ) );
       let expected = [ '.', './Output.js' ];
-      test.is( _.fileProvider.fileSize( outPath ) > 100 );
+      test.true( _.fileProvider.fileSize( outPath ) > 100 );
       let found = self.find( routinePath );
       test.identical( found, expected );
 
@@ -170,8 +170,8 @@ function singleFileInputDir( test )
     if( err )
     throw _.err( err );
 
-    test.is( _.fileProvider.fileExists( outPath ) );
-    test.is( _.fileProvider.fileSize( outPath ) > 100 );
+    test.true( _.fileProvider.fileExists( outPath ) );
+    test.true( _.fileProvider.fileSize( outPath ) > 100 );
     let expected = [ '.', './Output.js' ];
     let found = self.find( routinePath );
     test.identical( found, expected );
@@ -235,8 +235,8 @@ function singleDst( test )
     if( err )
     throw _.err( err );
 
-    test.is( _.fileProvider.fileExists( outPath ) );
-    test.is( _.fileProvider.fileSize( outPath ) > 5000 );
+    test.true( _.fileProvider.fileExists( outPath ) );
+    test.true( _.fileProvider.fileSize( outPath ) > 5000 );
     let expected = [ '.', './Output.js' ];
     let found = self.find( routinePath );
     test.identical( found, expected );
@@ -282,10 +282,10 @@ function severalDst( test )
     var expected = [ '.', './All.js', './All.s', './File1.js', './File1.s', './File2.js', './File2.s' ];
     var found = self.findIn( fileProvider, '/' );
     test.identical( found, expected );
-    test.is( _.strHas( fileProvider.fileRead( '/All.js' ), 'File1.js' ) );
-    test.is( _.strHas( fileProvider.fileRead( '/All.js' ), 'File2.js' ) );
-    test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File1.s' ) );
-    test.is( _.strHas( fileProvider.fileRead( '/All.s' ), 'File2.s' ) );
+    test.true( _.strHas( fileProvider.fileRead( '/All.js' ), 'File1.js' ) );
+    test.true( _.strHas( fileProvider.fileRead( '/All.js' ), 'File2.js' ) );
+    test.true( _.strHas( fileProvider.fileRead( '/All.s' ), 'File1.s' ) );
+    test.true( _.strHas( fileProvider.fileRead( '/All.s' ), 'File2.s' ) );
 
     return true;
   });
@@ -329,10 +329,10 @@ function complexMask( test )
     var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dst', './dst/All.js', './dst/All.s' ];
     var found = self.findIn( fileProvider, '/' );
     test.identical( found, expected );
-    test.is( _.strHas( fileProvider.fileRead( '/dst/All.js' ), 'File1.js' ) );
-    test.is( _.strHas( fileProvider.fileRead( '/dst/All.js' ), 'File2.js' ) );
-    test.is( _.strHas( fileProvider.fileRead( '/dst/All.s' ), 'File1.s' ) );
-    test.is( _.strHas( fileProvider.fileRead( '/dst/All.s' ), 'File2.s' ) );
+    test.true( _.strHas( fileProvider.fileRead( '/dst/All.js' ), 'File1.js' ) );
+    test.true( _.strHas( fileProvider.fileRead( '/dst/All.js' ), 'File2.js' ) );
+    test.true( _.strHas( fileProvider.fileRead( '/dst/All.s' ), 'File1.s' ) );
+    test.true( _.strHas( fileProvider.fileRead( '/dst/All.s' ), 'File2.s' ) );
 
     return true;
   });
@@ -390,11 +390,11 @@ function oneToOne( test )
 
     var src = fileProvider.fileRead( '/File1.js' );
     var dst = fileProvider.fileRead( '/dst/File1.js' );
-    test.is( _.strHas( dst, src ) );
+    test.true( _.strHas( dst, src ) );
 
     var src = fileProvider.fileRead( '/dir/File2.js' );
     var dst = fileProvider.fileRead( '/dst/dir/File2.js' );
-    test.is( _.strHas( dst, src ) );
+    test.true( _.strHas( dst, src ) );
 
     return true;
 
@@ -443,7 +443,7 @@ function nothingFoundOneToOne( test )
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
-    test.is( !!err );
+    test.true( !!err );
     var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dir', './dir/File1.js', './dir/File1.s', './dir/File2.js', './dir/File2.s' ];
     var found = self.findIn( fileProvider, '/' );
     test.identical( found, expected );
@@ -495,12 +495,12 @@ function nothingFoundManyToOne( test )
   return multiple.form().perform()
   .finally( ( err, got ) =>
   {
-    test.is( !!err );
+    test.true( !!err );
     var expected = [ '.', './File1.js', './File1.s', './File2.js', './File2.s', './dir', './dir/File1.js', './dir/File1.s', './dir/File2.js', './dir/File2.s' ];
     var found = self.findIn( fileProvider, '/' );
     test.identical( found, expected );
-    test.is( !fileProvider.fileExists( '/dst' ) );
-    // test.is( fileProvider.fileRead( '/dst' ) === '' );
+    test.true( !fileProvider.fileExists( '/dst' ) );
+    // test.true( fileProvider.fileRead( '/dst' ) === '' );
     if( err )
     _.errLogOnce( err );
     return null;
@@ -588,13 +588,13 @@ function transpileManyToOne( test )
       test.identical( found, expected );
 
       var read = fileProvider.fileRead( '/dst/Main.s' );
-      test.is( !_.strHas( read, 'dir2/-Ecluded.js' ) );
-      test.is( _.strHas( read, 'dir2/File.js' ) );
-      test.is( !_.strHas( read, 'dir2/File.test.js' ) );
-      test.is( _.strHas( read, 'dir2/File1.debug.js' ) );
-      test.is( !_.strHas( read, 'dir2/File1.release.js' ) );
-      test.is( _.strHas( read, 'dir2/File2.debug.js' ) );
-      test.is( !_.strHas( read, 'dir2/File2.release.js' ) );
+      test.true( !_.strHas( read, 'dir2/-Ecluded.js' ) );
+      test.true( _.strHas( read, 'dir2/File.js' ) );
+      test.true( !_.strHas( read, 'dir2/File.test.js' ) );
+      test.true( _.strHas( read, 'dir2/File1.debug.js' ) );
+      test.true( !_.strHas( read, 'dir2/File1.release.js' ) );
+      test.true( _.strHas( read, 'dir2/File2.debug.js' ) );
+      test.true( !_.strHas( read, 'dir2/File2.release.js' ) );
 
       return true;
     });
@@ -671,13 +671,13 @@ function transpileManyToOne( test )
       test.identical( found, expected );
 
       var read = fileProvider.fileRead( '/dst/Tests.s' );
-      test.is( !_.strHas( read, 'dir2/-Ecluded.js' ) );
-      test.is( !_.strHas( read, 'dir2/File.js' ) );
-      test.is( _.strHas( read, 'dir2/File.test.js' ) );
-      test.is( !_.strHas( read, 'dir2/File1.debug.js' ) );
-      test.is( !_.strHas( read, 'dir2/File1.release.js' ) );
-      test.is( !_.strHas( read, 'dir2/File2.debug.js' ) );
-      test.is( !_.strHas( read, 'dir2/File2.release.js' ) );
+      test.true( !_.strHas( read, 'dir2/-Ecluded.js' ) );
+      test.true( !_.strHas( read, 'dir2/File.js' ) );
+      test.true( _.strHas( read, 'dir2/File.test.js' ) );
+      test.true( !_.strHas( read, 'dir2/File1.debug.js' ) );
+      test.true( !_.strHas( read, 'dir2/File1.release.js' ) );
+      test.true( !_.strHas( read, 'dir2/File2.debug.js' ) );
+      test.true( !_.strHas( read, 'dir2/File2.release.js' ) );
 
       return true;
     });
@@ -730,7 +730,7 @@ function shell( test )
     var files = self.find( routinePath );
     test.identical( files, [ '.', './out.js' ] );
     test.identical( got.exitCode, 0 );
-    test.is( _.fileProvider.isTerminal( outPath ) );
+    test.true( _.fileProvider.isTerminal( outPath ) );
 
     return null;
   })
@@ -1093,7 +1093,7 @@ function beautifing( test )
     .then( () =>
     {
       let read = _.fileProvider.fileRead( outPath );
-      test.is( _.strHas( read, 'debugger' ) );
+      test.true( _.strHas( read, 'debugger' ) );
       return null;
     })
   })
@@ -1134,10 +1134,10 @@ function severalStrategies( test )
       let stage1 = stage2.input;
       test.identical( stage2.index, 2 );
       test.identical( stage1.index, 1 );
-      test.is( stage2.strategy instanceof _.trs.transpiler.Uglify );
-      test.is( stage1.strategy instanceof _.trs.transpiler.Babel );
-      test.is( _.mapIsPopulated( stage2.settings ) )
-      test.is( _.mapIsPopulated( stage1.settings ) );
+      test.true( stage2.strategy instanceof _.trs.transpiler.Uglify );
+      test.true( stage1.strategy instanceof _.trs.transpiler.Babel );
+      test.true( _.mapIsPopulated( stage2.settings ) )
+      test.true( _.mapIsPopulated( stage1.settings ) );
       test.notIdentical( stage2.settings, stage1.settings );
       return null;
     })
@@ -1190,7 +1190,7 @@ function strategyProceed( test )
     {
       test.identical( got, output );
       test.notIdentical( got, stage );
-      test.is( got instanceof _.trs.Stage );
+      test.true( got instanceof _.trs.Stage );
       test.identical( got.input, stage );
 
       return got;
@@ -1254,7 +1254,7 @@ function outputMake( test )
   multiple.singleEach( ( single ) =>
   {
     let stage = single.input;
-    test.is( stage instanceof _.trs.Stage );
+    test.true( stage instanceof _.trs.Stage );
     test.identical( stage.settings, null );
     test.identical( stage.output, null );
     test.identical( stage.isFirst, true );
@@ -1262,7 +1262,7 @@ function outputMake( test )
     let output = stage.outputMake();
 
     test.identical( stage.output, output );
-    test.is( output instanceof _.trs.Stage );
+    test.true( output instanceof _.trs.Stage );
     test.notIdentical( stage, output );
     test.identical( output.data, null );
     test.identical( output.rawData, null );
@@ -1278,7 +1278,7 @@ function outputMake( test )
   multiple.singleEach( ( single ) =>
   {
     let stage = single.input;
-    test.is( stage instanceof _.trs.Stage );
+    test.true( stage instanceof _.trs.Stage );
     test.identical( stage.settings, null );
 
     stage.settings = { someSetting : 1 }
@@ -1286,7 +1286,7 @@ function outputMake( test )
     let output = stage.outputMake();
 
     test.identical( stage.output, output );
-    test.is( output instanceof _.trs.Stage );
+    test.true( output instanceof _.trs.Stage );
     test.notIdentical( stage, output );
     test.identical( output.settings, null );
     test.identical( output.index, 1 );
