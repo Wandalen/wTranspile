@@ -49,7 +49,7 @@ function _performAct( single )
   if( multiple.simpleConcatenator || multiple.splittingStrategy === 'OneToOne' )
   {
 
-    filesMap = _.map( filesMap, ( fileData, filePath ) =>
+    filesMap = _.map_( null, filesMap, ( fileData, filePath ) =>
     {
       return starter.sourceWrapSimple
       ({
