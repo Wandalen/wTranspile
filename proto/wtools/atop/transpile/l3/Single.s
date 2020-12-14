@@ -1,4 +1,5 @@
-( function _Single_s_() {
+( function _Single_s_()
+{
 
 'use strict';
 
@@ -60,9 +61,9 @@ function form()
 
   single.input = _.trs.Stage
   ({
-    single : single,
-    multiple : multiple,
-    sys : sys,
+    single,
+    multiple,
+    sys,
     index : 0,
     isFirst : true,
   });
@@ -114,8 +115,8 @@ function perform()
     {
       let output = input.outputMake
       ({
-        strategy : strategy,
-        isLast : isLast,
+        strategy,
+        isLast,
         isFirst : false
       });
       if( output.isLast )
@@ -374,9 +375,9 @@ function concatenatorFor()
     _.assert
     (
       concatenator === null || concatenator === concatenator2,
-      () => 'Found more than single concatenator\n' +
-            concatenator.qualifiedName + ' for ' + prevPath + '\n' +
-            concatenator2.qualifiedName + ' for ' + inPath + '\n'
+      () => 'Found more than single concatenator\n'
+            + concatenator.qualifiedName + ' for ' + prevPath + '\n'
+            + concatenator2.qualifiedName + ' for ' + inPath + '\n'
     );
     concatenator = concatenator2;
     prevPath = inPath;

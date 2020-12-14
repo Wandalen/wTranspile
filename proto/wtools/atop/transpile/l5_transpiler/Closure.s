@@ -1,4 +1,5 @@
-( function _TranspilerClosure_s_() {
+( function _TranspilerClosure_s_()
+{
 
 'use strict';
 
@@ -67,7 +68,7 @@ function _performAct( stage )
   _.assert( stage instanceof _.trs.Stage );
   _.assert( stage.formed === 1 );
 
-  stage.settings.jsCode = [{ src : stage.input.data }];
+  stage.settings.jsCode = [ { src : stage.input.data } ];
   stage.rawData = Closure( stage.settings );
 
   if( stage.rawData.error )

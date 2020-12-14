@@ -1,4 +1,5 @@
-( function _Multiple_s_() {
+( function _Multiple_s_()
+{
 
 'use strict';
 
@@ -322,10 +323,10 @@ function singleEach( onEach )
 
         let single = _.trs.Single
         ({
-          dataMap : dataMap,
+          dataMap,
           outPath : dstPath,
-          multiple : multiple,
-          sys : sys,
+          multiple,
+          sys,
         });
 
         single.form();
@@ -347,9 +348,9 @@ function singleEach( onEach )
           let single = _.trs.Single
           ({
             dataMap : dataMap2,
-            outPath : outPath,
-            multiple : multiple,
-            sys : sys,
+            outPath,
+            multiple,
+            sys,
           });
 
           single.form();

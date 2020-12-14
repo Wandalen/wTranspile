@@ -1,4 +1,5 @@
-( function _Concatenator_s_() {
+( function _Concatenator_s_()
+{
 
 'use strict';
 

@@ -1,4 +1,5 @@
-( function _Nop_s_() {
+( function _Nop_s_()
+{
 
 'use strict';
 

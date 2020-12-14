@@ -1,4 +1,5 @@
-( function _TranspilationStrategy_test_s_() {
+( function _TranspilationStrategy_test_s_()
+{
 
 'use strict';
 
@@ -43,7 +44,7 @@ function onSuiteBegin()
     let self = this;
     return fileProvider.filesFindRecursive
     ({
-      filePath : filePath,
+      filePath,
       outputFormat : 'relative',
     })
   }
@@ -82,7 +83,7 @@ function singleFileInputTerminal( test )
     let multiple = ts.multiple
     ({
       inPath : __filename,
-      outPath : outPath,
+      outPath,
     });
 
     return multiple.form().perform()
@@ -117,7 +118,7 @@ function singleFileInputTerminal( test )
     let multiple = ts.multiple
     ({
       inPath : __filename,
-      outPath : outPath,
+      outPath,
     });
 
     return multiple.form().perform()
@@ -161,7 +162,7 @@ function singleFileInputDir( test )
   let multiple = ts.multiple
   ({
     inPath : __dirname + '/**',
-    outPath : outPath,
+    outPath,
   });
 
   return multiple.form().perform()
@@ -196,7 +197,7 @@ function singleFileInputDirThrowing( test )
   let multiple = ts.multiple
   ({
     inPath : __dirname + '',
-    outPath : outPath,
+    outPath,
   });
 
   return test.shouldThrowErrorAsync( multiple.form().perform() );
@@ -226,7 +227,7 @@ function singleDst( test )
         [ originalAssetPath + '/**/*.(s|js)' ] : '',
       }
     },
-    outPath : outPath,
+    outPath,
   });
 
   return multiple.form().perform()
@@ -263,12 +264,12 @@ function severalDst( test )
     'File2.s' : `console.log( 'File2.s' );`,
   }
 
-  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+  var fileProvider = _.FileProvider.Extract({ filesTree });
   var inPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
-  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inPath : inPath,
+    inPath,
     outPath : null,
     diagnosing : 1,
   });
@@ -308,13 +309,13 @@ function complexMask( test )
     'File1.s' : `console.log( 'File1.s' );`,
     'File2.s' : `console.log( 'File2.s' );`,
   }
-  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+  var fileProvider = _.FileProvider.Extract({ filesTree });
 
   var inPath = { filePath : { '**.js' : 'All.js', '**.s' : 'All.s' } }
-  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inPath : inPath,
+    inPath,
     outPath : { prefixPath : '/dst' },
     splittingStrategy : 'ManyToOne',
     diagnosing : 1,
@@ -355,7 +356,7 @@ function oneToOne( test )
     'File1.s' : `console.log( './File1.s' );`,
     'File2.s' : `console.log( './File2.s' );`,
 
-    dir :
+    'dir' :
     {
       'File1.js' : `console.log( './dir/File1.js' );`,
       'File2.js' : `console.log( './dir/File2.js' );`,
@@ -365,13 +366,13 @@ function oneToOne( test )
 
   }
 
-  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+  var fileProvider = _.FileProvider.Extract({ filesTree });
 
   var inPath = { filePath : { '/' : null, '**.js' : true } }
-  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inPath : inPath,
+    inPath,
     outPath : { prefixPath : '/dst' },
     splittingStrategy : 'OneToOne',
     transpilingStrategy : [ 'Nop' ],
@@ -419,7 +420,7 @@ function nothingFoundOneToOne( test )
     'File2.js' : `console.log( './File2.js' );`,
     'File1.s' : `console.log( './File1.s' );`,
     'File2.s' : `console.log( './File2.s' );`,
-    dir :
+    'dir' :
     {
       'File1.js' : `console.log( './dir/File1.js' );`,
       'File2.js' : `console.log( './dir/File2.js' );`,
@@ -427,15 +428,15 @@ function nothingFoundOneToOne( test )
       'File2.s' : `console.log( './dir/File2.s' );`,
     }
   }
-  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+  var fileProvider = _.FileProvider.Extract({ filesTree });
 
   var inPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
   var outPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
-  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inPath : inPath,
-    outPath : outPath,
+    inPath,
+    outPath,
     splittingStrategy : 'OneToOne',
     transpilingStrategy : [ 'Nop' ],
   });
@@ -471,7 +472,7 @@ function nothingFoundManyToOne( test )
     'File2.js' : `console.log( './File2.js' );`,
     'File1.s' : `console.log( './File1.s' );`,
     'File2.s' : `console.log( './File2.s' );`,
-    dir :
+    'dir' :
     {
       'File1.js' : `console.log( './dir/File1.js' );`,
       'File2.js' : `console.log( './dir/File2.js' );`,
@@ -479,15 +480,15 @@ function nothingFoundManyToOne( test )
       'File2.s' : `console.log( './dir/File2.s' );`,
     }
   }
-  var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+  var fileProvider = _.FileProvider.Extract({ filesTree });
 
   var inPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
   var outPath = { filePath : { '**.test*' : true, '/' : '/dst' } }
-  var ts = new _.trs.System({ fileProvider : fileProvider }).form();
+  var ts = new _.trs.System({ fileProvider }).form();
   var multiple = ts.multiple
   ({
-    inPath : inPath,
-    outPath : outPath,
+    inPath,
+    outPath,
     splittingStrategy : 'ManyToOne',
     transpilingStrategy : [ 'Nop' ],
   });
@@ -547,7 +548,7 @@ function transpileManyToOne( test )
         },
       }
     }
-    var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+    var fileProvider = _.FileProvider.Extract({ filesTree });
 
     var inPath =
     {
@@ -560,11 +561,11 @@ function transpileManyToOne( test )
       filePath : { '**.test*' : false, '**.test/**' : false, '.' : '.' },
       prefixPath : '/dst/Main.s',
     }
-    var ts = new _.trs.System({ fileProvider : fileProvider }).form();
+    var ts = new _.trs.System({ fileProvider }).form();
     var multiple = ts.multiple
     ({
-      inPath : inPath,
-      outPath : outPath,
+      inPath,
+      outPath,
       totalReporting : 0,
       transpilingStrategy : [ 'Nop' ],
       splittingStrategy : 'ManyToOne',
@@ -630,7 +631,7 @@ function transpileManyToOne( test )
         },
       }
     }
-    var fileProvider = _.FileProvider.Extract({ filesTree : filesTree });
+    var fileProvider = _.FileProvider.Extract({ filesTree });
 
     var inPath =
     {
@@ -643,11 +644,11 @@ function transpileManyToOne( test )
       filePath : { '**.test*' : true, '.' : '.' },
       prefixPath : '/dst/Tests.s',
     }
-    var ts = new _.trs.System({ fileProvider : fileProvider }).form();
+    var ts = new _.trs.System({ fileProvider }).form();
     var multiple = ts.multiple
     ({
-      inPath : inPath,
-      outPath : outPath,
+      inPath,
+      outPath,
       totalReporting : 0,
       transpilingStrategy : [ 'Nop' ],
       splittingStrategy : 'ManyToOne',
@@ -706,7 +707,7 @@ function shell( test )
     execPath : 'node ' + execPath,
     currentPath : routinePath,
     outputCollecting : 1,
-    ready : ready,
+    ready,
   });
 
   /* - */
@@ -765,7 +766,7 @@ function combinedShell( test )
     currentPath : routinePath,
     outputCollecting : 1,
     throwingExitCode : 0,
-    ready : ready,
+    ready,
   });
 
   let shell2 = _.process.starter
@@ -773,7 +774,7 @@ function combinedShell( test )
     currentPath : routinePath,
     outputCollecting : 1,
     throwingExitCode : 0,
-    ready : ready,
+    ready,
   });
 
   /* - */
@@ -788,7 +789,10 @@ function combinedShell( test )
     return null;
   })
 
-  shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
+  var command =
+  `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} `
+  + `splittingStrategy:ManyToOne transpilingStrategy:Nop`;
+  shell({ args : command })
   /* node ../../../transpile/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
@@ -805,7 +809,11 @@ function combinedShell( test )
     test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
     test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../External.s' );` ), 1 );
-    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ), 1 ); /* qqq : update data, please */
+    test.identical
+    (
+      _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ),
+      1
+    ); /* qqq : update data, please */
     test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
@@ -838,8 +846,10 @@ function combinedShell( test )
     qqq xxx : why does it thow error???
     aaa : because test removes routinePath directory few lines above, routinePath is used in shell as currentPath
   */
-
-  shell({ args : `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} splittingStrategy:ManyToOne transpilingStrategy:Nop` })
+  var command =
+  `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} `
+  + `splittingStrategy:ManyToOne transpilingStrategy:Nop`;
+  shell({ args : command })
   /* node ../../../transpile/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
@@ -856,7 +866,11 @@ function combinedShell( test )
     test.identical( _.strCount( read, `console.log( 'external', external );` ), 1 );
     test.identical( _.strCount( read, `console.log( 'main/File2.s' );` ), 1 );
     test.identical( _.strCount( read, `_starter_._sourceInclude( null, _libraryDirPath_, '../External.s' );` ), 1 );
-    test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ), 1 );
+    test.identical
+    (
+      _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ),
+      1
+    );
     test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
@@ -940,7 +954,7 @@ function combinedProgramatic( test )
     execPath : 'node ' + execPath,
     currentPath : routinePath,
     outputCollecting : 1,
-    ready : ready,
+    ready,
   });
 
   /* - */
@@ -958,10 +972,10 @@ function combinedProgramatic( test )
     let multiple = ts.multiple
     ({
 
-      inPath : inPath,
-      outPath : outPath,
-      entryPath : entryPath,
-      externalBeforePath : externalBeforePath,
+      inPath,
+      outPath,
+      entryPath,
+      externalBeforePath,
       totalReporting : 0,
       transpilingStrategy : [ 'Nop' ],
       splittingStrategy : 'ManyToOne',
@@ -1026,7 +1040,7 @@ function beautifing( test )
     let multiple = ts.multiple
     ({
       inPath : __filename,
-      outPath : outPath,
+      outPath,
       transpilingStrategy : [ 'Uglify' ],
       beautifing : 0,
     });
@@ -1053,7 +1067,7 @@ function beautifing( test )
     let multiple = ts.multiple
     ({
       inPath : __filename,
-      outPath : outPath,
+      outPath,
       transpilingStrategy : [ 'Uglify' ],
       beautifing : 1,
     });
@@ -1080,7 +1094,7 @@ function beautifing( test )
     let multiple = ts.multiple
     ({
       inPath : __filename,
-      outPath : outPath,
+      outPath,
       transpilingStrategy : [ 'Uglify' ],
       minification : 9,
       diagnosing : 0,
@@ -1120,7 +1134,7 @@ function severalStrategies( test )
     let multiple = ts.multiple
     ({
       inPath : __filename,
-      outPath : outPath,
+      outPath,
       transpilingStrategy : [ 'Babel', 'Uglify' ],
       onEnd : ( multiple, output ) => ready.take( output )
     });
@@ -1163,7 +1177,7 @@ function strategyProceed( test )
   let multiple = ts.multiple
   ({
     inPath : __filename,
-    outPath : outPath,
+    outPath,
     transpilingStrategy : [ 'Nop' ],
   });
 
@@ -1243,7 +1257,7 @@ function outputMake( test )
   let multiple = ts.multiple
   ({
     inPath : __filename,
-    outPath : outPath,
+    outPath,
   });
 
   multiple.form();
@@ -1315,8 +1329,8 @@ let Self =
   name : 'Tools.top.TranspilationStrategy',
   silencing : 1,
   routineTimeOut : 60000,
-  onSuiteBegin : onSuiteBegin,
-  onSuiteEnd : onSuiteEnd,
+  onSuiteBegin,
+  onSuiteEnd,
 
   context :
   {
