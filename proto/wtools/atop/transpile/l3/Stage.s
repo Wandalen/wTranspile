@@ -1,4 +1,5 @@
-( function _Stage_s_() {
+( function _Stage_s_()
+{
 
 'use strict';
 
@@ -77,7 +78,7 @@ function errorHandle( err )
     code = _.strLinesSelect
     ({
       src : stage.input.data,
-      line : line,
+      line,
       numbering : 1,
     });
   }

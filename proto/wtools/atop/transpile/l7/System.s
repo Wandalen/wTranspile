@@ -1,4 +1,5 @@
-( function _MainBase_s_( ) {
+( function _MainBase_s_( )
+{
 
 'use strict';
 
@@ -110,7 +111,7 @@ function formAssociates()
   {
     if( c === 'Abstract' )
     continue;
-    new _.trs.concatenator[ c ]({ sys : sys }).form();
+    new _.trs.concatenator[ c ]({ sys }).form();
   }
 
   return sys;

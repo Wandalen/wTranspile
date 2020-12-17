@@ -1,4 +1,5 @@
-( function _TranspilerPrepack_s_() {
+( function _TranspilerPrepack_s_()
+{
 
 'use strict';
 
@@ -50,7 +51,7 @@ function _performAct( stage )
   let multiple = stage.multiple;
 
   debugger;
-  stage.rawData = Prepack.prepackSources( [{ fileContents : stage.input.data }], stage.settings );
+  stage.rawData = Prepack.prepackSources( [ { fileContents : stage.input.data } ], stage.settings );
   debugger;
 
   if( stage.rawData.error )

@@ -1,4 +1,5 @@
-( function _MainTop_s_( ) {
+( function _MainTop_s_( )
+{
 
 'use strict';
 
@@ -73,7 +74,7 @@ function exec()
   let appArgs = _.process.input();
   let ca = sys._commandsMake();
 
-  return ca.appArgsPerform({ appArgs : appArgs });
+  return ca.appArgsPerform({ appArgs });
 }
 
 //
@@ -98,7 +99,7 @@ function _commandsMake()
   let ca = _.CommandsAggregator
   ({
     basePath : fileProvider.path.current(),
-    commands : commands,
+    commands,
     commandPrefix : 'node ',
   })
 
@@ -168,7 +169,7 @@ function commandTranspile( e )
 
   let multiple = _.trs.Multiple
   ({
-    sys : sys,
+    sys,
   });
 
   // sys.storageLoad(); // xxx

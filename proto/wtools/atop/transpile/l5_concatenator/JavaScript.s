@@ -1,4 +1,5 @@
-( function _JavaScript_s_() {
+( function _JavaScript_s_()
+{
 
 'use strict';
 
@@ -68,11 +69,11 @@ function _performAct( single )
     result = starter.sourcesJoin
     ({
       outPath : single.outPath,
-      entryPath : entryPath,
-      basePath : basePath,
-      externalBeforePath : externalBeforePath,
-      externalAfterPath : externalAfterPath,
-      filesMap : filesMap,
+      entryPath,
+      basePath,
+      externalBeforePath,
+      externalAfterPath,
+      filesMap,
       removingShellPrologue : self.removingShellPrologue,
       withServer : 0,
     });

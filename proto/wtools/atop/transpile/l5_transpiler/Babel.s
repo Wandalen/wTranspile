@@ -1,4 +1,5 @@
-( function _TranspilerBabel_s_() {
+( function _TranspilerBabel_s_()
+{
 
 'use strict';
 
@@ -41,12 +42,9 @@ function _formAct( stage )
   if( !stage.settings )
   stage.settings = Object.create( null );
   let set = stage.settings;
-  let plugins =
-  [
-    'transform-runtime',
-  ]
+  let plugins = [ 'transform-runtime' ]
 
-  let presets = [ 'es2015-without-strict','stage-0','stage-1','stage-2','stage-3', ];
+  let presets = [ 'es2015-without-strict', 'stage-0', 'stage-1', 'stage-2', 'stage-3' ];
   if( multiple.isServerSide )//qqq Vova: check this field
   presets = [ 'node6-without-strict' ];
   presets = [];
@@ -66,8 +64,8 @@ function _formAct( stage )
     compact : !!multiple.minification,
     minified : !!multiple.minification,
     comments : !multiple.minification || !!multiple.debug,
-    presets : presets,
-    parserOpts : parserOpts,
+    presets,
+    parserOpts,
     // loose : [ 'es6.modules' ],
     // blacklist : [ 'useStrict' ],
     // plugins : [ 'transform-class-properties' ],
@@ -105,7 +103,7 @@ function _performAct( stage )
     debugger;
     stage.settings.sourceType = 'module';
     logger.log( 'failed, trying babel with { sourceType : "module" }' );
-    logger.log( 'settings\n',stage.settings );
+    logger.log( 'settings\n', stage.settings );
     stage.rawData = Babel.transform( stage.input.data, stage.settings );
 
   }
