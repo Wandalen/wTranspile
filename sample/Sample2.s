@@ -10,7 +10,7 @@ _.fileProvider.filesDelete( outPath )
 let multiple = ts.multiple
 ({
   inPath : __filename,
-  outPath : outPath,
+  outPath,
   diagnosing : 5,
   minification : 0,
   optimization : 0,
@@ -18,7 +18,7 @@ let multiple = ts.multiple
 });
 
 return multiple.form().perform()
-.finally( ( err,got ) =>
+.finally( ( err, got ) =>
 {
   if( err )
   _.errLogOnce( err );

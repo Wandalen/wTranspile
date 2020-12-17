@@ -1,4 +1,5 @@
-( function _Text_s_() {
+( function _Text_s_()
+{
 
 'use strict';
 

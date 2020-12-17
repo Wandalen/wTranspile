@@ -1,4 +1,5 @@
-( function _TranspilerUglify_s_() {
+( function _TranspilerUglify_s_()
+{
 
 'use strict';
 
@@ -97,30 +98,30 @@ function _formAct( stage )
 
   /* compress */
 
-/*
-ie8           : false, // ie8 unsafe
-sequences     : true,  // join consecutive statemets with the “comma operator”
-properties    : true,  // optimize property access : a["foo"] → a.foo
-dead_code     : true,  // discard unreachable code
-drop_debugger : true,  // discard "debugger" statements
-drop_console  : true,  // discard "console" statements
-unsafe        : false, // some unsafe optimizations (see below)
-conditionals  : true,  // optimize if-s and conditional expressions
-comparisons   : true,  // optimize comparisons
-evaluate      : true,  // evaluate constant expressions
-booleans      : true,  // optimize boolean expressions
-loops         : true,  // optimize loops
-unused        : true,  // drop unused variables/functions
-hoist_funs    : true,  // hoist function declarations
-hoist_vars    : false, // hoist variable declarations
-if_return     : true,  // optimize if-s followed by return/continue
-join_vars     : true,  // join let declarations
-cascade       : true,  // try to cascade `right` into `left` in sequences
-side_effects  : true,  // drop side-effect-free statements
-warnings      : true,  // warn about potentially dangerous optimizations/code
-global_defs   : {}     // global definitions
+  /*
+  ie8           : false, // ie8 unsafe
+  sequences     : true,  // join consecutive statemets with the “comma operator”
+  properties    : true,  // optimize property access : a["foo"] → a.foo
+  dead_code     : true,  // discard unreachable code
+  drop_debugger : true,  // discard "debugger" statements
+  drop_console  : true,  // discard "console" statements
+  unsafe        : false, // some unsafe optimizations (see below)
+  conditionals  : true,  // optimize if-s and conditional expressions
+  comparisons   : true,  // optimize comparisons
+  evaluate      : true,  // evaluate constant expressions
+  booleans      : true,  // optimize boolean expressions
+  loops         : true,  // optimize loops
+  unused        : true,  // drop unused variables/functions
+  hoist_funs    : true,  // hoist function declarations
+  hoist_vars    : false, // hoist variable declarations
+  if_return     : true,  // optimize if-s followed by return/continue
+  join_vars     : true,  // join let declarations
+  cascade       : true,  // try to cascade `right` into `left` in sequences
+  side_effects  : true,  // drop side-effect-free statements
+  warnings      : true,  // warn about potentially dangerous optimizations/code
+  global_defs   : {}     // global definitions
 
-*/
+  */
 
   let defCompress =
   {
@@ -172,8 +173,10 @@ global_defs   : {}     // global definitions
 
     // if( compress.arrows === undefined ) compress.arrows = !!multiple.optimization;
     if( compress.toplevel === undefined ) compress.toplevel = multiple.optimization > 7;
-    if( compress.drop_debugger === undefined ) compress.drop_debugger = !!multiple.minification && !multiple.diagnosing && !multiple.beautifing;
-    if( compress.drop_console === undefined ) compress.drop_console = !!multiple.minification && !multiple.diagnosing && !multiple.beautifing;
+    if( compress.drop_debugger === undefined )
+    compress.drop_debugger = !!multiple.minification && !multiple.diagnosing && !multiple.beautifing;
+    if( compress.drop_console === undefined )
+    compress.drop_console = !!multiple.minification && !multiple.diagnosing && !multiple.beautifing;
 
     if( compress.global_defs === undefined ) compress.global_defs =
     {
@@ -202,7 +205,7 @@ global_defs   : {}     // global definitions
     beautify : multiple.beautifing,
     comments : multiple.beautifing,
     indent_level : multiple.beautifing ? 2 : undefined,
-    keep_quoted_props : multiple.beautifing ? true : false,
+    keep_quoted_props : !!multiple.beautifing,
     max_line_len : multiple.beautifing ? 160 : 65535,
     source_map : null,
     // ecma : 6, /* problematic */
