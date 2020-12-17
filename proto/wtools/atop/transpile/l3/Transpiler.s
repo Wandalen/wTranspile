@@ -1,4 +1,5 @@
-( function _Transpiler_s_() {
+( function _Transpiler_s_()
+{
 
 'use strict';
 
@@ -192,18 +193,18 @@ let Restricts =
 let Forbids =
 {
 
-  usingBabel : 'usingBabel',
-  settingsOfBabel : 'settingsOfBabel',
-  usingButternut : 'usingButternut',
-  settingsOfButternut : 'settingsOfButternut',
-  usingBabili : 'usingBabili',
-  settingsOfBabili : 'settingsOfBabili',
-  usingPrepack : 'usingPrepack',
-  settingsOfPrepack : 'settingsOfPrepack',
-  usingClosure : 'usingClosure',
-  settingsOfClosure : 'settingsOfClosure',
-  usingUglify : 'usingUglify',
-  settingsOfUglify : 'settingsOfUglify',
+  // usingBabel : 'usingBabel',
+  // settingsOfBabel : 'settingsOfBabel',
+  // usingButternut : 'usingButternut',
+  // settingsOfButternut : 'settingsOfButternut',
+  // usingBabili : 'usingBabili',
+  // settingsOfBabili : 'settingsOfBabili',
+  // usingPrepack : 'usingPrepack',
+  // settingsOfPrepack : 'settingsOfPrepack',
+  // usingClosure : 'usingClosure',
+  // settingsOfClosure : 'settingsOfClosure',
+  // usingUglify : 'usingUglify',
+  // settingsOfUglify : 'settingsOfUglify',
   mapFilePath : 'mapFilePath',
   writingTempFiles : 'writingTempFiles',
   off : 'off',
