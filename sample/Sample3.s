@@ -17,6 +17,7 @@ let multiple = ts.multiple
 return multiple.form().perform()
 .finally( ( err, got ) =>
 {
+  _.fileProvider.filesDelete( outPath );
   if( err )
   _.errLogOnce( err );
   return got;
