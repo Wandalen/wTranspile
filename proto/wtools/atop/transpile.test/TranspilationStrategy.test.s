@@ -1052,7 +1052,7 @@ function beautifing( test )
     {
       let read = _.fileProvider.fileRead( outPath );
       let lines = _.strLinesCount( read );
-      test.identical( lines, 2 );
+      test.identical( lines, 3 );
       return null;
     })
   })
