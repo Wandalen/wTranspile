@@ -15,7 +15,7 @@ Aggregator of strategies to transpile JS code. It provides unified programmatic 
 git clone https://github.com/Wandalen/wTranspile
 cd wTranspile
 npm install
-node sample/Sample.s
+node sample/trivial/Sample.s
 ```
 
 ## To add to your project
@@ -26,7 +26,7 @@ npm add 'wtranspile@alpha'
 
 ## Try out
 ```
-npm -g install wtranspile
+npm -g install wtranspile@alpha
 ts .
 ts .config.define debug:0 minification:0 optimization:9
 ts .config.read
@@ -37,7 +37,7 @@ ts .config.read
 npm -g install wtranspile
 ts .config.define debug:0 minification:7 optimization:9
 ts .config.define strategies:[ Babel, Uglify, Babel ]
-ts .transpile inputPath:sample/Sample.s outputPath:temp.tmp/Sample.s
+ts .transpile inputPath:sample/trivial/Sample.s outputPath:temp.tmp/Sample.s
 ts .config.define verbosity:3
 ts .transpile inputPath:sample/Sample2.js outputPath:temp.tmp/Sample2.js debug:1
 ```
