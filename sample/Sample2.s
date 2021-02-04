@@ -3,7 +3,7 @@ let _ = require( 'wTools' );
 require( 'wtranspile' );
 let ts = new _.trs.System().form();
 
-let outPath = _.path.join( __dirname, '../temp.tmp/Sample2.s' );
+let outPath = _.path.join( __dirname, './temp.tmp/Sample2.s' );
 
 _.fileProvider.filesDelete( outPath )
 
@@ -20,7 +20,7 @@ let multiple = ts.multiple
 return multiple.form().perform()
 .finally( ( err, got ) =>
 {
-  _.fileProvider.filesDelete( outPath );
+  _.fileProvider.filesDelete( _.path.dir( outPath ) );
   if( err )
   _.errLogOnce( err );
   return got;
