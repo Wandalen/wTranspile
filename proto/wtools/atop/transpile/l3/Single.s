@@ -187,19 +187,32 @@ function perform()
     if( err )
     _.arrayAppendOnce( single.errors, err );
 
-    if( !single.errors.length )
+    if( single.errors.length )
+    {
+      if( multiple.verbosity >= 1 )
+      logger.log( ' ! Failed to transpile ' + single.outPath );
+    }
+    else
     {
       if( multiple.verbosity >= 3 )
       logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outPath, 'path' ) + ' in', _.time.spent( time ) );
       if( multiple.verbosity >= 4 )
       logger.log( ' # ' + single.sizeReportLast );
     }
-    else
-    {
-      debugger;
-      if( multiple.verbosity >= 1 )
-      logger.log( ' ! Failed to transpile ' + single.outPath );
-    }
+
+    // if( !single.errors.length )
+    // {
+    //   if( multiple.verbosity >= 3 )
+    //   logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outPath, 'path' ) + ' in', _.time.spent( time ) );
+    //   if( multiple.verbosity >= 4 )
+    //   logger.log( ' # ' + single.sizeReportLast );
+    // }
+    // else
+    // {
+    //   debugger;
+    //   if( multiple.verbosity >= 1 )
+    //   logger.log( ' ! Failed to transpile ' + single.outPath );
+    // }
 
     return single;
   });
