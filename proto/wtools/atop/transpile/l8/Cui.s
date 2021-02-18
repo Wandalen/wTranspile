@@ -91,9 +91,9 @@ function _commandsMake()
 
   let commands =
   {
-    'help' :              { e : _.routineJoin( sys, sys.commandHelp ),                h : 'Get help' },
-    'strategies list' :   { e : _.routineJoin( sys, sys.commandTranspilersList ),      h : 'List available strategies of transpilation' },
-    'transpile' :         { e : _.routineJoin( sys, sys.commandTranspile ),                h : 'Transpile inPath file and store result at outPath' },
+    'help' :              { e : _.routineJoin( sys, sys.commandHelp ), h : 'Get help' },
+    'strategies list' :   { e : _.routineJoin( sys, sys.commandTranspilersList ), h : 'List available strategies of transpilation' },
+    'transpile' :         { e : _.routineJoin( sys, sys.commandTranspile ), h : 'Transpile inPath file and store result at outPath' },
   }
 
   let ca = _.CommandsAggregator
