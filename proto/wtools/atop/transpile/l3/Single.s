@@ -163,7 +163,7 @@ function perform()
     multiple.fileProvider.fileWrite
     ({
       filePath : single.sourceMapPath,
-      data : _.strIs( single.output.sourceMap ) ? single.output.sourceMap : _.toJstruct( single.output.sourceMap ),
+      data : _.strIs( single.output.sourceMap ) ? single.output.sourceMap : _.entity.exportJstruct( single.output.sourceMap ),
       makingDirectory : 1,
       purging : 1,
     });

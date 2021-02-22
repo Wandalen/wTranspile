@@ -85,7 +85,7 @@ function perform( single )
 
   let result = self._performAct( single );
 
-  _.assert( _.strIs( result ), () => 'concatenator should return string, but got ' + _.strType( result ) );
+  _.assert( _.strIs( result ), () => 'concatenator should return string, but got ' + _.entity.strType( result ) );
 
   return result;
 }

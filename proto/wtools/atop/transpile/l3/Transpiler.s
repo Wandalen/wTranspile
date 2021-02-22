@@ -90,17 +90,17 @@ function perform( stage )
   if( multiple.verbosity >= 5 )
   {
     let fields = _.mapOnly( multiple, Fields );
-    logger.log( _.toStr( fields, { levels : 2, multiline : 1, wrap : 0 } ) );
+    logger.log( _.entity.exportString( fields, { levels : 2, multiline : 1, wrap : 0 } ) );
   }
 
   if( multiple.verbosity >= 5 )
   {
     logger.log( 'Settings' );
-    logger.log( _.toStr( stage.settings, { levels : multiple.verbosity >= 6 ? 2 : 1, wrap : 0, multiline : 1 } ) );
+    logger.log( _.entity.exportString( stage.settings, { levels : multiple.verbosity >= 6 ? 2 : 1, wrap : 0, multiline : 1 } ) );
   }
 
   // if( multiple.verbosity >= 5 )
-  // logger.log( 'inputFilesPaths :', _.toStr( multiple.inputFilesPaths, { levels : 2, wrap : 0, multiline : 1 } ) );
+  // logger.log( 'inputFilesPaths :', _.entity.exportString( multiple.inputFilesPaths, { levels : 2, wrap : 0, multiline : 1 } ) );
 
   /* */
 
