@@ -1,6 +1,6 @@
 {
   "name": "wtranspile",
-  "version": "0.3.231",
+  "version": "0.3.232",
   "enabled": 1,
   "description": "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
   "author": "Kostiantyn Wandalen <wanalen@01.school>",
@@ -42,20 +42,20 @@
     "babel-preset-node6-without-strict": "=0.0.1",
     "@babel/plugin-transform-runtime": "7.11.5",
     "@babel/plugin-proposal-class-properties": "7.10.4",
-    "wTools": "alpha",
-    "wCopyable": "alpha",
-    "wpathbasic": "alpha",
-    "wverbal": "alpha",
-    "wFiles": "alpha",
-    "wstarter": "alpha",
-    "wcommandsaggregator": "alpha",
-    "wcommandsconfig": "alpha",
-    "wstatestorage": "alpha",
-    "wstatesession": "alpha"
+    "wTools": "gamma",
+    "wCopyable": "gamma",
+    "wpathbasic": "gamma",
+    "wverbal": "gamma",
+    "wFiles": "gamma",
+    "wstarter": "gamma",
+    "wcommandsaggregator": "gamma",
+    "wcommandsconfig": "gamma",
+    "wstatestorage": "gamma",
+    "wstatesession": "gamma"
   },
   "devDependencies": {
     "eslint": "7.1.0",
-    "wTesting": "alpha",
+    "wTesting": "gamma",
     "wtranspile": "file:."
   },
   "keywords": [
