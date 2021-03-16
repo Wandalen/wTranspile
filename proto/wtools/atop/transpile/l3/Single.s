@@ -143,7 +143,6 @@ function perform()
 
     if( multiple.fileProvider.isDir( outPath ) )
     {
-      debugger;
       throw _.err( outPath, 'is directory, not safe to purge it!' );
     }
 
@@ -157,8 +156,6 @@ function perform()
 
     /* */
 
-    if( multiple.writingSourceMap && single.sourceMapPath && single.output.sourceMap )
-    debugger;
     if( multiple.writingSourceMap && single.sourceMapPath && single.output.sourceMap )
     multiple.fileProvider.fileWrite
     ({

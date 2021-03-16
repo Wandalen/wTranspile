@@ -123,8 +123,6 @@ function commandHelp( e )
 
   ca._commandHelp( e );
 
-  if( !e.commandName )
-  debugger;
   // if( !e.commandName )
   // logger.log( 'Use ' + logger.colorFormat( '"sys .help"', 'code' ) + ' to get help' );
 
@@ -139,7 +137,6 @@ function commandTranspilersList( e )
   let fileProvider = sys.fileProvider;
   let logger = sys.logger;
 
-  debugger;
   logger.log( 'Available strategies' );
   logger.up();
   for( let s in _.trs.transpiler )
@@ -300,7 +297,6 @@ function storageIs( storage )
 function storageDefaultGet()
 {
   let multiple = this;
-  debugger;
   return { storage : Object.create( null ) };
 }
 

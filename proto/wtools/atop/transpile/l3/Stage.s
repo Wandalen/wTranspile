@@ -66,8 +66,6 @@ function errorHandle( err )
   let stage = this;
   let result = null;
 
-  debugger;
-
   let code = '';
   let line = err.line;
   if( err.location && line === undefined )

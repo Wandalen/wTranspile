@@ -50,9 +50,7 @@ function _performAct( stage )
   let single = stage.single;
   let multiple = stage.multiple;
 
-  debugger;
   stage.rawData = Prepack.prepackSources( [ { fileContents : stage.input.data } ], stage.settings );
-  debugger;
 
   if( stage.rawData.error )
   throw stage.errorHandle( stage.rawData.error );

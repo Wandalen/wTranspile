@@ -100,7 +100,6 @@ function _performAct( stage )
   catch( err )
   {
 
-    debugger;
     stage.settings.sourceType = 'module';
     logger.log( 'failed, trying babel with { sourceType : "module" }' );
     logger.log( 'settings\n', stage.settings );
