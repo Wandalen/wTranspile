@@ -44,7 +44,6 @@ function _formAct( stage )
   stage.settings = Object.create( null );
   let set = stage.settings;
 
-  // debugger;
   if( set.sourceMap === undefined )
   {
     _.assert( _.strIs( single.outPath ) );
@@ -190,7 +189,6 @@ function _formAct( stage )
     // if( compress.top_retain )
     // compress.top_retain = function( a, b, c )
     // {
-    //   debugger;
     //   console.log( a, b, c )
     // }
 

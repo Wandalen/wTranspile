@@ -290,7 +290,6 @@ function singleEach( onEach )
   try
   {
 
-    // debugger;
     let groups = fileProvider.filesFindGroups
     ({
       src : multiple.inPath,
@@ -299,7 +298,6 @@ function singleEach( onEach )
       // recursive : 2,
       outputFormat : 'absolute',
     });
-    // debugger;
 
     for( let dstPath in groups.filesGrouped )
     {

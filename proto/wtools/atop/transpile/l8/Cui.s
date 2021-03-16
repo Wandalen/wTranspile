@@ -103,8 +103,6 @@ function _commandsMake()
     commandPrefix : 'node ',
   })
 
-  // debugger;
-
   sys._commandsConfigAdd( ca );
 
   ca.form();

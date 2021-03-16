@@ -206,7 +206,6 @@ function perform()
     // }
     // else
     // {
-    //   debugger;
     //   if( multiple.verbosity >= 1 )
     //   logger.log( ' ! Failed to transpile ' + single.outPath );
     // }
