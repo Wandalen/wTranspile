@@ -9,8 +9,8 @@ if( typeof module !== 'undefined' )
 
   _.include( 'wCommandsAggregator' );
   _.include( 'wCommandsConfig' );
-  _.include( 'wStateStorage' );
-  _.include( 'wStateSession' );
+  _.include( 'wStateStorage' ); /* xxx qqq : try to remove */
+  _.include( 'wStateSession' ); /* xxx qqq : try to remove */
 
   require( '../l8/Cui.s' );
 
