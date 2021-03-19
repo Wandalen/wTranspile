@@ -110,7 +110,6 @@ function perform( stage )
   }
   catch( err )
   {
-    debugger;
     let err2 = _.err( 'Error executing ', self.Self.shortName, '\n', err );
     return _.Consequence().error( err2 );
   }
@@ -140,7 +139,6 @@ function perform( stage )
   })
   .catch( function( err )
   {
-    debugger;
     err = _.err( err )
     if( !stage.error )
     stage.error = err;
