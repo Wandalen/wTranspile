@@ -5,9 +5,9 @@
 
 //
 
-let _ = _global_.wTools;
-let Parent = _.trs.concatenator.Abstract;
-let Self = wTsConcatenatorText;
+const _ = _global_.wTools;
+const Parent = _.trs.concatenator.Abstract;
+const Self = wTsConcatenatorText;
 function wTsConcatenatorText( o )
 {
   return _.workpiece.construct( Self, this, arguments );

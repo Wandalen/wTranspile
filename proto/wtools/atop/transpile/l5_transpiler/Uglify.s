@@ -7,9 +7,9 @@ let Uglify = require( 'uglify-es' );
 
 //
 
-let _ = _global_.wTools;
-let Parent = _.trs.transpiler.Abstract;
-let Self = wTsTranspilerUglify;
+const _ = _global_.wTools;
+const Parent = _.trs.transpiler.Abstract;
+const Self = wTsTranspilerUglify;
 function wTsTranspilerUglify( o )
 {
   return _.workpiece.construct( Self, this, arguments );

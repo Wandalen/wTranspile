@@ -7,9 +7,9 @@ let Prepack = require( 'prepack' );
 
 //
 
-let _ = _global_.wTools;
-let Parent = _.trs.transpiler.Abstract;
-let Self = wTsTranspilerPrepack;
+const _ = _global_.wTools;
+const Parent = _.trs.transpiler.Abstract;
+const Self = wTsTranspilerPrepack;
 function wTsTranspilerPrepack( o )
 {
   return _.workpiece.construct( Self, this, arguments );

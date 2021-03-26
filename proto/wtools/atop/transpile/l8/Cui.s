@@ -5,9 +5,9 @@
 
 /* qqq : normalize file. adjust definition of commands. ask */
 
-let _ = _global_.wTools;
-let Parent = _.trs.System; /* qqq : remove inheritance. ask */
-let Self = wTranspileCui;
+const _ = _global_.wTools;
+const Parent = _.trs.System; /* qqq : remove inheritance. ask */
+const Self = wTranspileCui;
 function wTranspileCui( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -158,7 +158,7 @@ function commandTranspile( e )
 
   e.propertiesMap.outPath = e.propertiesMap.outPath || path.current();
 
-  _.sureMapHasOnly( e.propertiesMap, commandTranspile.commandProperties );
+  _.map.sureHasOnly( e.propertiesMap, commandTranspile.commandProperties );
   _.sureBriefly( _.strIs( e.propertiesMap.inPath ), 'Expects path to file to transpile {-inPath-}' );
   _.sureBriefly( _.strIs( e.propertiesMap.outPath ), 'Expects path to file to save transpiled {-outPath-}' );
 

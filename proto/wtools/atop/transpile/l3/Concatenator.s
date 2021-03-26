@@ -7,9 +7,9 @@ let Zlib;
 
 //
 
-let _ = _global_.wTools;
-let Parent = null;
-let Self = wTsConcatenatorAbstract;
+const _ = _global_.wTools;
+const Parent = null;
+const Self = wTsConcatenatorAbstract;
 function wTsConcatenatorAbstract( o )
 {
   return _.workpiece.construct( Self, this, arguments );

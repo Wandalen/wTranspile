@@ -5,9 +5,9 @@
 
 //
 
-let _ = _global_.wTools;
-let Parent = null;
-let Self = wTsTranspilerAbstract;
+const _ = _global_.wTools;
+const Parent = null;
+const Self = wTsTranspilerAbstract;
 function wTsTranspilerAbstract( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -89,7 +89,7 @@ function perform( stage )
 
   if( multiple.verbosity >= 5 )
   {
-    let fields = _.mapOnly( multiple, Fields );
+    let fields = _.mapOnly_( null, multiple, Fields );
     logger.log( _.entity.exportString( fields, { levels : 2, multiline : 1, wrap : 0 } ) );
   }
 

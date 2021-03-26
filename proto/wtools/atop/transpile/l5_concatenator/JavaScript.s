@@ -5,9 +5,9 @@
 
 //
 
-let _ = _global_.wTools;
-let Parent = _.trs.concatenator.Abstract;
-let Self = wTsConcatenatorJavaScript;
+const _ = _global_.wTools;
+const Parent = _.trs.concatenator.Abstract;
+const Self = wTsConcatenatorJavaScript;
 function wTsConcatenatorJavaScript( o )
 {
   return _.workpiece.construct( Self, this, arguments );
@@ -66,6 +66,7 @@ function _performAct( single )
   else
   {
 
+    debugger;
     result = starter.sourcesJoin
     ({
       outPath : single.outPath,

@@ -3,8 +3,8 @@
 
 'use strict';
 
-let _ = _global_.wTools;
-let Self = _.trs = _.trs || Object.create( null );
+const _ = _global_.wTools;
+const Self = _.trs = _.trs || Object.create( null );
 
 _.trs.transpiler = _.trs.transpiler || Object.create( null );
 _.trs.concatenator = _.trs.concatenator || Object.create( null );

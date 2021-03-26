@@ -7,9 +7,9 @@ let Zlib;
 
 //
 
-let _ = _global_.wTools;
-let Parent = null;
-let Self = wTsMultiple;
+const _ = _global_.wTools;
+const Parent = null;
+const Self = wTsMultiple;
 function wTsMultiple( o )
 {
   return _.workpiece.construct( Self, this, arguments );

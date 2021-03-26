@@ -14,8 +14,8 @@ if( typeof module !== 'undefined' )
 
 }
 
-let _global = _global_;
-let _ = _global_.wTools;
+const _global = _global_;
+const _ = _global_.wTools;
 
 /* qqq : normalize. use assetFor here please */
 
@@ -1323,7 +1323,7 @@ function outputMake( test )
 // define
 // --
 
-let Self =
+const Proto =
 {
 
   name : 'Tools.top.TranspilationStrategy',
@@ -1376,7 +1376,7 @@ let Self =
 
 /* qqq : use assetFor here */
 
-Self = wTestSuite( Self );
+const Self = wTestSuite( Proto );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
