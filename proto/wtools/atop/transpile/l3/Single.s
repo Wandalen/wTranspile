@@ -43,8 +43,8 @@ function form()
   let single = this;
   let multiple = single.multiple;
   let sys = single.sys;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
 
   _.assert( multiple instanceof _.trs.Multiple );
   _.assert( single.input === null );
@@ -87,8 +87,8 @@ function perform()
   let single = this;
   let multiple = single.multiple;
   let sys = single.sys;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
   let con = new _.Consequence().take( null );
   let time = _.time.now();
   let logger = multiple.logger;
@@ -223,8 +223,8 @@ function strategyProceed( stage )
   let single = this;
   let multiple = single.multiple;
   let sys = single.sys;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
   let result = _.Consequence().take( null );
 
   _.assert( !!stage.strategy );
@@ -264,8 +264,8 @@ function sizeReport( o )
   let multiple = single.multiple;
   let sys = multiple.sys;
   let logger = multiple.logger;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
   let con = _.Consequence();
 
   if( !_.objectIs( o ) )
@@ -315,8 +315,8 @@ function tempPathFor( name )
   let single = this;
   let multiple = single.multiple;
   let sys = single.sys;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
 
   let result = path.join( multiple.tempPath, path.joinNames( single.name, name ) );
 
@@ -329,8 +329,8 @@ function tempWrite( o )
 {
   let single = this;
   let multiple = single.multiple;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
 
   if( !multiple.writingTempFiles || !multiple.tempPath )
   return;
@@ -366,8 +366,8 @@ function concatenatorFor()
   let single = this;
   let sys = single.sys;
   let multiple = single.multiple;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
   let concatenator = null;
 
   _.assert( arguments.length === 0, 'Expects no arguments' );
@@ -404,8 +404,8 @@ function concatenate()
   let single = this;
   let sys = single.sys;
   let multiple = single.multiple;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
 
   _.assert( arguments.length === 0, 'Expects no arguments' );
 

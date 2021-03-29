@@ -31,8 +31,8 @@ function _formAct( stage )
   let sys = stage.sys;
   let single = stage.single;
   let multiple = stage.multiple;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
 
   // let stage = self.stage;
 
@@ -223,8 +223,8 @@ function _performAct( stage )
   let sys = stage.sys;
   let single = stage.single;
   let multiple = stage.multiple;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
 
   _.assert( arguments.length === 1 );
   _.assert( stage instanceof _.trs.Stage );

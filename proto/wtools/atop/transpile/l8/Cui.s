@@ -70,7 +70,7 @@ function exec()
   _.assert( arguments.length === 0, 'Expects no arguments' );
 
   let logger = sys.logger;
-  let fileProvider = sys.fileProvider;
+  const fileProvider = sys.fileProvider;
   let appArgs = _.process.input();
   let ca = sys._commandsMake();
 
@@ -83,7 +83,7 @@ function _commandsMake()
 {
   let sys = this;
   let logger = sys.logger;
-  let fileProvider = sys.fileProvider;
+  const fileProvider = sys.fileProvider;
   let appArgs = _.process.input();
 
   _.assert( _.instanceIs( sys ) );
@@ -116,7 +116,7 @@ function commandHelp( e )
 {
   let sys = this;
   let ca = e.ca;
-  let fileProvider = sys.fileProvider;
+  const fileProvider = sys.fileProvider;
   let logger = sys.logger;
 
   ca._commandHelp( e );
@@ -132,7 +132,7 @@ function commandHelp( e )
 function commandTranspilersList( e )
 {
   let sys = this;
-  let fileProvider = sys.fileProvider;
+  const fileProvider = sys.fileProvider;
   let logger = sys.logger;
 
   logger.log( 'Available strategies' );
@@ -152,8 +152,8 @@ function commandTranspilersList( e )
 function commandTranspile( e )
 {
   let sys = this;
-  let fileProvider = sys.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = sys.fileProvider;
+  const path = fileProvider.path;
   let logger = sys.logger;
 
   e.propertiesMap.outPath = e.propertiesMap.outPath || path.current();

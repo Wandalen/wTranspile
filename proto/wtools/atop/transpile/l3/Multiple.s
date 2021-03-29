@@ -86,8 +86,8 @@ function form()
 
   multiple.formed = 1;
 
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
 
   /* path temp */
 
@@ -278,8 +278,8 @@ function singleEach( onEach )
   let multiple = this;
   let sys = multiple.sys;
   let logger = multiple.logger;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
 
   _.assert( arguments.length === 1 );
   _.assert( multiple.inPath.formed === 3 );

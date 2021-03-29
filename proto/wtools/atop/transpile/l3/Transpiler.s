@@ -44,8 +44,8 @@ function perform( stage )
   let sys = stage.sys;
   let single = stage.single;
   let multiple = stage.multiple;
-  let fileProvider = multiple.fileProvider;
-  let path = fileProvider.path;
+  const fileProvider = multiple.fileProvider;
+  const path = fileProvider.path;
   let logger = multiple.logger;
   let time = _.time.now();
   let result;
