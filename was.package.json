@@ -5,7 +5,7 @@
   "description" : "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
   "author" : "Kostiantyn Wandalen <wanalen@01.school>",
   "license" : "MIT",
-  "main" : "proto/wtools/atop/transpile/entry/Include.s",
+  "main" : "proto/node_modules/wtranspile",
   "bin" : { "trs" : "proto/wtools/atop/transpile/entry/Exec" },
   "files" : [ "proto/wtools/atop/transpile", "proto/wtools/Tools.s", "out", "proto/node_modules" ],
   "scripts" :
