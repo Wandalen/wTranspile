@@ -149,8 +149,8 @@ path:
       raw: compiled
       content: prime
   npm.proto.entry:
-    - /pro/module/wTranspile/proto/wtools/atop/transpile/entry/Include.s
-    - /pro/module/wTranspile/proto/node_modules/wtranspile
+    - proto/wtools/atop/transpile/entry/Include.s
+    - proto/node_modules/wtranspile
 reflector:
   reflect.proto:
     inherit: predefined.*
