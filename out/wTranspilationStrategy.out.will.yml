@@ -176,7 +176,7 @@ module:
         path:
           - ../proto
           - ../proto/wtools
-          - ../proto/wtools/Tools.s
+          - ../proto/node_modules/Tools
           - ../proto/wtools/abase
           - ../proto/wtools/amid
           - ../proto/wtools/atop
