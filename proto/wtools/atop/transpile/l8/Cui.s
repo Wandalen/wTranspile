@@ -70,11 +70,12 @@ function exec()
   _.assert( arguments.length === 0, 'Expects no arguments' );
 
   let logger = sys.logger;
-  const fileProvider = sys.fileProvider;
+  let fileProvider = sys.fileProvider;
   let appArgs = _.process.input();
-  let ca = sys._commandsMake();
+  let aggregator = sys._commandsMake();
 
-  return ca.appArgsPerform({ appArgs });
+  return aggregator.programPerform({ program : appArgs.original });
+  // return aggregator.appArgsPerform({ appArgs });
 }
 
 //
@@ -83,7 +84,7 @@ function _commandsMake()
 {
   let sys = this;
   let logger = sys.logger;
-  const fileProvider = sys.fileProvider;
+  let fileProvider = sys.fileProvider;
   let appArgs = _.process.input();
 
   _.assert( _.instanceIs( sys ) );
@@ -91,23 +92,23 @@ function _commandsMake()
 
   let commands =
   {
-    'help' :              { e : _.routineJoin( sys, sys.commandHelp ), h : 'Get help' },
-    'strategies list' :   { e : _.routineJoin( sys, sys.commandTranspilersList ), h : 'List available strategies of transpilation' },
-    'transpile' :         { e : _.routineJoin( sys, sys.commandTranspile ), h : 'Transpile inPath file and store result at outPath' },
+    'help' :              { ro : _.routineJoin( sys, sys.commandHelp ), h : 'Get help' },
+    'strategies list' :   { ro : _.routineJoin( sys, sys.commandTranspilersList ), h : 'List available strategies of transpilation' },
+    'transpile' :         { ro : _.routineJoin( sys, sys.commandTranspile ), h : 'Transpile inPath file and store result at outPath' },
   }
 
-  let ca = _.CommandsAggregator
+  let aggregator = _.CommandsAggregator
   ({
     basePath : fileProvider.path.current(),
     commands,
     commandPrefix : 'node ',
   })
 
-  sys._commandsConfigAdd( ca );
+  sys._commandsConfigAdd( aggregator );
 
-  ca.form();
+  aggregator.form();
 
-  return ca;
+  return aggregator;
 }
 
 //
@@ -115,14 +116,11 @@ function _commandsMake()
 function commandHelp( e )
 {
   let sys = this;
-  let ca = e.ca;
-  const fileProvider = sys.fileProvider;
+  let aggregator = e.aggregator;
+  let fileProvider = sys.fileProvider;
   let logger = sys.logger;
 
-  ca._commandHelp( e );
-
-  // if( !e.commandName )
-  // logger.log( 'Use ' + logger.colorFormat( '"sys .help"', 'code' ) + ' to get help' );
+  aggregator._commandHelp( e );
 
   return sys;
 }
@@ -132,7 +130,7 @@ function commandHelp( e )
 function commandTranspilersList( e )
 {
   let sys = this;
-  const fileProvider = sys.fileProvider;
+  let fileProvider = sys.fileProvider;
   let logger = sys.logger;
 
   logger.log( 'Available strategies' );
@@ -152,13 +150,13 @@ function commandTranspilersList( e )
 function commandTranspile( e )
 {
   let sys = this;
-  const fileProvider = sys.fileProvider;
+  let fileProvider = sys.fileProvider;
   const path = fileProvider.path;
   let logger = sys.logger;
 
   e.propertiesMap.outPath = e.propertiesMap.outPath || path.current();
 
-  _.map.sureHasOnly( e.propertiesMap, commandTranspile.commandProperties );
+  _.map.sureHasOnly( e.propertiesMap, commandTranspile.command.properties );
   _.sureBriefly( _.strIs( e.propertiesMap.inPath ), 'Expects path to file to transpile {-inPath-}' );
   _.sureBriefly( _.strIs( e.propertiesMap.outPath ), 'Expects path to file to save transpiled {-outPath-}' );
 
@@ -275,7 +273,8 @@ function commandTranspile( e )
 
 }
 
-commandTranspile.commandProperties = ConfigProperties
+var command = commandTranspile.command = Object.create( null );
+command.properties = ConfigProperties
 
 //
 
