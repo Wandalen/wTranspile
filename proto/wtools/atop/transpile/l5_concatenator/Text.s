@@ -16,7 +16,7 @@ function wTsConcatenatorText( o )
 Self.shortName = 'Text';
 
 // --
-// routines
+// implementation
 // --
 
 function init()
@@ -41,7 +41,7 @@ function _performAct( single )
 
   /* */
 
-  result = _.mapVals( files ).join( '\n' );
+  result = _.props.vals( files ).join( '\n' );
 
   return result;
 }

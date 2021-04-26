@@ -814,7 +814,7 @@ function combinedShell( test )
       _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ),
       1
     ); /* qqq : update data, please */
-    test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude( ` ), 2 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
     return null;
@@ -871,7 +871,7 @@ function combinedShell( test )
       _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ),
       1
     );
-    test.identical( _.strCount( read, `_starter_._sourceInclude(` ), 2 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude( ` ), 2 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
     return null;
@@ -1150,8 +1150,8 @@ function severalStrategies( test )
       test.identical( stage1.index, 1 );
       test.true( stage2.strategy instanceof _.trs.transpiler.Uglify );
       test.true( stage1.strategy instanceof _.trs.transpiler.Babel );
-      test.true( _.mapIsPopulated( stage2.settings ) )
-      test.true( _.mapIsPopulated( stage1.settings ) );
+      test.true( _.map.isPopulated( stage2.settings ) )
+      test.true( _.map.isPopulated( stage1.settings ) );
       test.notIdentical( stage2.settings, stage1.settings );
       return null;
     })

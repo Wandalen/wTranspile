@@ -79,7 +79,7 @@ function _formAct( stage )
   }
 
   let mangle = set.mangle = set.mangle || Object.create( null );
-  _.mapSupplement( mangle, defMangle );
+  _.props.supplement( mangle, defMangle );
 
   set.mangle.toplevel = multiple.minification >= 8;
 
@@ -184,7 +184,7 @@ function _formAct( stage )
       'Config.release' : !multiple.diagnosing,
     }
 
-    _.mapSupplement( compress, defCompress );
+    _.props.supplement( compress, defCompress );
 
     // if( compress.top_retain )
     // compress.top_retain = function( a, b, c )
@@ -209,7 +209,7 @@ function _formAct( stage )
     // ecma : 6, /* problematic */
   }
 
-  _.mapSupplement( output, defOutput );
+  _.props.supplement( output, defOutput );
 
   stage.formed = 1;
   return stage;

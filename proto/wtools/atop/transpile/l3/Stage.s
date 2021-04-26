@@ -54,7 +54,7 @@ function outputMake( o )
   stage.output.settings = null;
 
   if( o )
-  _.mapExtend( stage.output, o )
+  _.props.extend( stage.output, o )
 
   return stage.output;
 }

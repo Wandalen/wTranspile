@@ -99,7 +99,7 @@ function perform()
   _.assert( arguments.length === 0, 'Expects no arguments' );
 
   multiple.dstCounter += 1;
-  multiple.srcCounter += _.mapKeys( single.dataMap ).length;
+  multiple.srcCounter += _.props.keys( single.dataMap ).length;
 
   con.thenKeep( ( arg ) =>
   {
@@ -192,7 +192,7 @@ function perform()
     else
     {
       if( multiple.verbosity >= 3 )
-      logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outPath, 'path' ) + ' in', _.time.spent( time ) );
+      logger.log( ' # Transpiled ' + _.props.keys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outPath, 'path' ) + ' in', _.time.spent( time ) );
       if( multiple.verbosity >= 4 )
       logger.log( ' # ' + single.sizeReportLast );
     }
@@ -200,7 +200,7 @@ function perform()
     // if( !single.errors.length )
     // {
     //   if( multiple.verbosity >= 3 )
-    //   logger.log( ' # Transpiled ' + _.mapKeys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outPath, 'path' ) + ' in', _.time.spent( time ) );
+    //   logger.log( ' # Transpiled ' + _.props.keys( single.dataMap ).length + ' file(s) to ' + _.color.strFormat( single.outPath, 'path' ) + ' in', _.time.spent( time ) );
     //   if( multiple.verbosity >= 4 )
     //   logger.log( ' # ' + single.sizeReportLast );
     // }
@@ -271,7 +271,7 @@ function sizeReport( o )
   if( !_.objectIs( o ) )
   o = { output : o };
 
-  _.routineOptions( sizeReport, o );
+  _.routine.options_( sizeReport, o );
   _.assert( arguments.length === 1, 'Expects single argument' );
 
   if( !multiple.sizeReporting || multiple.verbosity < 4 )
@@ -347,7 +347,7 @@ function tempWrite( o )
 
   o.filePath = path.join( multiple.tempPath, o.filePath )
 
-  _.routineOptions( tempWrite, o );
+  _.routine.options_( tempWrite, o );
 
   fileProvider.fileWrite( o );
 
@@ -372,7 +372,7 @@ function concatenatorFor()
 
   _.assert( arguments.length === 0, 'Expects no arguments' );
 
-  if( !_.mapKeys( single.dataMap ).length )
+  if( !_.props.keys( single.dataMap ).length )
   return concatenator;
 
   let prevPath;

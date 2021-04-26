@@ -72,7 +72,7 @@ function _formAct( stage )
     // plugins : plugins,
   }
 
-  _.mapSupplement( set, defSettings );
+  _.props.supplement( set, defSettings );
 
   stage.formed = 1;
 

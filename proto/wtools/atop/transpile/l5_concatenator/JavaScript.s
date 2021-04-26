@@ -16,7 +16,7 @@ function wTsConcatenatorJavaScript( o )
 Self.shortName = 'JavaScript';
 
 // --
-// routines
+// implementation
 // --
 
 function init()
@@ -60,7 +60,7 @@ function _performAct( single )
       });
     });
 
-    result = _.mapVals( filesMap ).join( '\n' );
+    result = _.props.vals( filesMap ).join( '\n' );
 
   }
   else
@@ -92,7 +92,7 @@ function sourceWrapSimple( o )
 {
   let self = this;
 
-  _.routineOptions( sourceWrapSimple, arguments );
+  _.routine.options_( sourceWrapSimple, arguments );
 
   let fileName = _.strVarNameFor( _.path.fullName( o.filePath ) );
 
