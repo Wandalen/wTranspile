@@ -268,7 +268,7 @@ function sizeReport( o )
   const path = fileProvider.path;
   let con = _.Consequence();
 
-  if( !_.objectIs( o ) )
+  if( !_.object.isBasic( o ) )
   o = { output : o };
 
   _.routine.options_( sizeReport, o );

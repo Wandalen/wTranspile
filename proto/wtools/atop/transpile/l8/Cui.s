@@ -282,7 +282,7 @@ function storageIs( storage )
 {
   let multiple = this;
   _.assert( arguments.length === 1 );
-  if( !_.objectIs( storage ) )
+  if( !_.object.isBasic( storage ) )
   return false;
   if( !_.mapHasOnly( storage, multiple.ConfigProperties ) )
   return false;

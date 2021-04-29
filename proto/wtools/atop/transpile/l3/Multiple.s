@@ -65,7 +65,7 @@ function form()
   /* parent */
 
   _.assert( multiple.formed === 0 );
-  _.assert( _.objectIs( multiple.sys ) );
+  _.assert( _.object.isBasic( multiple.sys ) );
   _.assert( multiple.errors === null );
   _.assert( arguments.length === 0, 'Expects no arguments' );
 
