@@ -291,8 +291,8 @@ function sizeReport( o )
   Zlib.gzip( o.output, function( err, buffer )
   {
 
-    let outputSize = _.entitySize( o.output );
-    let gzipSize = _.entitySize( buffer );
+    let outputSize = _.entity.sizeOf( o.output );
+    let gzipSize = _.entity.sizeOf( buffer );
 
     single.sizeReportLast = 'Compression factor : ' + format( inputSize ) + ' / ' + format( outputSize ) + ' / ' + format( gzipSize );
 
