@@ -1,5 +1,5 @@
 
-# module::Transpile  [![status](https://github.com/Wandalen/wTranspile/workflows/publish/badge.svg)](https://github.com/Wandalen/wTranspile/actions?query=workflow%3Apublish) [![experimental](https://img.shields.io/badge/stability-experimental-orange.svg)](https://github.com/emersion/stability-badges#experimental)
+# module::Transpile  [![status](https://github.com/Wandalen/wTranspile/actions/workflows/StandardPublish.yml/badge.svg)](https://github.com/Wandalen/wTranspile/actions/workflows/StandardPublish.yml) [![experimental](https://img.shields.io/badge/stability-experimental-orange.svg)](https://github.com/emersion/stability-badges#experimental)
 
 Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.
 
@@ -18,7 +18,7 @@ npm install
 node sample/trivial/Sample.s
 ```
 
-## To add to your project
+### To add to your project
 ```
 npm add 'wtranspile@alpha'
 ```
