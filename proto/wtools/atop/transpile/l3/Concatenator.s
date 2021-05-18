@@ -47,7 +47,7 @@ function form()
   _.assert( arguments.length === 0, 'Expects no arguments' );
   _.assert( self.formed === 0 );
 
-  self.ext = _.arrayAs( self.ext );
+  self.ext = _.array.as( self.ext );
 
   self._formAct();
 

@@ -165,7 +165,7 @@ function form()
 
   }
 
-  // multiple.entryPath = multiple.entryPath ? _.arrayAs( multiple.entryPath ) : [];
+  // multiple.entryPath = multiple.entryPath ? _.array.as( multiple.entryPath ) : [];
   // multiple.entryPath = path.s.join( multiple.inPath.basePaths[ 0 ], multiple.entryPath );
 
   multiple.tempPath = path.resolve( multiple.tempPath );
