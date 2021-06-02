@@ -4,7 +4,7 @@
 'use strict';
 
 const _ = _global_.wTools;
-const Self = _.trs = _.trs || Object.create( null );
+_.trs = _.trs || Object.create( null );
 
 _.trs.transpiler = _.trs.transpiler || Object.create( null );
 _.trs.concatenator = _.trs.concatenator || Object.create( null );
@@ -39,7 +39,7 @@ let Extension =
 
 }
 
-_.props.extend( Self, Extension );
+/* _.props.extend */Object.assign( _.trs, Extension );
 
 //
 
