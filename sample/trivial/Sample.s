@@ -1,6 +1,7 @@
 
-let _ = require( 'wTools' );
 require( 'wtranspile' );
+let _ = wTools;
+
 let ts = new _.trs.System().form();
 
 let outPath = _.path.join( __dirname, '../temp.tmp/Sample.s' );
