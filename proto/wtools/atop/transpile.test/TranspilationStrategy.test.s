@@ -792,7 +792,7 @@ function combinedShell( test )
   var command =
   `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} `
   + `splittingStrategy:ManyToOne transpilingStrategy:Nop`;
-  shell({ args : command })
+  shell( command )
   /* node ../../../transpile/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
@@ -821,7 +821,6 @@ function combinedShell( test )
   })
 
   shell2({ execPath : 'node ' + _.path.nativize( outMainPath ) })
-
   .then( ( got ) =>
   {
     test.identical( got.exitCode, 0 );
@@ -849,7 +848,7 @@ function combinedShell( test )
   var command =
   `.transpile inPath:${inPath} outPath:${outPath} entryPath:${entryPath} externalBeforePath:${externalBeforePath} `
   + `splittingStrategy:ManyToOne transpilingStrategy:Nop`;
-  shell({ args : command })
+  shell( command )
   /* node ../../../transpile/entry/Exec .transpile inPath:main/** outPath:out/Main.s entryPath:main/File1.s externalBeforePath:External.s splittingStrategy:ManyToOne transpilingStrategy:Nop */
 
   .then( ( got ) =>
