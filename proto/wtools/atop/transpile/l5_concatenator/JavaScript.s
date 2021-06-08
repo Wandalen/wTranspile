@@ -49,7 +49,6 @@ function _performAct( single )
 
   if( multiple.simpleConcatenator || multiple.splittingStrategy === 'OneToOne' )
   {
-
     filesMap = _.container.map_( null, filesMap, ( fileData, filePath ) =>
     {
       return starter.sourceWrapSimple
@@ -61,12 +60,9 @@ function _performAct( single )
     });
 
     result = _.props.vals( filesMap ).join( '\n' );
-
   }
   else
   {
-
-    debugger;
     result = starter.sourcesJoin
     ({
       outPath : single.outPath,
@@ -78,7 +74,6 @@ function _performAct( single )
       removingShellPrologue : self.removingShellPrologue,
       withServer : 0,
     });
-
   }
 
   /* */
