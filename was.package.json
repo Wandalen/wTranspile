@@ -7,7 +7,7 @@
   "license" : "MIT",
   "main" : "proto/node_modules/wtranspile",
   "bin" : { "trs" : "proto/wtools/atop/transpile/entry/Exec" },
-  "files" : [ "proto/wtools/atop/transpile", "out", "proto/node_modules" ],
+  "files" : [ "proto/wtools/atop/transpile", "out", "proto/node_modules", "proto/node_modules/Tools", "proto/node_modules/wtranspile" ],
   "scripts" :
   {
     "test" : "wtest .run 'proto/**' rapidity:-3",
