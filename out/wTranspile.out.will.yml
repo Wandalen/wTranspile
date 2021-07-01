@@ -212,6 +212,8 @@ module:
           - ../proto/wtools/atop/transpile.test
           - ../proto/wtools/atop/transpile.test/TranspilationStrategy.test.s
           - ../proto/wtools/atop/transpile.test/_asset
+          - ../proto/wtools/atop/transpile.test/_asset/bigint
+          - ../proto/wtools/atop/transpile.test/_asset/bigint/File1.s
           - ../proto/wtools/atop/transpile.test/_asset/combined
           - ../proto/wtools/atop/transpile.test/_asset/combined/External.s
           - ../proto/wtools/atop/transpile.test/_asset/combined/main
