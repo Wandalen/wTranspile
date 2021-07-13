@@ -153,7 +153,7 @@ function singleFileInputDir( test )
   const context = this;
   const a = test.assetFor( false );
 
-  /* - */
+  /* */
 
   test.case = 'single input dir with glob';
   let outPath = a.abs( 'Output.js' );
@@ -174,7 +174,7 @@ function singleFileInputDir( test )
     test.true( _.fileProvider.fileExists( outPath ) );
     test.true( _.fileProvider.fileSize( outPath ) > 100 );
     let expected = [ '.', './Output.js' ];
-    let found = self.find( routinePath );
+    let found = a.find( a.routinePath );
     test.identical( found, expected );
     return true;
   });
@@ -184,25 +184,22 @@ function singleFileInputDir( test )
 
 function singleFileInputDirThrowing( test )
 {
-  let self = this;
-  let routinePath = _.path.join( self.suiteTempPath, test.name );
+  const context = this;
+  const a = test.assetFor( false );
 
-  /* - */
+  /* */
 
   test.case = 'single input dir without glob';
-
-  let outPath = _.path.join( routinePath, 'Output.js' );
+  let outPath = a.abs( 'Output.js' );
   let ts = new _.trs.System().form();
   let multiple = ts.multiple
   ({
     inPath : __dirname + '',
     outPath,
+    transpilingStrategy : [ 'UglifyJs' ],
   });
 
   return test.shouldThrowErrorAsync( multiple.form().perform() );
-
-  /* - */
-
 }
 
 //
