@@ -1136,7 +1136,7 @@ function beautifing( test )
     {
       let read = _.fileProvider.fileRead( outPath );
       let lines = _.strLinesCount( read );
-      test.identical( lines, 3 );
+      test.identical( lines, 5 );
       return null;
     })
   })
@@ -1197,6 +1197,98 @@ function beautifing( test )
   })
 
   return con;
+}
+
+//
+
+function beautifingWithUglifyJs( test )
+{
+  const context = this;
+  const a = test.assetFor( false );
+
+  /* - */
+
+  a.ready.then( () =>
+  {
+    test.case = 'UglifyJs, beautifing off';
+    let outPath = a.abs( 'Output.js' );
+    let ts = new _.trs.System().form();
+    let multiple = ts.multiple
+    ({
+      inPath : __filename,
+      outPath,
+      transpilingStrategy : [ 'UglifyJs' ],
+      beautifing : 0,
+    });
+
+    a.fileProvider.filesDelete( outPath );
+
+    return multiple.form().perform()
+    .then( () =>
+    {
+      let read = _.fileProvider.fileRead( outPath );
+      let lines = _.strLinesCount( read );
+      test.identical( lines, 5 );
+      return null;
+    });
+  });
+
+  /* */
+
+  a.ready.then( () =>
+  {
+    test.case = 'UglifyJs, beautifing on';
+    let outPath = a.abs( 'Output.js' );
+    let ts = new _.trs.System().form();
+    let multiple = ts.multiple
+    ({
+      inPath : __filename,
+      outPath,
+      transpilingStrategy : [ 'Uglify' ],
+      beautifing : 1,
+    });
+
+    a.fileProvider.filesDelete( outPath );
+
+    return multiple.form().perform()
+    .then( () =>
+    {
+      let read = _.fileProvider.fileRead( outPath );
+      let lines = _.strLinesCount( read );
+      test.gt( lines, 100 );
+      return null;
+    });
+  });
+
+  /* */
+
+  a.ready.then( () =>
+  {
+    test.case = 'UglifyJs, drop debugger';
+    let outPath = a.abs( 'Output.js' );
+    let ts = new _.trs.System().form();
+    let multiple = ts.multiple
+    ({
+      inPath : __filename,
+      outPath,
+      transpilingStrategy : [ 'Uglify' ],
+      minification : 9,
+      diagnosing : 0,
+      beautifing : 0,
+    });
+
+    a.fileProvider.filesDelete( outPath );
+
+    return multiple.form().perform()
+    .then( () =>
+    {
+      let read = _.fileProvider.fileRead( outPath );
+      test.true( _.strHas( read, 'debugger' ) );
+      return null;
+    });
+  });
+
+  return a.ready;
 }
 
 //
@@ -1445,6 +1537,7 @@ const Proto =
     combinedProgramatic,
 
     beautifing,
+    beautifingWithUglifyJs,
 
     severalStrategies,
 
