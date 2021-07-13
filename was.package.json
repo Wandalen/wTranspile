@@ -40,6 +40,7 @@
     "wcommandsconfig": "",
     "wcommandsaggregator": "",
     "uglify-es": "=3.3.9",
+    "uglify-js": "=3.13.10",
     "google-closure-compiler-js": "=20200517.0.0",
     "babylon": "=6.18.0",
     "babel-preset-node6-without-strict": "=0.0.1",

@@ -344,6 +344,9 @@ submodule:
   uglify-es:
     path: 'npm:///uglify-es#3.3.9'
     enabled: 0
+  uglify-js:
+    path: 'npm:///uglify-js#3.13.10'
+    enabled: 0
   babylon:
     path: 'npm:///babylon#6.18.0'
     enabled: 0
