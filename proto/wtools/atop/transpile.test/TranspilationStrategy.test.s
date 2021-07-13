@@ -773,16 +773,60 @@ function transpileBigIntUglify( test )
   multiple.form();
   let ready = multiple.perform();
   ready.then( () => a.appStart( outPath ) )
-  ready.then( ( op ) => 
+  ready.then( ( op ) =>
   {
     test.identical( op.exitCode, 0 );
-    test.true( _.strHas( op.output ), '1n' )
-    test.true( _.strHas( op.output ), '2n' )
+    test.true( _.strHas( op.output, '1n' ) );
+    test.true( _.strHas( op.output, '2n' ) );
     return null;
   })
 
   return ready;
-  
+}
+
+//
+
+function transpileBigIntUglifyJs( test )
+{
+  let context = this;
+  let a = test.assetFor( 'bigint' );
+  a.reflect();
+
+  /* */
+
+  let inPath = a.abs( 'File1.s' );
+  let outPath = a.abs( 'File1.out.s' );
+
+  let ts = new _.trs.System().form();
+  let multiple = ts.multiple
+  ({
+    inPath,
+    outPath,
+    transpilingStrategy : [ 'UglifyJs' ],
+    splittingStrategy : 'OneToOne',
+    optimization : 9,
+    minification : 8,
+    diagnosing : 1,
+    beautifing : 0
+  });
+
+  multiple.form();
+  let ready = multiple.perform();
+
+  /* - */
+
+  ready.then( () => a.appStart( outPath ) );
+  ready.then( ( op ) =>
+  {
+    test.identical( op.exitCode, 0 );
+    test.true( _.strHas( op.output, '1n' ) );
+    test.true( _.strHas( op.output, '2n' ) );
+    return null;
+  });
+
+  /* - */
+
+  return ready;
 }
 
 //
@@ -1394,7 +1438,8 @@ const Proto =
     nothingFoundManyToOne,
     transpileManyToOne,
     // shell, /* qqq : problem because js file to transpile is beyond base path. create test assets with js file and copy it to tmp path to avoid that */
-    transpileBigIntUglify,
+    // transpileBigIntUglify, /* Dmytro : module `uglify-es` does not convert BigInts */
+    transpileBigIntUglifyJs,
 
     combinedShell,
     combinedProgramatic,
