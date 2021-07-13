@@ -3,8 +3,8 @@ root:
   - wTranspile.out
 consistency:
   ../will.yml: &ref_0
-    hash: 83d228a507a4d6af9c2f532bfdcee174
-    size: 8301
+    hash: 89b5e0720058df48a593226506a2a9d0
+    size: 8366
 module:
   wTranspile.out:
     about:
@@ -205,6 +205,7 @@ module:
           - ../proto/wtools/atop/transpile/l5_transpiler/Nop.s
           - ../proto/wtools/atop/transpile/l5_transpiler/Prepack.s
           - ../proto/wtools/atop/transpile/l5_transpiler/Uglify.s
+          - ../proto/wtools/atop/transpile/l5_transpiler/UglifyJs.s
           - ../proto/wtools/atop/transpile/l7
           - ../proto/wtools/atop/transpile/l7/System.s
           - ../proto/wtools/atop/transpile/l8
@@ -266,6 +267,10 @@ module:
         enabled: 0
       uglify-es:
         path: 'npm:///uglify-es#3.3.9'
+        autoExporting: 0
+        enabled: 0
+      uglify-js:
+        path: 'npm:///uglify-js#3.13.10'
         autoExporting: 0
         enabled: 0
       babylon:
@@ -1081,6 +1086,10 @@ module:
         path: 'npm:///uglify-es#3.3.9'
         autoExporting: 0
         enabled: 0
+      uglify-js:
+        path: 'npm:///uglify-js#3.13.10'
+        autoExporting: 0
+        enabled: 0
       babylon:
         path: 'npm:///babylon#6.18.0'
         autoExporting: 0
@@ -1651,5 +1660,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: 83d228a507a4d6af9c2f532bfdcee174
-        size: 8301
+        hash: 89b5e0720058df48a593226506a2a9d0
+        size: 8366
