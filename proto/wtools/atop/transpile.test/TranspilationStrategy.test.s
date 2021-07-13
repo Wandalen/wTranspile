@@ -150,19 +150,19 @@ function singleFileInputTerminal( test )
 
 function singleFileInputDir( test )
 {
-  let self = this;
-  let routinePath = _.path.join( self.suiteTempPath, test.name );
+  const context = this;
+  const a = test.assetFor( false );
 
-  /* - */
+  /* */
 
   test.case = 'single input dir with glob';
-
-  let outPath = _.path.join( routinePath, 'Output.js' );
+  let outPath = a.abs( 'Output.js' );
   let ts = new _.trs.System().form();
   let multiple = ts.multiple
   ({
     inPath : __dirname + '/**',
     outPath,
+    transpilingStrategy : [ 'UglifyJs' ],
   });
 
   return multiple.form().perform()
@@ -174,36 +174,32 @@ function singleFileInputDir( test )
     test.true( _.fileProvider.fileExists( outPath ) );
     test.true( _.fileProvider.fileSize( outPath ) > 100 );
     let expected = [ '.', './Output.js' ];
-    let found = self.find( routinePath );
+    let found = a.find( a.routinePath );
     test.identical( found, expected );
     return true;
   });
-
 }
 
 //
 
 function singleFileInputDirThrowing( test )
 {
-  let self = this;
-  let routinePath = _.path.join( self.suiteTempPath, test.name );
+  const context = this;
+  const a = test.assetFor( false );
 
-  /* - */
+  /* */
 
   test.case = 'single input dir without glob';
-
-  let outPath = _.path.join( routinePath, 'Output.js' );
+  let outPath = a.abs( 'Output.js' );
   let ts = new _.trs.System().form();
   let multiple = ts.multiple
   ({
     inPath : __dirname + '',
     outPath,
+    transpilingStrategy : [ 'UglifyJs' ],
   });
 
   return test.shouldThrowErrorAsync( multiple.form().perform() );
-
-  /* - */
-
 }
 
 //
@@ -773,16 +769,60 @@ function transpileBigIntUglify( test )
   multiple.form();
   let ready = multiple.perform();
   ready.then( () => a.appStart( outPath ) )
-  ready.then( ( op ) => 
+  ready.then( ( op ) =>
   {
     test.identical( op.exitCode, 0 );
-    test.true( _.strHas( op.output ), '1n' )
-    test.true( _.strHas( op.output ), '2n' )
+    test.true( _.strHas( op.output, '1n' ) );
+    test.true( _.strHas( op.output, '2n' ) );
     return null;
   })
 
   return ready;
-  
+}
+
+//
+
+function transpileBigIntUglifyJs( test )
+{
+  let context = this;
+  let a = test.assetFor( 'bigint' );
+  a.reflect();
+
+  /* */
+
+  let inPath = a.abs( 'File1.s' );
+  let outPath = a.abs( 'File1.out.s' );
+
+  let ts = new _.trs.System().form();
+  let multiple = ts.multiple
+  ({
+    inPath,
+    outPath,
+    transpilingStrategy : [ 'UglifyJs' ],
+    splittingStrategy : 'OneToOne',
+    optimization : 9,
+    minification : 8,
+    diagnosing : 1,
+    beautifing : 0
+  });
+
+  multiple.form();
+  let ready = multiple.perform();
+
+  /* - */
+
+  ready.then( () => a.appStart( outPath ) );
+  ready.then( ( op ) =>
+  {
+    test.identical( op.exitCode, 0 );
+    test.true( _.strHas( op.output, '1n' ) );
+    test.true( _.strHas( op.output, '2n' ) );
+    return null;
+  });
+
+  /* - */
+
+  return ready;
 }
 
 //
@@ -820,8 +860,7 @@ function combinedShell( test )
 
   /* - */
 
-  ready
-  .then( ( got ) =>
+  ready.then( ( got ) =>
   {
     test.case = '.transpile';
     _.fileProvider.filesDelete( routinePath );
@@ -855,7 +894,7 @@ function combinedShell( test )
       _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ),
       1
     ); /* qqq : update data, please */
-    test.identical( _.strCount( read, `_starter_._sourceInclude( ` ), 2 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude( ` ), 3 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
     return null;
@@ -911,7 +950,7 @@ function combinedShell( test )
       _.strCount( read, `module.exports = _starter_._sourceInclude( null, _libraryFilePath_, './main/File1.s' );` ),
       1
     );
-    test.identical( _.strCount( read, `_starter_._sourceInclude( ` ), 2 );
+    test.identical( _.strCount( read, `_starter_._sourceInclude( ` ), 3 );
     test.identical( _.strCount( read, `module.exports = _starter_._sourceInclude` ), 1 );
 
     return null;
@@ -1092,7 +1131,7 @@ function beautifing( test )
     {
       let read = _.fileProvider.fileRead( outPath );
       let lines = _.strLinesCount( read );
-      test.identical( lines, 3 );
+      test.identical( lines, 5 );
       return null;
     })
   })
@@ -1157,6 +1196,100 @@ function beautifing( test )
 
 //
 
+function beautifingWithUglifyJs( test )
+{
+  const context = this;
+  const a = test.assetFor( false );
+
+  /* - */
+
+  a.ready.then( () =>
+  {
+    test.case = 'UglifyJs, beautifing off';
+    let outPath = a.abs( 'Output.js' );
+    let ts = new _.trs.System().form();
+    let multiple = ts.multiple
+    ({
+      inPath : __filename,
+      outPath,
+      transpilingStrategy : [ 'UglifyJs' ],
+      beautifing : 0,
+    });
+
+    a.fileProvider.filesDelete( outPath );
+
+    return multiple.form().perform()
+    .then( () =>
+    {
+      let read = _.fileProvider.fileRead( outPath );
+      let lines = _.strLinesCount( read );
+      test.identical( lines, 5 );
+      return null;
+    });
+  });
+
+  /* */
+
+  a.ready.then( () =>
+  {
+    test.case = 'UglifyJs, beautifing on';
+    let outPath = a.abs( 'Output.js' );
+    let ts = new _.trs.System().form();
+    let multiple = ts.multiple
+    ({
+      inPath : __filename,
+      outPath,
+      transpilingStrategy : [ 'Uglify' ],
+      beautifing : 1,
+    });
+
+    a.fileProvider.filesDelete( outPath );
+
+    return multiple.form().perform()
+    .then( () =>
+    {
+      let read = _.fileProvider.fileRead( outPath );
+      let lines = _.strLinesCount( read );
+      test.gt( lines, 100 );
+      return null;
+    });
+  });
+
+  /* */
+
+  a.ready.then( () =>
+  {
+    test.case = 'UglifyJs, drop debugger';
+    let outPath = a.abs( 'Output.js' );
+    let ts = new _.trs.System().form();
+    let multiple = ts.multiple
+    ({
+      inPath : __filename,
+      outPath,
+      transpilingStrategy : [ 'Uglify' ],
+      minification : 9,
+      diagnosing : 0,
+      beautifing : 0,
+    });
+
+    a.fileProvider.filesDelete( outPath );
+
+    return multiple.form().perform()
+    .then( () =>
+    {
+      let read = _.fileProvider.fileRead( outPath );
+      test.true( _.strHas( read, 'debugger' ) );
+      return null;
+    });
+  });
+
+  /* - */
+
+  return a.ready;
+}
+
+//
+
 function severalStrategies( test )
 {
   let self = this;
@@ -1200,6 +1333,54 @@ function severalStrategies( test )
   })
 
   return con;
+}
+
+//
+
+function severalStrategiesWithUglifyJs( test )
+{
+  const context = this;
+  const a = test.assetFor( false );
+
+  /* - */
+
+  a.ready.then( () =>
+  {
+    test.case = 'each strategy has own stage and settings';
+    let con = _.Consequence();
+    let outPath = a.abs( 'Output.js' );
+    let ts = new _.trs.System().form();
+    let multiple = ts.multiple
+    ({
+      inPath : __filename,
+      outPath,
+      transpilingStrategy : [ 'Babel', 'UglifyJs' ],
+      onEnd : ( multiple, output ) => con.take( output ),
+    });
+
+    multiple.form();
+    multiple.perform();
+
+    con.then( ( single ) =>
+    {
+      let stage2 = single.output;
+      let stage1 = stage2.input;
+      test.identical( stage2.index, 2 );
+      test.identical( stage1.index, 1 );
+      test.true( stage2.strategy instanceof _.trs.transpiler.UglifyJs );
+      test.true( stage1.strategy instanceof _.trs.transpiler.Babel );
+      test.true( _.map.isPopulated( stage2.settings ) );
+      test.true( _.map.isPopulated( stage1.settings ) );
+      test.notIdentical( stage2.settings, stage1.settings );
+      return null;
+    });
+
+    return con;
+  });
+
+  /* - */
+
+  return a.ready;
 }
 
 //
@@ -1394,14 +1575,17 @@ const Proto =
     nothingFoundManyToOne,
     transpileManyToOne,
     // shell, /* qqq : problem because js file to transpile is beyond base path. create test assets with js file and copy it to tmp path to avoid that */
-    transpileBigIntUglify,
+    // transpileBigIntUglify, /* Dmytro : module `uglify-es` does not convert BigInts */
+    transpileBigIntUglifyJs,
 
     combinedShell,
     combinedProgramatic,
 
     beautifing,
+    beautifingWithUglifyJs,
 
     severalStrategies,
+    severalStrategiesWithUglifyJs,
 
     //strategy
 
