@@ -1,6 +1,6 @@
 {
   "name": "wtranspile",
-  "version": "0.3.273",
+  "version": "0.3.274",
   "enabled": 1,
   "description": "Aggregator of strategies to transpile JS code. It provides unified programmatic and CL interfaces to transpile/optimize/minimize/beautify code by one or several transpilers in series. More strategies could be added as plugins. Default options of transpilation can be written into a config file to avoid retyping. Use the module to utilize the power of open source transpilation tools in single package.",
   "author": "Kostiantyn Wandalen <wanalen@01.school>",
@@ -29,16 +29,16 @@
     "url": "https://github.com/Wandalen/wTranspile/issues"
   },
   "dependencies": {
-    "wverbal": "latest",
-    "wTools": "latest",
-    "wstatestorage": "latest",
-    "wstatesession": "latest",
-    "wstarter": "latest",
-    "wpathbasic": "latest",
-    "wFiles": "latest",
-    "wCopyable": "latest",
-    "wcommandsconfig": "latest",
-    "wcommandsaggregator": "latest",
+    "wverbal": "delta",
+    "wTools": "delta",
+    "wstatestorage": "delta",
+    "wstatesession": "delta",
+    "wstarter": "delta",
+    "wpathbasic": "delta",
+    "wFiles": "delta",
+    "wCopyable": "delta",
+    "wcommandsconfig": "delta",
+    "wcommandsaggregator": "delta",
     "uglify-js": "=3.13.10",
     "uglify-es": "=3.3.9",
     "google-closure-compiler-js": "=20200517.0.0",
@@ -57,7 +57,7 @@
     "@babel/core": "=7.11.6"
   },
   "devDependencies": {
-    "wTesting": "latest",
+    "wTesting": "delta",
     "eslint": "7.1.0"
   },
   "keywords": [
