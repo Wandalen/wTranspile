@@ -3,8 +3,8 @@ root:
   - wTranspile.out
 consistency:
   ../will.yml: &ref_0
-    hash: 89b5e0720058df48a593226506a2a9d0
-    size: 8366
+    hash: ea80d07632448607955275b9f69e9e5c
+    size: 8225
 module:
   wTranspile.out:
     about:
@@ -492,9 +492,6 @@ module:
           content: npm
         inherit:
           - module.export
-      npm.publish:
-        opts:
-          shell: npm publish
       npm.generate.debug.raw:
         opts:
           entryPath: 'path::entry.out.*=1'
@@ -830,12 +827,6 @@ module:
           - 'step::doc.export'
         criterion:
           content: doc
-          export: 1
-      npm.export:
-        steps:
-          - 'step::npm.publish'
-        criterion:
-          content: npm
           export: 1
       export:
         steps:
@@ -1258,9 +1249,6 @@ module:
           content: npm
         inherit:
           - module.export
-      npm.publish:
-        opts:
-          shell: npm publish
       npm.generate.debug.raw:
         opts:
           entryPath: 'path::entry.out.*=1'
@@ -1597,12 +1585,6 @@ module:
         criterion:
           content: doc
           export: 1
-      npm.export:
-        steps:
-          - 'step::npm.publish'
-        criterion:
-          content: npm
-          export: 1
       export:
         steps:
           - 'build::proto.export'
@@ -1660,5 +1642,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: 89b5e0720058df48a593226506a2a9d0
-        size: 8366
+        hash: ea80d07632448607955275b9f69e9e5c
+        size: 8225
