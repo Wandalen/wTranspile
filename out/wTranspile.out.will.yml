@@ -3,8 +3,8 @@ root:
   - wTranspile.out
 consistency:
   ../will.yml: &ref_0
-    hash: ea80d07632448607955275b9f69e9e5c
-    size: 8225
+    hash: b9d58d7fab4b389e20f89d5e97125b2d
+    size: 8233
 module:
   wTranspile.out:
     about:
@@ -1642,5 +1642,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: ea80d07632448607955275b9f69e9e5c
-        size: 8225
+        hash: b9d58d7fab4b389e20f89d5e97125b2d
+        size: 8233
