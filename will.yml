@@ -13,7 +13,7 @@ about:
   npm.name: wtranspile
   npm.bin:
     trs: proto/wtools/atop/transpile/entry/Exec
-  author: Kostiantyn Wandalen <wanalen@01.school>
+  author: Kostiantyn Wandalen <wandalen@obox.systems>
   keywords:
     - wTools
     - Transpilation
@@ -29,7 +29,7 @@ about:
     - javascript
     - ecmascript
   contributors:
-    - Kostiantyn Wandalen <wanalen@01.school>
+    - Kostiantyn Wandalen <wandalen@obox.systems>
   interpreters:
     - njs >= 10.0.0
     - chrome >= 60.0.0

@@ -23,7 +23,7 @@ module:
       npm.name: wtranspile
       npm.bin: &ref_1
         trs: proto/wtools/atop/transpile/entry/Exec
-      author: Kostiantyn Wandalen <wanalen@01.school>
+      author: Kostiantyn Wandalen <wandalen@obox.systems>
       keywords: &ref_2
         - wTools
         - Transpilation
@@ -39,7 +39,7 @@ module:
         - javascript
         - ecmascript
       contributors: &ref_3
-        - Kostiantyn Wandalen <wanalen@01.school>
+        - Kostiantyn Wandalen <wandalen@obox.systems>
       interpreters: &ref_4
         - njs >= 10.0.0
         - chrome >= 60.0.0
@@ -914,7 +914,7 @@ module:
       license: MIT
       npm.name: wtranspile
       npm.bin: *ref_1
-      author: Kostiantyn Wandalen <wanalen@01.school>
+      author: Kostiantyn Wandalen <wandalen@obox.systems>
       keywords: *ref_2
       contributors: *ref_3
       interpreters: *ref_4
